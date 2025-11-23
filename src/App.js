@@ -33,7 +33,6 @@ async function loadData(domain) {
       src: ${styleSrcs.join(', ')};
     }
   `;
-  console.log('textContent', style.textContent);
   document.head.appendChild(style);
 }
 
@@ -45,19 +44,23 @@ function OpencodeText({ children }) {
     }
   }
   const text = childArray.length === 0 ? '' : childArray.map(c => String(c)).join('');
+
   let domain = '';
   let chunkText = '';
   const domains = new Set();
   const elements = [];
+
   const output = () => {
     if (domain !== '') {
       domains.add(domain);
     }
     const fontFamily = domain.replace(/\./g, ' ');
-    elements.push(<span style={{fontFamily}}>{chunkText}</span>);
+    const index = elements.length;
+    elements.push(<span key={index} style={{fontFamily}}>{chunkText}</span>);
     domain = '';
     chunkText = '';
   }
+
   for (const ch of text) {
     const cp = ch.codePointAt(0);
     if (cp === 0xe0001) {
