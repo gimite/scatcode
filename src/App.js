@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect } from 'react';
+import { useEffect, Children } from 'react';
 
 const toCodePoints = (str) => Array.from(str, ch => ch.codePointAt(0));
 
@@ -38,7 +38,13 @@ async function loadData(domain) {
 }
 
 function OpencodeText({ children }) {
-  const text = children == null ? '' : String(children);
+  const childArray = Children.toArray(children);
+  for (const c of childArray) {
+    if (typeof c !== 'string' && typeof c !== 'number') {
+      throw new Error('OpencodeText: children must be plain text (string or number)');
+    }
+  }
+  const text = childArray.length === 0 ? '' : childArray.map(c => String(c)).join('');
   let domain = '';
   let chunkText = '';
   const domains = new Set();
