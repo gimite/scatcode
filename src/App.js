@@ -115,9 +115,11 @@ function App() {
               'Tahoma, Geneva, sans-serif',
               'Times New Roman, Times, serif',
               'Trebuchet MS, Helvetica, sans-serif',
-              'Verdana, Geneva, sans-serif'
+              'Verdana, Geneva, sans-serif',
+              'sitelenpona gimite net',
+              'tengwar gimite net',
             ],
-            supportAllValues: true
+            supportAllValues: true,
           },
           initialData: '<p style="font-family: Arial, Helvetica, sans-serif;">Hello from CKEditor 5 in React!</p>',
         } }
