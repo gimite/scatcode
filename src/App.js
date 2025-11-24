@@ -1,4 +1,4 @@
-import { useEffect, Children } from 'react';
+import { useEffect, Children, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, Bold, Italic, FontFamily } from 'ckeditor5';
 
@@ -90,6 +90,37 @@ function OpencodeText({ children }) {
 }
 
 function App() {
+  const [clipboardHTML, setClipboardHTML] = useState('');
+  const [clipboardText, setClipboardText] = useState('');
+
+  const handlePasteClick = async () => {
+    try {
+      // Prefer the Async Clipboard API read() which can return rich types like text/html
+      if (navigator.clipboard && navigator.clipboard.read) {
+        const items = await navigator.clipboard.read();
+        for (const item of items) {
+          if (item.types && item.types.includes('text/html')) {
+            const blob = await item.getType('text/html');
+            const html = await blob.text();
+            setClipboardHTML(html);
+            setClipboardText('');
+            console.log('Clipboard HTML:', html);
+            return;
+          }
+        }
+      }
+
+      // Fallback to plain text if no html available or read() not supported
+      const text = await navigator.clipboard.readText();
+      setClipboardText(text);
+      setClipboardHTML('');
+      console.log('Clipboard text:', text);
+    } catch (err) {
+      console.error('Failed to read clipboard', err);
+      alert('Failed to read clipboard: ' + (err && err.message ? err.message : err));
+    }
+  };
+
   return (
     <div>
       <div>
@@ -98,6 +129,23 @@ function App() {
           &#xe0001;&#xe007f;bar
           &#xe0001;&#xe0074;&#xe0065;&#xe006e;&#xe0067;&#xe0077;&#xe0061;&#xe0072;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;abc
         </OpencodeText>
+      </div>
+      <div>
+        <button onClick={handlePasteClick}>Paste</button>
+      </div>
+      <div>
+        <strong>Clipboard (rendered):</strong>
+        <div style={{border: '1px solid #ddd', padding: 8, marginTop: 6}}>
+          {clipboardHTML ? (
+            <div dangerouslySetInnerHTML={{ __html: clipboardHTML }} />
+          ) : (
+            <div style={{whiteSpace: 'pre-wrap'}}>{clipboardText}</div>
+          )}
+        </div>
+      </div>
+      <div style={{marginTop: 8}}>
+        <strong>Clipboard (raw):</strong>
+        <pre style={{whiteSpace: 'pre-wrap', background: '#f7f7f7', padding: 8}}>{clipboardHTML || clipboardText}</pre>
       </div>
       <CKEditor
         editor={ ClassicEditor }
