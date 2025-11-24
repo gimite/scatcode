@@ -1,5 +1,9 @@
-import './App.css';
 import { useEffect, Children } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { ClassicEditor, Essentials, Paragraph, Bold, Italic } from 'ckeditor5';
+
+import 'ckeditor5/ckeditor5.css';
+import './App.css';
 
 const toCodePoints = (str) => Array.from(str, ch => ch.codePointAt(0));
 
@@ -95,6 +99,15 @@ function App() {
           &#xe0001;&#xe0074;&#xe0065;&#xe006e;&#xe0067;&#xe0077;&#xe0061;&#xe0072;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;abc
         </OpencodeText>
       </div>
+      <CKEditor
+        editor={ ClassicEditor }
+        config={ {
+          licenseKey: 'GPL',
+          plugins: [ Essentials, Paragraph, Bold, Italic ],
+          toolbar: [ 'undo', 'redo', '|', 'bold', 'italic' ],
+          initialData: '<p>Hello from CKEditor 5 in React!</p>',
+        } }
+      />
     </div>
   );
 }
