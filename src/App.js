@@ -121,6 +121,47 @@ function App() {
     }
   };
 
+    // Global copy handler: capture copied HTML and plain text anywhere in the window.
+    useEffect(() => {
+      const handleCopy = (e) => {
+        try {
+          let html = '';
+          let text = '';
+
+          const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
+          if (cb && typeof cb.getData === 'function') {
+            html = cb.getData('text/html') || '';
+            text = cb.getData('text/plain') || '';
+          }
+
+          // Fallback to selection-derived values when clipboardData is not populated.
+          if ((!html || html === '') && window.getSelection) {
+            console.log('Falling back to selection for HTML');
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount > 0) {
+              const container = document.createElement('div');
+              for (let i = 0; i < sel.rangeCount; i++) {
+                container.appendChild(sel.getRangeAt(i).cloneContents());
+              }
+              html = container.innerHTML || '';
+            }
+          }
+          if ((!text || text === '') && window.getSelection) {
+            text = window.getSelection().toString() || '';
+          }
+
+          setClipboardHTML(html);
+          setClipboardText(text);
+          console.log('Captured copy event — html length:', (html || '').length, 'text length:', (text || '').length);
+        } catch (err) {
+          console.error('Error in copy handler', err);
+        }
+      };
+
+      document.addEventListener('copy', handleCopy);
+      return () => document.removeEventListener('copy', handleCopy);
+    }, []);
+
   return (
     <div>
       <div>
