@@ -307,6 +307,7 @@ function App() {
               if (!dt) return;
               const plain = dt.getData('text/plain') ?? '';
               const html = parseOpencodeToHtml(plain);
+              console.log('Parsed HTML from Opencode:', html);
               data.content = editor.data.processor.toView(html);
             } catch (err) {
               console.error('Error handling clipboard inputTransformation:', err);
