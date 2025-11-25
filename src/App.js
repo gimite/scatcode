@@ -316,6 +316,28 @@ function App() {
 
           clipboard.on('inputTransformation', clipboardHandler);
           editor.on('destroy', () => clipboard.off('inputTransformation', clipboardHandler));
+
+          // Ensure typed input always uses the default font, regardless of the font
+          // at the current position. We remove the `fontFamily` model attribute
+          // from the selection right before typing so inserted text won't inherit
+          // any font family defined on ancestor spans.
+          const view = editor.editing.view;
+          view.document.on('keydown', (evt, data) => {
+            try {
+              const domEvent = data.domEvent;
+              // Ignore modifier combos (Ctrl/Cmd/Alt) and navigation keys.
+              if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
+              const key = domEvent.key;
+              // If this is basic typing (single printable character) or Enter/Tab,
+              // remove the fontFamily attribute so the typed character uses default.
+              if ((key && key.length === 1) || key === 'Enter' || key === 'Tab') {
+                editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
+              }
+            } catch (err) {
+              // Do not break typing; log for debugging.
+              console.error('Error enforcing default font on typing:', err);
+            }
+          }, { priority: 'high' });
         }}
         config={ {
           licenseKey: 'GPL',
