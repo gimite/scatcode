@@ -89,9 +89,85 @@ function OpencodeText({ children }) {
   return <>{elements}</>;
 }
 
+/**
+ * Return the inline fontFamily string from an element or its ancestor where
+ * the `style="font-family:..."` is present. This DOES NOT look up CSS rules,
+ * only inline style attribute values.
+ */
+function getInlineFontFamily(node) {
+  let el = node && node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
+  while (el && el.nodeType === Node.ELEMENT_NODE) {
+    if (el.style && el.style.fontFamily) {
+      return el.style.fontFamily;
+    }
+    el = el.parentElement;
+  }
+  return '';
+}
+
+/**
+ * From a Window Selection, return an array of {text, fontFamily} objects where
+ * `text` is a contiguous piece of selected text and `fontFamily` is the raw
+ * inline style value applied on the node or an ancestor element. This only
+ * considers inline `style="font-family:..."` attributes and does not resolve
+ * CSS rules or computed styles.
+ */
+function getSelectionTextFontRuns(selection = window.getSelection()) {
+  const runs = [];
+  if (!selection || selection.rangeCount === 0) return runs;
+
+  for (let r = 0; r < selection.rangeCount; r++) {
+    const range = selection.getRangeAt(r);
+    const root = range.commonAncestorContainer.nodeType === Node.TEXT_NODE
+      ? range.commonAncestorContainer.parentElement
+      : range.commonAncestorContainer;
+
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        return range.intersectsNode(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+
+    // If the root itself is a text node and it intersects, ensure we include it.
+    let node = walker.nextNode();
+    if (root.nodeType === Node.TEXT_NODE && range.intersectsNode(root) && (!node || node !== root)) {
+      node = root;
+    }
+
+    while (node) {
+      if (!range.intersectsNode(node)) {
+        node = walker.nextNode();
+        continue;
+      }
+      let start = 0;
+      let end = node.length;
+      if (node === range.startContainer) start = range.startOffset;
+      if (node === range.endContainer) end = range.endOffset;
+      if (end > start) {
+        const text = node.data.slice(start, end);
+        const fontFamily = getInlineFontFamily(node) || '';
+        runs.push({ text, fontFamily });
+      }
+      node = walker.nextNode();
+    }
+  }
+
+  // Merge adjacent runs with same fontFamily
+  const merged = [];
+  for (const run of runs) {
+    if (merged.length > 0 && merged[merged.length - 1].fontFamily === run.fontFamily) {
+      merged[merged.length - 1].text += run.text;
+    } else {
+      merged.push({ ...run });
+    }
+  }
+  return merged;
+}
+
 function App() {
   const [clipboardHTML, setClipboardHTML] = useState('');
   const [clipboardText, setClipboardText] = useState('');
+  const [selectionRuns, setSelectionRuns] = useState([]);
 
   const handlePasteClick = async () => {
     try {
@@ -153,6 +229,10 @@ function App() {
           setClipboardHTML(html);
           setClipboardText(text);
           console.log('Captured copy event — html length:', (html || '').length, 'text length:', (text || '').length);
+
+          const runs = getSelectionTextFontRuns();
+          setSelectionRuns(runs);
+          console.log('Selection runs:', runs);
         } catch (err) {
           console.error('Error in copy handler', err);
         }
@@ -187,6 +267,10 @@ function App() {
       <div style={{marginTop: 8}}>
         <strong>Clipboard (raw):</strong>
         <pre style={{whiteSpace: 'pre-wrap', background: '#f7f7f7', padding: 8}}>{clipboardHTML || clipboardText}</pre>
+      </div>
+      <div style={{marginTop: 8}}>
+        <strong>Selection Runs:</strong>
+        <pre style={{whiteSpace: 'pre-wrap', background: '#f7f7f7', padding: 8}}>{JSON.stringify(selectionRuns, null, 2)}</pre>
       </div>
       <CKEditor
         editor={ ClassicEditor }
