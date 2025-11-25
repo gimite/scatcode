@@ -213,13 +213,9 @@ function parseOpencodeToHtml(text) {
 
   const flush = () => {
     if (chunk === '') return;
-    if (domain === '') {
-      result += escapeHtml(chunk);
-    } else {
-      const fontFamily = domain.replace(/\./g, ' ');
-      const esc = escapeCssString(fontFamily);
-      result += `<span style="font-family: '${esc}';">${escapeHtml(chunk)}</span>`;
-    }
+    const fontFamily = domain.replace(/\./g, ' ');
+    const esc = escapeCssString(fontFamily);
+    result += `<span style="font-family: '${esc}';">${escapeHtml(chunk)}</span>`;
     chunk = '';
   };
 
@@ -309,11 +305,9 @@ function App() {
               console.log('CKEditor clipboard inputTransformation event', data);
               const dt = data.dataTransfer;
               if (!dt) return;
-              const plain = dt.getData('text/plain');
-              const html = dt.getData('text/html');
-              if (!plain || plain.indexOf(String.fromCodePoint(0xe0001)) === -1) return;
-              const htmlFromOpencode = parseOpencodeToHtml(plain);
-              data.content = editor.data.processor.toView(htmlFromOpencode);
+              const plain = dt.getData('text/plain') ?? '';
+              const html = parseOpencodeToHtml(plain);
+              data.content = editor.data.processor.toView(html);
             } catch (err) {
               console.error('Error handling clipboard inputTransformation:', err);
             }
