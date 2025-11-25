@@ -191,6 +191,57 @@ function getOpencodeTextFromFontRuns(runs) {
   return result;
 }
 
+// Parse a text string encoded with Opencode markers into HTML where text runs are wrapped
+// in <span style="font-family: ..."> markers corresponding to the encoded domain.
+function escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escapeCssString(s) {
+  // We will wrap in single quotes, so escape single quotes if any
+  return String(s).replace(/'/g, "\\'");
+}
+
+function parseOpencodeToHtml(text) {
+  let result = '';
+  let domain = '';
+  let chunk = '';
+
+  const flush = () => {
+    if (chunk === '') return;
+    if (domain === '') {
+      result += escapeHtml(chunk);
+    } else {
+      const fontFamily = domain.replace(/\./g, ' ');
+      const esc = escapeCssString(fontFamily);
+      result += `<span style="font-family: '${esc}';">${escapeHtml(chunk)}</span>`;
+    }
+    chunk = '';
+  };
+
+  for (const ch of text) {
+    const cp = ch.codePointAt(0);
+    if (cp === 0xe0001) {
+      flush();
+      domain = '';
+    } else if (cp === 0xe007f) {
+      // delimiter - ignore
+    } else if (cp >= 0xe0020 && cp < 0xe007f) {
+      // Domain is encoded as ASCII codepoints (cp - 0xe0000)
+      const ascii = String.fromCodePoint(cp - 0xe0000);
+      domain += ascii;
+    } else {
+      chunk += ch;
+    }
+  }
+  flush();
+  return result;
+}
+
 function App() {
   const [selectionRuns, setSelectionRuns] = useState([]);
 
@@ -217,7 +268,6 @@ function App() {
           console.log('Opencode text:', opencodeText);
           console.log('Opencode text codepoints:', toCodePoints(opencodeText));
           cb.setData('text/plain', opencodeText);
-          console.log(cb.getData('text/plain'));
           e.preventDefault();
         } catch (err) {
           console.error('Error in copy handler', err);
@@ -246,6 +296,32 @@ function App() {
       </div>
       <CKEditor
         editor={ ClassicEditor }
+        onReady={(editor) => {
+          // Use CKEditor's Clipboard plugin to intercept pasted text and transform Opencode runs
+          const clipboard = editor.plugins.get('ClipboardPipeline');
+          if (!clipboard) {
+            console.error('Clipboard plugin not found in CKEditor instance');
+            return;
+          }
+
+          const clipboardHandler = (evt, data) => {
+            try {
+              console.log('CKEditor clipboard inputTransformation event', data);
+              const dt = data.dataTransfer;
+              if (!dt) return;
+              const plain = dt.getData('text/plain');
+              const html = dt.getData('text/html');
+              if (!plain || plain.indexOf(String.fromCodePoint(0xe0001)) === -1) return;
+              const htmlFromOpencode = parseOpencodeToHtml(plain);
+              data.content = editor.data.processor.toView(htmlFromOpencode);
+            } catch (err) {
+              console.error('Error handling clipboard inputTransformation:', err);
+            }
+          };
+
+          clipboard.on('inputTransformation', clipboardHandler);
+          editor.on('destroy', () => clipboard.off('inputTransformation', clipboardHandler));
+        }}
         config={ {
           licenseKey: 'GPL',
           plugins: [ Essentials, Paragraph, Bold, Italic, FontFamily ],
