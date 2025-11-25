@@ -164,6 +164,29 @@ function getSelectionTextFontRuns(selection = window.getSelection()) {
   return merged;
 }
 
+function getOpencodeTextFromFontRuns(runs) {
+  let result = '';
+  let lastDomain = '';
+  for (const run of runs) {
+    const { text, fontFamily } = run;
+    let domain = '';
+    if (fontFamily && fontFamily !== '') {
+      domain = fontFamily.replace(/ /g, '.');
+    }
+    if (domain !== lastDomain) {
+      result += String.fromCodePoint(0xe0001);
+      for (const ch of domain) {
+        const cp = ch.codePointAt(0);
+        result += String.fromCodePoint(cp + 0xe0000);
+      }
+      result += String.fromCodePoint(0xe007f);
+      lastDomain = domain;
+    }
+    result += text;
+  }
+  return result;
+}
+
 function App() {
   const [clipboardHTML, setClipboardHTML] = useState('');
   const [clipboardText, setClipboardText] = useState('');
@@ -171,23 +194,8 @@ function App() {
 
   const handlePasteClick = async () => {
     try {
-      // Prefer the Async Clipboard API read() which can return rich types like text/html
-      if (navigator.clipboard && navigator.clipboard.read) {
-        const items = await navigator.clipboard.read();
-        for (const item of items) {
-          if (item.types && item.types.includes('text/html')) {
-            const blob = await item.getType('text/html');
-            const html = await blob.text();
-            setClipboardHTML(html);
-            setClipboardText('');
-            console.log('Clipboard HTML:', html);
-            return;
-          }
-        }
-      }
-
-      // Fallback to plain text if no html available or read() not supported
       const text = await navigator.clipboard.readText();
+      console.log('Codepoints: ', toCodePoints(text));
       setClipboardText(text);
       setClipboardHTML('');
       console.log('Clipboard text:', text);
@@ -201,38 +209,14 @@ function App() {
     useEffect(() => {
       const handleCopy = (e) => {
         try {
-          let html = '';
-          let text = '';
-
           const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
-          if (cb && typeof cb.getData === 'function') {
-            html = cb.getData('text/html') || '';
-            text = cb.getData('text/plain') || '';
-          }
-
-          // Fallback to selection-derived values when clipboardData is not populated.
-          if ((!html || html === '') && window.getSelection) {
-            console.log('Falling back to selection for HTML');
-            const sel = window.getSelection();
-            if (sel && sel.rangeCount > 0) {
-              const container = document.createElement('div');
-              for (let i = 0; i < sel.rangeCount; i++) {
-                container.appendChild(sel.getRangeAt(i).cloneContents());
-              }
-              html = container.innerHTML || '';
-            }
-          }
-          if ((!text || text === '') && window.getSelection) {
-            text = window.getSelection().toString() || '';
-          }
-
-          setClipboardHTML(html);
-          setClipboardText(text);
-          console.log('Captured copy event — html length:', (html || '').length, 'text length:', (text || '').length);
-
           const runs = getSelectionTextFontRuns();
           setSelectionRuns(runs);
           console.log('Selection runs:', runs);
+          const opencodeText = getOpencodeTextFromFontRuns(runs);
+          console.log('Opencode text:', opencodeText);
+          console.log('Opencode text codepoints:', toCodePoints(opencodeText));
+          cb.setData('text/plain', opencodeText);
         } catch (err) {
           console.error('Error in copy handler', err);
         }
@@ -253,20 +237,6 @@ function App() {
       </div>
       <div>
         <button onClick={handlePasteClick}>Paste</button>
-      </div>
-      <div>
-        <strong>Clipboard (rendered):</strong>
-        <div style={{border: '1px solid #ddd', padding: 8, marginTop: 6}}>
-          {clipboardHTML ? (
-            <div dangerouslySetInnerHTML={{ __html: clipboardHTML }} />
-          ) : (
-            <div style={{whiteSpace: 'pre-wrap'}}>{clipboardText}</div>
-          )}
-        </div>
-      </div>
-      <div style={{marginTop: 8}}>
-        <strong>Clipboard (raw):</strong>
-        <pre style={{whiteSpace: 'pre-wrap', background: '#f7f7f7', padding: 8}}>{clipboardHTML || clipboardText}</pre>
       </div>
       <div style={{marginTop: 8}}>
         <strong>Selection Runs:</strong>
