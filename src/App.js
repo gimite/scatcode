@@ -170,8 +170,12 @@ function getOpencodeTextFromFontRuns(runs) {
   for (const run of runs) {
     const { text, fontFamily } = run;
     let domain = '';
-    if (fontFamily && fontFamily !== '') {
-      domain = fontFamily.replace(/ /g, '.');
+    let decodedFontFamily = fontFamily;
+    try {
+      decodedFontFamily = JSON.parse(fontFamily);
+    } catch (e) {}
+    if (decodedFontFamily && decodedFontFamily !== '') {
+      domain = decodedFontFamily.replace(/ /g, '.');
     }
     if (domain !== lastDomain) {
       result += String.fromCodePoint(0xe0001);
@@ -188,16 +192,12 @@ function getOpencodeTextFromFontRuns(runs) {
 }
 
 function App() {
-  const [clipboardHTML, setClipboardHTML] = useState('');
-  const [clipboardText, setClipboardText] = useState('');
   const [selectionRuns, setSelectionRuns] = useState([]);
 
   const handlePasteClick = async () => {
     try {
       const text = await navigator.clipboard.readText();
       console.log('Codepoints: ', toCodePoints(text));
-      setClipboardText(text);
-      setClipboardHTML('');
       console.log('Clipboard text:', text);
     } catch (err) {
       console.error('Failed to read clipboard', err);
@@ -217,6 +217,8 @@ function App() {
           console.log('Opencode text:', opencodeText);
           console.log('Opencode text codepoints:', toCodePoints(opencodeText));
           cb.setData('text/plain', opencodeText);
+          console.log(cb.getData('text/plain'));
+          e.preventDefault();
         } catch (err) {
           console.error('Error in copy handler', err);
         }
