@@ -73,6 +73,7 @@ function parseOpencodeRuns(text) {
   const runs = [];
   let domain = '';
   let chunk = '';
+  let isInDomain = false;
 
   const flush = () => {
     if (chunk === '') return;
@@ -85,9 +86,10 @@ function parseOpencodeRuns(text) {
     if (cp === 0xe0001) {
       flush();
       domain = '';
-    } else if (cp === 0xe007f) {
-      // delimiter - ignore
-    } else if (cp >= 0xe0020 && cp < 0xe007f) {
+      isInDomain = true;
+    } else if (cp === 0xe007f && isInDomain) {
+      isInDomain = false;
+    } else if (cp >= 0xe0020 && cp < 0xe007f && isInDomain) {
       // Domain is encoded as ASCII codepoints (cp - 0xe0000)
       const ascii = String.fromCodePoint(cp - 0xe0000);
       domain += ascii;
