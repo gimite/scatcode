@@ -49,36 +49,14 @@ function OpencodeText({ children }) {
   }
   const text = childArray.length === 0 ? '' : childArray.map(c => String(c)).join('');
 
-  let domain = '';
-  let chunkText = '';
+  // Use the shared parser to obtain runs of {domain, text}
+  const runs = parseOpencodeRuns(text);
   const domains = new Set();
-  const elements = [];
-
-  const output = () => {
-    if (domain !== '') {
-      domains.add(domain);
-    }
-    const fontFamily = domain.replace(/\./g, ' ');
-    const index = elements.length;
-    elements.push(<span key={index} style={{fontFamily}}>{chunkText}</span>);
-    domain = '';
-    chunkText = '';
-  }
-
-  for (const ch of text) {
-    const cp = ch.codePointAt(0);
-    if (cp === 0xe0001) {
-      output();
-      domain = '';
-    } else if (cp === 0xe007f) {
-    } else if (cp >= 0xe0020 && cp < 0xe007f) {
-      const ascii = String.fromCodePoint(cp - 0xe0000);
-      domain += ascii;
-    } else {
-      chunkText += ch;
-    }
-  }
-  output();
+  const elements = runs.map((run, index) => {
+    if (run.domain && run.domain !== '') domains.add(run.domain);
+    const fontFamily = run.domain.replace(/\./g, ' ');
+    return <span key={index} style={{fontFamily}}>{run.text}</span>;
+  });
 
   useEffect(() => {
     for (const d of domains) {
@@ -87,6 +65,38 @@ function OpencodeText({ children }) {
   }, [text]);
   
   return <>{elements}</>;
+}
+
+// Parse opencode encoded text into an array of runs [{domain, text}].
+// `domain` is '' for the default domain, otherwise contains the domain string.
+function parseOpencodeRuns(text) {
+  const runs = [];
+  let domain = '';
+  let chunk = '';
+
+  const flush = () => {
+    if (chunk === '') return;
+    runs.push({ domain, text: chunk });
+    chunk = '';
+  };
+
+  for (const ch of text) {
+    const cp = ch.codePointAt(0);
+    if (cp === 0xe0001) {
+      flush();
+      domain = '';
+    } else if (cp === 0xe007f) {
+      // delimiter - ignore
+    } else if (cp >= 0xe0020 && cp < 0xe007f) {
+      // Domain is encoded as ASCII codepoints (cp - 0xe0000)
+      const ascii = String.fromCodePoint(cp - 0xe0000);
+      domain += ascii;
+    } else {
+      chunk += ch;
+    }
+  }
+  flush();
+  return runs;
 }
 
 /**
@@ -207,39 +217,18 @@ function escapeCssString(s) {
 }
 
 function parseOpencodeToHtml(text) {
+  const runs = parseOpencodeRuns(text);
   let result = '';
-  let domain = '';
-  let chunk = '';
-
-  const flush = () => {
-    if (chunk === '') return;
-    const chunkHtml = escapeHtml(chunk);
-    if (domain === '') {
+  for (const run of runs) {
+    const chunkHtml = escapeHtml(run.text);
+    if (!run.domain || run.domain === '') {
       result += chunkHtml;
     } else {
-      const fontFamily = domain.replace(/\./g, ' ');
+      const fontFamily = run.domain.replace(/\./g, ' ');
       const esc = escapeCssString(fontFamily);
       result += `<span style="font-family: '${esc}';">${chunkHtml}</span>`;
     }
-    chunk = '';
-  };
-
-  for (const ch of text) {
-    const cp = ch.codePointAt(0);
-    if (cp === 0xe0001) {
-      flush();
-      domain = '';
-    } else if (cp === 0xe007f) {
-      // delimiter - ignore
-    } else if (cp >= 0xe0020 && cp < 0xe007f) {
-      // Domain is encoded as ASCII codepoints (cp - 0xe0000)
-      const ascii = String.fromCodePoint(cp - 0xe0000);
-      domain += ascii;
-    } else {
-      chunk += ch;
-    }
   }
-  flush();
   return result;
 }
 
