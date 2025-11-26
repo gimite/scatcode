@@ -236,9 +236,10 @@ function parseOpencodeToHtml(text) {
 
 function App() {
   const editorRef = useRef(null);
-  const handlePasteClick = async () => {
+
+  const insertHtml = (html) => {
     if (!editorRef.current) {
-      alert('Editor is not ready');
+      console.error('Editor is not ready');
       return;
     }
     try {
@@ -253,8 +254,11 @@ function App() {
       });
     } catch (err) {
       console.error('Failed to insert HTML into CKEditor', err);
-      alert('Failed to insert content: ' + (err && err.message ? err.message : err));
     }
+  };
+
+  const handlePasteClick = async () => {
+    insertHtml('<strong>foo</strong>');
   };
 
     // Global copy handler: capture copied HTML and plain text anywhere in the window.
