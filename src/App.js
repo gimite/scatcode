@@ -1,4 +1,4 @@
-import { useEffect, Children, useState } from 'react';
+import { useEffect, Children, useState, useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, Bold, Italic, FontFamily } from 'ckeditor5';
 
@@ -235,14 +235,25 @@ function parseOpencodeToHtml(text) {
 }
 
 function App() {
+  const editorRef = useRef(null);
   const handlePasteClick = async () => {
+    if (!editorRef.current) {
+      alert('Editor is not ready');
+      return;
+    }
     try {
-      const text = await navigator.clipboard.readText();
-      console.log('Codepoints: ', toCodePoints(text));
-      console.log('Clipboard text:', text);
+      const editor = editorRef.current;
+      const html = '<strong>foo</strong>';
+      const viewFragment = editor.data.processor.toView(html);
+      const modelFragment = editor.data.toModel(viewFragment);
+      editor.model.change(writer => {
+        // Ensure default font is used for the inserted content
+        writer.removeSelectionAttribute('fontFamily');
+        editor.model.insertContent(modelFragment, editor.model.document.selection);
+      });
     } catch (err) {
-      console.error('Failed to read clipboard', err);
-      alert('Failed to read clipboard: ' + (err && err.message ? err.message : err));
+      console.error('Failed to insert HTML into CKEditor', err);
+      alert('Failed to insert content: ' + (err && err.message ? err.message : err));
     }
   };
 
@@ -282,6 +293,7 @@ function App() {
       <CKEditor
         editor={ ClassicEditor }
         onReady={(editor) => {
+          editorRef.current = editor;
           // Use CKEditor's Clipboard plugin to intercept pasted text and transform Opencode runs
           const clipboard = editor.plugins.get('ClipboardPipeline');
           if (!clipboard) {
@@ -305,7 +317,10 @@ function App() {
           };
 
           clipboard.on('inputTransformation', clipboardHandler);
-          editor.on('destroy', () => clipboard.off('inputTransformation', clipboardHandler));
+          editor.on('destroy', () => {
+            clipboard.off('inputTransformation', clipboardHandler);
+            editorRef.current = null;
+          });
 
           // Ensure typed input always uses the default font, regardless of the font
           // at the current position. We remove the `fontFamily` model attribute
