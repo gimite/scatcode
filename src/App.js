@@ -235,8 +235,6 @@ function parseOpencodeToHtml(text) {
 }
 
 function App() {
-  const [selectionRuns, setSelectionRuns] = useState([]);
-
   const handlePasteClick = async () => {
     try {
       const text = await navigator.clipboard.readText();
@@ -254,7 +252,6 @@ function App() {
         try {
           const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
           const runs = getSelectionTextFontRuns();
-          setSelectionRuns(runs);
           console.log('Selection runs:', runs);
           const opencodeText = getOpencodeTextFromFontRuns(runs);
           console.log('Opencode text:', opencodeText);
@@ -281,10 +278,6 @@ function App() {
       </div>
       <div>
         <button onClick={handlePasteClick}>Paste</button>
-      </div>
-      <div style={{marginTop: 8}}>
-        <strong>Selection Runs:</strong>
-        <pre style={{whiteSpace: 'pre-wrap', background: '#f7f7f7', padding: 8}}>{JSON.stringify(selectionRuns, null, 2)}</pre>
       </div>
       <CKEditor
         editor={ ClassicEditor }
