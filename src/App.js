@@ -213,9 +213,14 @@ function parseOpencodeToHtml(text) {
 
   const flush = () => {
     if (chunk === '') return;
-    const fontFamily = domain.replace(/\./g, ' ');
-    const esc = escapeCssString(fontFamily);
-    result += `<span style="font-family: '${esc}';">${escapeHtml(chunk)}</span>`;
+    const chunkHtml = escapeHtml(chunk);
+    if (domain === '') {
+      result += chunkHtml;
+    } else {
+      const fontFamily = domain.replace(/\./g, ' ');
+      const esc = escapeCssString(fontFamily);
+      result += `<span style="font-family: '${esc}';">${chunkHtml}</span>`;
+    }
     chunk = '';
   };
 
@@ -305,6 +310,7 @@ function App() {
               console.log('CKEditor clipboard inputTransformation event', data);
               const dt = data.dataTransfer;
               if (!dt) return;
+              editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
               const plain = dt.getData('text/plain') ?? '';
               const html = parseOpencodeToHtml(plain);
               console.log('Parsed HTML from Opencode:', html);
