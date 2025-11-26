@@ -244,7 +244,6 @@ function App() {
     }
     try {
       const editor = editorRef.current;
-      const html = '<strong>foo</strong>';
       const viewFragment = editor.data.processor.toView(html);
       const modelFragment = editor.data.toModel(viewFragment);
       editor.model.change(writer => {
