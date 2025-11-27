@@ -325,6 +325,24 @@ function App() {
             editorRef.current = null;
           });
 
+          // Make plain Enter behave like Shift+Enter (insert a <br/>) instead of creating
+          // a new paragraph.
+          try {
+            editor.keystrokes.set('Enter', (keyEvtData, cancel) => {
+              const domEvent = keyEvtData.domEvent;
+              // Keep modifier combos intact (Ctrl/Cmd/Alt/Shift+Enter should remain usable)
+              if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
+              if (domEvent.shiftKey) return; // let default Shift+Enter behavior remain
+              // Prefer to use the editor's shiftEnter command (if present) which inserts a soft break <br/>
+              if (editor.commands.get('shiftEnter')) {
+                try { editor.execute('shiftEnter'); } catch (e) { /* ignore if command fails */ }
+              }
+              cancel();
+            });
+          } catch (err) {
+            console.warn('Could not override Enter keystroke to insert <br/>:', err);
+          }
+
           // Ensure typed input always uses the default font, regardless of the font
           // at the current position. We remove the `fontFamily` model attribute
           // from the selection right before typing so inserted text won't inherit
