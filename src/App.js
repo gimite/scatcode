@@ -1,6 +1,6 @@
-import { useEffect, Children, useState, useRef } from 'react';
+import { useEffect, Children, useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { ClassicEditor, Essentials, Paragraph, Bold, Italic, FontFamily } from 'ckeditor5';
+import { ClassicEditor, Essentials, Paragraph, FontFamily } from 'ckeditor5';
 
 import 'ckeditor5/ckeditor5.css';
 import './App.css';
@@ -260,26 +260,26 @@ function App() {
     insertHtml('<strong>foo</strong>');
   };
 
-    // Global copy handler: capture copied HTML and plain text anywhere in the window.
-    useEffect(() => {
-      const handleCopy = (e) => {
-        try {
-          const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
-          const runs = getSelectionTextFontRuns();
-          console.log('Selection runs:', runs);
-          const opencodeText = getOpencodeTextFromFontRuns(runs);
-          console.log('Opencode text:', opencodeText);
-          console.log('Opencode text codepoints:', toCodePoints(opencodeText));
-          cb.setData('text/plain', opencodeText);
-          e.preventDefault();
-        } catch (err) {
-          console.error('Error in copy handler', err);
-        }
-      };
+  // Global copy handler: capture copied HTML and plain text anywhere in the window.
+  useEffect(() => {
+    const handleCopy = (e) => {
+      try {
+        const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
+        const runs = getSelectionTextFontRuns();
+        console.log('Selection runs:', runs);
+        const opencodeText = getOpencodeTextFromFontRuns(runs);
+        console.log('Opencode text:', opencodeText);
+        console.log('Opencode text codepoints:', toCodePoints(opencodeText));
+        cb.setData('text/plain', opencodeText);
+        e.preventDefault();
+      } catch (err) {
+        console.error('Error in copy handler', err);
+      }
+    };
 
-      document.addEventListener('copy', handleCopy);
-      return () => document.removeEventListener('copy', handleCopy);
-    }, []);
+    document.addEventListener('copy', handleCopy);
+    return () => document.removeEventListener('copy', handleCopy);
+  }, []);
 
   return (
     <div>
@@ -349,22 +349,8 @@ function App() {
         }}
         config={ {
           licenseKey: 'GPL',
-          plugins: [ Essentials, Paragraph, Bold, Italic, FontFamily ],
-          toolbar: [ 'undo', 'redo', '|', 'fontFamily', 'bold', 'italic' ],
+          plugins: [ Essentials, Paragraph, FontFamily ],
           fontFamily: {
-            options: [
-              'default',
-              'Arial, Helvetica, sans-serif',
-              'Courier New, Courier, monospace',
-              'Georgia, serif',
-              'Lucida Sans Unicode, Lucida Grande, sans-serif',
-              'Tahoma, Geneva, sans-serif',
-              'Times New Roman, Times, serif',
-              'Trebuchet MS, Helvetica, sans-serif',
-              'Verdana, Geneva, sans-serif',
-              'sitelenpona gimite net',
-              'tengwar gimite net',
-            ],
             supportAllValues: true,
           },
           initialData: '<p style="font-family: Arial, Helvetica, sans-serif;">Hello from CKEditor 5 in React!</p>',
