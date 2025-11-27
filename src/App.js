@@ -7,7 +7,16 @@ import './App.css';
 
 const toCodePoints = (str) => Array.from(str, ch => ch.codePointAt(0));
 
-// Array.from("sitelenpona.gimite.net", ch => "&#x" + (ch.codePointAt(0) + 0xe0000).toString(16) + ";").join("")
+function getOpencodeDomainTagHtml(domain) {
+  return '&#xe0001;' +
+    Array.from(
+      domain,
+      ch => "&#x" + (ch.codePointAt(0) + 0xe0000).toString(16) + ";"
+    ).join("") +
+    '&#xe007f;'
+}
+
+// console.log(getOpencodeDomainTagHtml('liparxe.gimite.net'));
 
 const loadedDomains = new Set();
 
@@ -285,9 +294,13 @@ function App() {
     <div>
       <div>
         <OpencodeText>
-          foo&#xe0001;&#xe0073;&#xe0069;&#xe0074;&#xe0065;&#xe006c;&#xe0065;&#xe006e;&#xe0070;&#xe006f;&#xe006e;&#xe0061;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xe007f;&#xF196C;&#xF1954;
-          &#xe0001;&#xe007f;bar
+          I love
+          &#xe0001;&#xe0073;&#xe0069;&#xe0074;&#xe0065;&#xe006c;&#xe0065;&#xe006e;&#xe0070;&#xe006f;&#xe006e;&#xe0061;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xe007f;&#xF196C;&#xF1954;
+          &#xe0001;&#xe007f;,
           &#xe0001;&#xe0074;&#xe0065;&#xe006e;&#xe0067;&#xe0077;&#xe0061;&#xe0072;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xE000;&#xE046;&#xE007;&#xE040;&#xE014;
+          &#xe0001;&#xe007f; and
+          &#xe0001;&#xe006c;&#xe0069;&#xe0070;&#xe0061;&#xe0072;&#xe0078;&#xe0065;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xe007f;lineparine
+          &#xe0001;&#xe007f;!
         </OpencodeText>
       </div>
       <div>
