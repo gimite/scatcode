@@ -1,4 +1,4 @@
-import { useEffect, Children, useRef } from 'react';
+import { useEffect, Children, useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, FontFamily } from 'ckeditor5';
 
@@ -19,6 +19,7 @@ function getOpencodeDomainTagHtml(domain) {
 // console.log(getOpencodeDomainTagHtml('liparxe.gimite.net'));
 
 const loadedDomains = new Set();
+const domainData = {};
 
 async function loadData(domain) {
   if (loadedDomains.has(domain)) {
@@ -32,6 +33,7 @@ async function loadData(domain) {
   }
   const data = await response.json();
   console.log(data);
+  domainData[domain] = data;
 
   const styleSrcs = data.fallbackFont.src.map((src) => {
     const urlExp = JSON.stringify(src.url);
@@ -245,6 +247,11 @@ function parseOpencodeToHtml(text) {
 
 function App() {
   const editorRef = useRef(null);
+  const [domainInput, setDomainInput] = useState('');
+  const [tableDomain, setTableDomain] = useState('');
+  const [tableDomainData, setTableDomainData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const insertHtml = (html) => {
     if (!editorRef.current) {
@@ -387,6 +394,76 @@ function App() {
           initialData: '<p style="font-family: Arial, Helvetica, sans-serif;">Hello from CKEditor 5 in React!</p>',
         } }
       />
+      {/* Domain character viewer: input + table */}
+      <div style={{ marginTop: 20 }}>
+        <form onSubmit={async (e) => { e.preventDefault(); }}>
+          <label style={{ marginRight: 8 }}>Domain:</label>
+          <input
+            type="text"
+            value={domainInput}
+            onChange={(e) => setDomainInput(e.target.value)}
+            placeholder="example.com"
+            style={{ marginRight: 8 }}
+          />
+          <button type="button" onClick={async () => {
+            const domain = domainInput.trim();
+            if (!domain) return;
+            setLoading(true);
+            setError(null);
+            try {
+              await loadData(domain);
+              setTableDomain(domain);
+              setTableDomainData(domainData[domain]);
+            } catch (err) {
+              setError(String(err));
+              setTableDomain('');
+              setTableDomainData(null);
+            } finally {
+              setLoading(false);
+            }
+          }}>Load</button>
+        </form>
+
+        {loading && <div style={{ marginTop: 8 }}>Loading...</div>}
+        {error && <div style={{ marginTop: 8, color: 'red' }}>{error}</div>}
+
+        {tableDomainData && (
+          <div style={{ marginTop: 12 }}>
+            <h3>{tableDomainData.name}</h3>
+            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+              <thead>
+                <tr>
+                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Character</th>
+                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Codepoint</th>
+                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tableDomainData.characters.length === 0 && (
+                  <tr><td colSpan={3} style={{ padding: 8 }}>No characters found.</td></tr>
+                )}
+                {tableDomainData.characters.map((ch, i) => {
+                  const domainFontFamily = tableDomain.replace(/\./g, ' ');
+                  const cpHex = ch.codepoint;
+                  const cp = parseInt(cpHex, 16);
+                  const rendered = Number.isNaN(cp) ? '' : String.fromCodePoint(cp);
+                  const fullCodepoint = `${tableDomain}/#${cpHex}`;
+                  const fullName = tableDomainData.name.toUpperCase() + ' ' + ch.name;
+                  return (
+                    <tr key={i}>
+                      <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily: domainFontFamily }}>
+                        {rendered}
+                      </td>
+                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{fullCodepoint}</td>
+                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{fullName}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
