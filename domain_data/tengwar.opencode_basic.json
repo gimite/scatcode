@@ -1,0 +1,9 @@
+{
+  "name": "Tengwar",
+  "fallbackFont": {
+    "src": [
+      {"url": "https://sitelenpona.gimite.net/FairfaxHD.woff2", "format": "woff2"}
+    ]
+  }
+}
+

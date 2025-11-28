@@ -1,28 +1,35 @@
 require "json"
 require "fileutils"
 
-domain_name = "sitelenpona"
-name_regex = /^SITELEN PONA (.+)$/
-
-data = open("#{domain_name}.opencode_basic.json") { |f| JSON.load(f) }
-characters = []
+ucsur_characters = []
 
 File.readlines("UCSUR_UnicodeData.txt").each do |line|
   fields = line.chomp.split(";")
-  codepoint = fields[0]
-  full_name = fields[1]
-  next unless full_name =~ name_regex
-  name = $1
-
-  characters.push({
-    "codepoint" => codepoint,
-    "name" => name,
+  ucsur_characters.push({
+    "codepoint" => fields[0],
+    "fullName" => fields[1],
   })
 end
 
-data["characters"] = characters
+for (domain_name, name_regex) in [
+    ["sitelenpona", /^SITELEN PONA (.+)$/],
+    ["tengwar", /^TENGWAR (.+)$/],
+  ]
+  data = open("#{domain_name}.opencode_basic.json") { |f| JSON.load(f) }
+  data["characters"] = ucsur_characters.filter_map do |ch|
+    name_match = ch["fullName"].match(name_regex)
+    if name_match
+      {
+        "codepoint" => ch["codepoint"],
+        "name" => name_match[1],
+      }
+    else
+      nil
+    end
+  end
 
-FileUtils.mkdir_p(domain_name)
-File.open("#{domain_name}/opencode.json", "w") do |f|
-  f.write(JSON.pretty_generate(data))
+  FileUtils.mkdir_p(domain_name)
+  File.open("#{domain_name}/opencode.json", "w") do |f|
+    f.write(JSON.pretty_generate(data))
+  end
 end
