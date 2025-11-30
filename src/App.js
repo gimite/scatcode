@@ -247,11 +247,18 @@ function parseOpencodeToHtml(text) {
 
 function App() {
   const editorRef = useRef(null);
+  const [domainPreset, setDomainPreset] = useState('custom');
   const [domainInput, setDomainInput] = useState('');
   const [tableDomain, setTableDomain] = useState('');
   const [tableDomainData, setTableDomainData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const domainPresets = {
+    'sitelenpona': 'sitelenpona.gimite.net',
+    'tengwar': 'tengwar.gimite.net',
+    'liparxe': 'liparxe.gimite.net',
+  };
 
   const insertHtml = (html) => {
     if (!editorRef.current) {
@@ -280,6 +287,10 @@ function App() {
     e.preventDefault();
     const domain = domainInput.trim();
     if (!domain) return;
+    await loadDomainData(domain);
+  }
+
+  const loadDomainData = async (domain) => {
     setLoading(true);
     setError(null);
     try {
@@ -292,6 +303,17 @@ function App() {
       setTableDomainData(null);
     } finally {
       setLoading(false);
+    }
+  }
+
+  const handlePresetChange = async (e) => {
+    const preset = e.target.value;
+    setDomainPreset(preset);
+    
+    if (preset !== 'custom') {
+      const domain = domainPresets[preset];
+      setDomainInput(domain);
+      await loadDomainData(domain);
     }
   }
 
@@ -416,6 +438,18 @@ function App() {
       {/* Domain character viewer: input + table */}
       <div style={{ marginTop: 20 }}>
         <form onSubmit={handleCharacterTableSubmit}>
+          <label style={{ marginRight: 8 }}>Preset:</label>
+          <select 
+            value={domainPreset}
+            onChange={handlePresetChange}
+            style={{ marginRight: 16 }}
+          >
+            <option value="sitelenpona">Sitelen Pona</option>
+            <option value="tengwar">Tengwar</option>
+            <option value="liparxe">Liparxe</option>
+            <option value="custom">Custom domain...</option>
+          </select>
+          
           <label style={{ marginRight: 8 }}>Domain:</label>
           <input
             type="text"
@@ -423,8 +457,9 @@ function App() {
             onChange={(e) => setDomainInput(e.target.value)}
             placeholder="example.com"
             style={{ marginRight: 8 }}
+            disabled={domainPreset !== 'custom'}
           />
-          <button type="submit">Load</button>
+          <button type="submit" disabled={domainPreset !== 'custom'}>Load</button>
         </form>
 
         {loading && <div style={{ marginTop: 8 }}>Loading...</div>}
