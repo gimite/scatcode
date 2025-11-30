@@ -14,17 +14,20 @@ end
 for (domain_name, name_regex) in [
     ["sitelenpona", /^SITELEN PONA (.+)$/],
     ["tengwar", /^TENGWAR (.+)$/],
+    ["liparxe", nil],
   ]
   data = open("#{domain_name}.opencode_basic.json") { |f| JSON.load(f) }
-  data["characters"] = ucsur_characters.filter_map do |ch|
-    name_match = ch["fullName"].match(name_regex)
-    if name_match
-      {
-        "codepoint" => ch["codepoint"],
-        "name" => name_match[1],
-      }
-    else
-      nil
+  if name_regex
+    data["characters"] = ucsur_characters.filter_map do |ch|
+      name_match = ch["fullName"].match(name_regex)
+      if name_match
+        {
+          "codepoint" => ch["codepoint"],
+          "name" => name_match[1],
+        }
+      else
+        nil
+      end
     end
   end
 

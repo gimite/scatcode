@@ -1,0 +1,391 @@
+{
+  "name": "Liparxe",
+  "fallbackFont": {
+    "src": [
+      {"url": "https://liparxe.gimite.net/hmakranten_liparxe.woff2", "format": "woff2"}
+    ]
+  },
+  "characters": [
+    {
+      "codepoint": "0020",
+      "name": "SPACE"
+    },
+    {
+      "codepoint": "0021",
+      "name": "EXCLAMATION MARK"
+    },
+    {
+      "codepoint": "0022",
+      "name": "QUOTATION MARK"
+    },
+    {
+      "codepoint": "0023",
+      "name": "NUMBER SIGN"
+    },
+    {
+      "codepoint": "0024",
+      "name": "DOLLAR SIGN"
+    },
+    {
+      "codepoint": "0025",
+      "name": "PERCENT SIGN"
+    },
+    {
+      "codepoint": "0026",
+      "name": "AMPERSAND"
+    },
+    {
+      "codepoint": "0027",
+      "name": "APOSTROPHE"
+    },
+    {
+      "codepoint": "0028",
+      "name": "LEFT PARENTHESIS"
+    },
+    {
+      "codepoint": "0029",
+      "name": "RIGHT PARENTHESIS"
+    },
+    {
+      "codepoint": "002A",
+      "name": "ASTERISK"
+    },
+    {
+      "codepoint": "002B",
+      "name": "PLUS SIGN"
+    },
+    {
+      "codepoint": "002C",
+      "name": "COMMA"
+    },
+    {
+      "codepoint": "002D",
+      "name": "HYPHEN-MINUS"
+    },
+    {
+      "codepoint": "002E",
+      "name": "FULL STOP"
+    },
+    {
+      "codepoint": "002F",
+      "name": "SOLIDUS"
+    },
+    {
+      "codepoint": "0030",
+      "name": "DIGIT ZERO"
+    },
+    {
+      "codepoint": "0031",
+      "name": "DIGIT ONE"
+    },
+    {
+      "codepoint": "0032",
+      "name": "DIGIT TWO"
+    },
+    {
+      "codepoint": "0033",
+      "name": "DIGIT THREE"
+    },
+    {
+      "codepoint": "0034",
+      "name": "DIGIT FOUR"
+    },
+    {
+      "codepoint": "0035",
+      "name": "DIGIT FIVE"
+    },
+    {
+      "codepoint": "0036",
+      "name": "DIGIT SIX"
+    },
+    {
+      "codepoint": "0037",
+      "name": "DIGIT SEVEN"
+    },
+    {
+      "codepoint": "0038",
+      "name": "DIGIT EIGHT"
+    },
+    {
+      "codepoint": "0039",
+      "name": "DIGIT NINE"
+    },
+    {
+      "codepoint": "003A",
+      "name": "COLON"
+    },
+    {
+      "codepoint": "003B",
+      "name": "SEMICOLON"
+    },
+    {
+      "codepoint": "003C",
+      "name": "LESS-THAN SIGN"
+    },
+    {
+      "codepoint": "003D",
+      "name": "EQUALS SIGN"
+    },
+    {
+      "codepoint": "003E",
+      "name": "GREATER-THAN SIGN"
+    },
+    {
+      "codepoint": "003F",
+      "name": "QUESTION MARK"
+    },
+    {
+      "codepoint": "0040",
+      "name": "COMMERCIAL AT"
+    },
+    {
+      "codepoint": "0041",
+      "name": "LATIN CAPITAL LETTER A"
+    },
+    {
+      "codepoint": "0042",
+      "name": "LATIN CAPITAL LETTER B"
+    },
+    {
+      "codepoint": "0043",
+      "name": "LATIN CAPITAL LETTER C"
+    },
+    {
+      "codepoint": "0044",
+      "name": "LATIN CAPITAL LETTER D"
+    },
+    {
+      "codepoint": "0045",
+      "name": "LATIN CAPITAL LETTER E"
+    },
+    {
+      "codepoint": "0046",
+      "name": "LATIN CAPITAL LETTER F"
+    },
+    {
+      "codepoint": "0047",
+      "name": "LATIN CAPITAL LETTER G"
+    },
+    {
+      "codepoint": "0048",
+      "name": "LATIN CAPITAL LETTER H"
+    },
+    {
+      "codepoint": "0049",
+      "name": "LATIN CAPITAL LETTER I"
+    },
+    {
+      "codepoint": "004A",
+      "name": "LATIN CAPITAL LETTER J"
+    },
+    {
+      "codepoint": "004B",
+      "name": "LATIN CAPITAL LETTER K"
+    },
+    {
+      "codepoint": "004C",
+      "name": "LATIN CAPITAL LETTER L"
+    },
+    {
+      "codepoint": "004D",
+      "name": "LATIN CAPITAL LETTER M"
+    },
+    {
+      "codepoint": "004E",
+      "name": "LATIN CAPITAL LETTER N"
+    },
+    {
+      "codepoint": "004F",
+      "name": "LATIN CAPITAL LETTER O"
+    },
+    {
+      "codepoint": "0050",
+      "name": "LATIN CAPITAL LETTER P"
+    },
+    {
+      "codepoint": "0051",
+      "name": "LATIN CAPITAL LETTER Q"
+    },
+    {
+      "codepoint": "0052",
+      "name": "LATIN CAPITAL LETTER R"
+    },
+    {
+      "codepoint": "0053",
+      "name": "LATIN CAPITAL LETTER S"
+    },
+    {
+      "codepoint": "0054",
+      "name": "LATIN CAPITAL LETTER T"
+    },
+    {
+      "codepoint": "0055",
+      "name": "LATIN CAPITAL LETTER U"
+    },
+    {
+      "codepoint": "0056",
+      "name": "LATIN CAPITAL LETTER V"
+    },
+    {
+      "codepoint": "0057",
+      "name": "LATIN CAPITAL LETTER W"
+    },
+    {
+      "codepoint": "0058",
+      "name": "LATIN CAPITAL LETTER X"
+    },
+    {
+      "codepoint": "0059",
+      "name": "LATIN CAPITAL LETTER Y"
+    },
+    {
+      "codepoint": "005A",
+      "name": "LATIN CAPITAL LETTER Z"
+    },
+    {
+      "codepoint": "005B",
+      "name": "LEFT SQUARE BRACKET"
+    },
+    {
+      "codepoint": "005C",
+      "name": "REVERSE SOLIDUS"
+    },
+    {
+      "codepoint": "005D",
+      "name": "RIGHT SQUARE BRACKET"
+    },
+    {
+      "codepoint": "005E",
+      "name": "CIRCUMFLEX ACCENT"
+    },
+    {
+      "codepoint": "005F",
+      "name": "LOW LINE"
+    },
+    {
+      "codepoint": "0060",
+      "name": "GRAVE ACCENT"
+    },
+    {
+      "codepoint": "0061",
+      "name": "LATIN SMALL LETTER A"
+    },
+    {
+      "codepoint": "0062",
+      "name": "LATIN SMALL LETTER B"
+    },
+    {
+      "codepoint": "0063",
+      "name": "LATIN SMALL LETTER C"
+    },
+    {
+      "codepoint": "0064",
+      "name": "LATIN SMALL LETTER D"
+    },
+    {
+      "codepoint": "0065",
+      "name": "LATIN SMALL LETTER E"
+    },
+    {
+      "codepoint": "0066",
+      "name": "LATIN SMALL LETTER F"
+    },
+    {
+      "codepoint": "0067",
+      "name": "LATIN SMALL LETTER G"
+    },
+    {
+      "codepoint": "0068",
+      "name": "LATIN SMALL LETTER H"
+    },
+    {
+      "codepoint": "0069",
+      "name": "LATIN SMALL LETTER I"
+    },
+    {
+      "codepoint": "006A",
+      "name": "LATIN SMALL LETTER J"
+    },
+    {
+      "codepoint": "006B",
+      "name": "LATIN SMALL LETTER K"
+    },
+    {
+      "codepoint": "006C",
+      "name": "LATIN SMALL LETTER L"
+    },
+    {
+      "codepoint": "006D",
+      "name": "LATIN SMALL LETTER M"
+    },
+    {
+      "codepoint": "006E",
+      "name": "LATIN SMALL LETTER N"
+    },
+    {
+      "codepoint": "006F",
+      "name": "LATIN SMALL LETTER O"
+    },
+    {
+      "codepoint": "0070",
+      "name": "LATIN SMALL LETTER P"
+    },
+    {
+      "codepoint": "0071",
+      "name": "LATIN SMALL LETTER Q"
+    },
+    {
+      "codepoint": "0072",
+      "name": "LATIN SMALL LETTER R"
+    },
+    {
+      "codepoint": "0073",
+      "name": "LATIN SMALL LETTER S"
+    },
+    {
+      "codepoint": "0074",
+      "name": "LATIN SMALL LETTER T"
+    },
+    {
+      "codepoint": "0075",
+      "name": "LATIN SMALL LETTER U"
+    },
+    {
+      "codepoint": "0076",
+      "name": "LATIN SMALL LETTER V"
+    },
+    {
+      "codepoint": "0077",
+      "name": "LATIN SMALL LETTER W"
+    },
+    {
+      "codepoint": "0078",
+      "name": "LATIN SMALL LETTER X"
+    },
+    {
+      "codepoint": "0079",
+      "name": "LATIN SMALL LETTER Y"
+    },
+    {
+      "codepoint": "007A",
+      "name": "LATIN SMALL LETTER Z"
+    },
+    {
+      "codepoint": "007B",
+      "name": "LEFT CURLY BRACKET"
+    },
+    {
+      "codepoint": "007C",
+      "name": "VERTICAL LINE"
+    },
+    {
+      "codepoint": "007D",
+      "name": "RIGHT CURLY BRACKET"
+    },
+    {
+      "codepoint": "007E",
+      "name": "TILDE"
+    }
+  ]
+}
+
