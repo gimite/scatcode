@@ -276,6 +276,25 @@ function App() {
     insertHtml('<strong>foo</strong>');
   };
 
+  const handleCharacterTableSubmit = async (e) => {
+    e.preventDefault();
+    const domain = domainInput.trim();
+    if (!domain) return;
+    setLoading(true);
+    setError(null);
+    try {
+      await loadData(domain);
+      setTableDomain(domain);
+      setTableDomainData(domainData[domain]);
+    } catch (err) {
+      setError(String(err));
+      setTableDomain('');
+      setTableDomainData(null);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   // Global copy handler: capture copied HTML and plain text anywhere in the window.
   useEffect(() => {
     const handleCopy = (e) => {
@@ -396,7 +415,7 @@ function App() {
       />
       {/* Domain character viewer: input + table */}
       <div style={{ marginTop: 20 }}>
-        <form onSubmit={async (e) => { e.preventDefault(); }}>
+        <form onSubmit={handleCharacterTableSubmit}>
           <label style={{ marginRight: 8 }}>Domain:</label>
           <input
             type="text"
@@ -405,23 +424,7 @@ function App() {
             placeholder="example.com"
             style={{ marginRight: 8 }}
           />
-          <button type="button" onClick={async () => {
-            const domain = domainInput.trim();
-            if (!domain) return;
-            setLoading(true);
-            setError(null);
-            try {
-              await loadData(domain);
-              setTableDomain(domain);
-              setTableDomainData(domainData[domain]);
-            } catch (err) {
-              setError(String(err));
-              setTableDomain('');
-              setTableDomainData(null);
-            } finally {
-              setLoading(false);
-            }
-          }}>Load</button>
+          <button type="submit">Load</button>
         </form>
 
         {loading && <div style={{ marginTop: 8 }}>Loading...</div>}
