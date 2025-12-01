@@ -279,10 +279,6 @@ function App() {
     }
   };
 
-  const handlePasteClick = async () => {
-    insertHtml('<strong>foo</strong>');
-  };
-
   const handleCharacterTableSubmit = async (e) => {
     e.preventDefault();
     const domain = domainInput.trim();
@@ -350,9 +346,6 @@ function App() {
           &#xe0001;&#xe006c;&#xe0069;&#xe0070;&#xe0061;&#xe0072;&#xe0078;&#xe0065;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xe007f;lineparine
           &#xe0001;&#xe007f;!
         </OpencodeText>
-      </div>
-      <div>
-        <button onClick={handlePasteClick}>Paste</button>
       </div>
       <CKEditor
         editor={ ClassicEditor }
@@ -435,10 +428,10 @@ function App() {
           initialData: '<p style="font-family: Arial, Helvetica, sans-serif;">Hello from CKEditor 5 in React!</p>',
         } }
       />
-      {/* Domain character viewer: input + table */}
+
+      <h3>Available characters</h3>
       <div style={{ marginTop: 20 }}>
         <form onSubmit={handleCharacterTableSubmit}>
-          <label style={{ marginRight: 8 }}>Preset:</label>
           <select 
             value={domainPreset}
             onChange={handlePresetChange}
@@ -449,8 +442,6 @@ function App() {
             <option value="liparxe">Liparxe</option>
             <option value="custom">Custom domain...</option>
           </select>
-          
-          <label style={{ marginRight: 8 }}>Domain:</label>
           <input
             type="text"
             value={domainInput}
@@ -459,7 +450,6 @@ function App() {
             style={{ marginRight: 8 }}
             disabled={domainPreset !== 'custom'}
           />
-          <button type="submit" disabled={domainPreset !== 'custom'}>Load</button>
         </form>
 
         {loading && <div style={{ marginTop: 8 }}>Loading...</div>}
@@ -467,7 +457,6 @@ function App() {
 
         {tableDomainData && (
           <div style={{ marginTop: 12 }}>
-            <h3>{tableDomainData.name}</h3>
             <table style={{ borderCollapse: 'collapse', width: '100%' }}>
               <thead>
                 <tr>
