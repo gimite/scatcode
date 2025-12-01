@@ -253,6 +253,7 @@ function App() {
   const [tableDomainData, setTableDomainData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedChars, setSelectedChars] = useState(null);
 
   const domainPresets = {
     'sitelenpona': 'sitelenpona.gimite.net',
@@ -332,6 +333,50 @@ function App() {
 
     document.addEventListener('copy', handleCopy);
     return () => document.removeEventListener('copy', handleCopy);
+  }, []);
+
+  // Handle text selection: show table of selected characters
+  useEffect(() => {
+    const handleSelectionChange = () => {
+      try {
+        const selection = window.getSelection();
+        const selectedText = selection.toString();
+        
+        if (!selectedText || selectedText.trim() === '') {
+          setSelectedChars(null);
+          return;
+        }
+
+        // Get font runs with their associated domains
+        const runs = getSelectionTextFontRuns(selection);
+        const opencodeText = getOpencodeTextFromFontRuns(runs);
+        
+        // Parse the opencode text to get domain information for each character
+        const opencodeRuns = parseOpencodeRuns(opencodeText);
+        
+        // Build character list with domain and codepoint info
+        const chars = [];
+        for (const run of opencodeRuns) {
+          for (const ch of run.text) {
+            const cp = ch.codePointAt(0);
+            const cpHex = cp.toString(16).toUpperCase();
+            chars.push({
+              char: ch,
+              codepoint: cpHex,
+              domain: run.domain || '',
+              unicodeName: '', // Could be enhanced with Unicode name lookup
+            });
+          }
+        }
+        
+        setSelectedChars(chars);
+      } catch (err) {
+        console.error('Error in selectionchange handler', err);
+      }
+    };
+
+    document.addEventListener('selectionchange', handleSelectionChange);
+    return () => document.removeEventListener('selectionchange', handleSelectionChange);
   }, []);
 
   return (
@@ -429,34 +474,10 @@ function App() {
         } }
       />
 
-      <h3>Available characters</h3>
       <div style={{ marginTop: 20 }}>
-        <form onSubmit={handleCharacterTableSubmit}>
-          <select 
-            value={domainPreset}
-            onChange={handlePresetChange}
-            style={{ marginRight: 16 }}
-          >
-            <option value="sitelenpona">Sitelen Pona</option>
-            <option value="tengwar">Tengwar</option>
-            <option value="liparxe">Liparxe</option>
-            <option value="custom">Custom domain...</option>
-          </select>
-          <input
-            type="text"
-            value={domainInput}
-            onChange={(e) => setDomainInput(e.target.value)}
-            placeholder="example.com"
-            style={{ marginRight: 8 }}
-            disabled={domainPreset !== 'custom'}
-          />
-        </form>
-
-        {loading && <div style={{ marginTop: 8 }}>Loading...</div>}
-        {error && <div style={{ marginTop: 8, color: 'red' }}>{error}</div>}
-
-        {tableDomainData && (
-          <div style={{ marginTop: 12 }}>
+        {selectedChars ? (
+          <div>
+            <h3>Selected characters</h3>
             <table style={{ borderCollapse: 'collapse', width: '100%' }}>
               <thead>
                 <tr>
@@ -466,29 +487,95 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-                {tableDomainData.characters.length === 0 && (
-                  <tr><td colSpan={3} style={{ padding: 8 }}>No characters found.</td></tr>
-                )}
-                {tableDomainData.characters.map((ch, i) => {
-                  const domainFontFamily = tableDomain.replace(/\./g, ' ');
-                  const cpHex = ch.codepoint;
-                  const cp = parseInt(cpHex, 16);
-                  const rendered = Number.isNaN(cp) ? '' : String.fromCodePoint(cp);
-                  const fullCodepoint = `${tableDomain}/#${cpHex}`;
-                  const fullName = tableDomainData.name.toUpperCase() + ' ' + ch.name;
+                {selectedChars.map((charInfo, i) => {
+                  const fontFamily = charInfo.domain ? charInfo.domain.replace(/\./g, ' ') : '';
+                  const codepointDisplay = charInfo.domain 
+                    ? `${charInfo.domain}/#${charInfo.codepoint}`
+                    : `U+${charInfo.codepoint}`;
+                  const name = charInfo.domain && domainData[charInfo.domain]
+                    ? (() => {
+                        const data = domainData[charInfo.domain];
+                        const charData = data.characters.find(c => c.codepoint.toUpperCase() === charInfo.codepoint);
+                        return charData ? `${data.name.toUpperCase()} ${charData.name}` : '';
+                      })()
+                    : charInfo.unicodeName;
+                  
                   return (
                     <tr key={i}>
-                      <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily: domainFontFamily }}>
-                        {rendered}
+                      <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily }}>
+                        {charInfo.char}
                       </td>
-                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{fullCodepoint}</td>
-                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{fullName}</td>
+                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{codepointDisplay}</td>
+                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{name}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
+        ) : (
+          <>
+            <h3>Available characters</h3>
+            <form onSubmit={handleCharacterTableSubmit}>
+              <select 
+                value={domainPreset}
+                onChange={handlePresetChange}
+                style={{ marginRight: 16 }}
+              >
+                <option value="sitelenpona">Sitelen Pona</option>
+                <option value="tengwar">Tengwar</option>
+                <option value="liparxe">Liparxe</option>
+                <option value="custom">Custom domain...</option>
+              </select>
+              <input
+                type="text"
+                value={domainInput}
+                onChange={(e) => setDomainInput(e.target.value)}
+                placeholder="example.com"
+                style={{ marginRight: 8 }}
+                disabled={domainPreset !== 'custom'}
+              />
+            </form>
+
+            {loading && <div style={{ marginTop: 8 }}>Loading...</div>}
+            {error && <div style={{ marginTop: 8, color: 'red' }}>{error}</div>}
+
+            {tableDomainData && (
+              <div style={{ marginTop: 12 }}>
+                <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+                  <thead>
+                    <tr>
+                      <th style={{ border: '1px solid #ccc', padding: '4px' }}>Character</th>
+                      <th style={{ border: '1px solid #ccc', padding: '4px' }}>Codepoint</th>
+                      <th style={{ border: '1px solid #ccc', padding: '4px' }}>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tableDomainData.characters.length === 0 && (
+                      <tr><td colSpan={3} style={{ padding: 8 }}>No characters found.</td></tr>
+                    )}
+                    {tableDomainData.characters.map((ch, i) => {
+                      const domainFontFamily = tableDomain.replace(/\./g, ' ');
+                      const cpHex = ch.codepoint;
+                      const cp = parseInt(cpHex, 16);
+                      const rendered = Number.isNaN(cp) ? '' : String.fromCodePoint(cp);
+                      const fullCodepoint = `${tableDomain}/#${cpHex}`;
+                      const fullName = tableDomainData.name.toUpperCase() + ' ' + ch.name;
+                      return (
+                        <tr key={i}>
+                          <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily: domainFontFamily }}>
+                            {rendered}
+                          </td>
+                          <td style={{ border: '1px solid #ccc', padding: '4px' }}>{fullCodepoint}</td>
+                          <td style={{ border: '1px solid #ccc', padding: '4px' }}>{fullName}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
