@@ -252,6 +252,34 @@ function parseOpencodeToHtml(text) {
   return result;
 }
 
+function CharacterTable({ characters }) {
+  return (
+    <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+      <thead>
+        <tr>
+          <th style={{ border: '1px solid #ccc', padding: '4px' }}>Character</th>
+          <th style={{ border: '1px solid #ccc', padding: '4px' }}>Codepoint</th>
+          <th style={{ border: '1px solid #ccc', padding: '4px' }}>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {characters.length === 0 && (
+          <tr><td colSpan={3} style={{ border: '1px solid #ccc', padding: 8 }}>No characters found.</td></tr>
+        )}
+        {characters.map((charInfo, i) => (
+          <tr key={i}>
+            <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily: charInfo.fontFamily }}>
+              {charInfo.char}
+            </td>
+            <td style={{ border: '1px solid #ccc', padding: '4px' }}>{charInfo.codepoint}</td>
+            <td style={{ border: '1px solid #ccc', padding: '4px' }}>{charInfo.name}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
 function App() {
   const editorRef = useRef(null);
   const [domainPreset, setDomainPreset] = useState('custom');
@@ -514,28 +542,7 @@ function App() {
         {selectedChars ? (
           <div>
             <h3>Selected characters</h3>
-            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-              <thead>
-                <tr>
-                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Character</th>
-                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Codepoint</th>
-                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedChars.map((charInfo, i) => {
-                  return (
-                    <tr key={i}>
-                      <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily: charInfo.fontFamily }}>
-                        {charInfo.char}
-                      </td>
-                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{charInfo.codepoint}</td>
-                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{charInfo.name}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <CharacterTable characters={selectedChars} />
           </div>
         ) : (
           <>
@@ -566,37 +573,22 @@ function App() {
 
             {tableDomainData && (
               <div style={{ marginTop: 12 }}>
-                <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-                  <thead>
-                    <tr>
-                      <th style={{ border: '1px solid #ccc', padding: '4px' }}>Character</th>
-                      <th style={{ border: '1px solid #ccc', padding: '4px' }}>Codepoint</th>
-                      <th style={{ border: '1px solid #ccc', padding: '4px' }}>Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {tableDomainData.characters.length === 0 && (
-                      <tr><td colSpan={3} style={{ padding: 8 }}>No characters found.</td></tr>
-                    )}
-                    {tableDomainData.characters.map((ch, i) => {
-                      const domainFontFamily = tableDomain.replace(/\./g, ' ');
-                      const cpHex = ch.codepoint;
-                      const cp = parseInt(cpHex, 16);
-                      const rendered = Number.isNaN(cp) ? '' : String.fromCodePoint(cp);
-                      const fullCodepoint = `${tableDomain}/#${cpHex}`;
-                      const fullName = tableDomainData.name.toUpperCase() + ' ' + ch.name;
-                      return (
-                        <tr key={i}>
-                          <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily: domainFontFamily }}>
-                            {rendered}
-                          </td>
-                          <td style={{ border: '1px solid #ccc', padding: '4px' }}>{fullCodepoint}</td>
-                          <td style={{ border: '1px solid #ccc', padding: '4px' }}>{fullName}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                <CharacterTable 
+                  characters={tableDomainData.characters.map((ch) => {
+                    const domainFontFamily = tableDomain.replace(/\./g, ' ');
+                    const cpHex = ch.codepoint;
+                    const cp = parseInt(cpHex, 16);
+                    const rendered = Number.isNaN(cp) ? '' : String.fromCodePoint(cp);
+                    const fullCodepoint = `${tableDomain}/#${cpHex}`;
+                    const fullName = tableDomainData.name.toUpperCase() + ' ' + ch.name;
+                    return {
+                      char: rendered,
+                      codepoint: fullCodepoint,
+                      name: fullName,
+                      fontFamily: domainFontFamily,
+                    };
+                  })}
+                />
               </div>
             )}
           </>
