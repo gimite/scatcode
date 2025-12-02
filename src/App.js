@@ -349,6 +349,23 @@ function App() {
         const selection = window.getSelection();
         const selectedText = selection.toString();
         
+        // Check if the selection is inside CKEditor
+        if (!editorRef.current) {
+          setSelectedChars(null);
+          return;
+        }
+        const editorElement = editorRef.current.ui.view.editable.element;
+        if (!editorElement) {
+          setSelectedChars(null);
+          return;
+        }
+        
+        // Check if any part of the selection is within the editor
+        const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+        if (!range || !editorElement.contains(range.commonAncestorContainer)) {
+          return;
+        }
+
         if (!selectedText || selectedText.trim() === '') {
           setSelectedChars(null);
           return;
