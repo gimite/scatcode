@@ -294,6 +294,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedChars, setSelectedChars] = useState(null);
+  const [selectedOpencodeText, setSelectedOpencodeText] = useState('');
 
   const domainPresets = {
     'sitelenpona': 'sitelenpona.gimite.net',
@@ -403,8 +404,6 @@ function App() {
         }
 
         const opencodeText = getOpencodeTextFromSelection(selection);
-        console.log('opencodeText:', opencodeText);
-        console.log('opencodeText codepoints:', toCodePoints(opencodeText));
         const opencodeRuns = parseOpencodeRuns(opencodeText);
         
         // Build character list with domain and codepoint info
@@ -435,6 +434,7 @@ function App() {
         }
         
         setSelectedChars(chars);
+        setSelectedOpencodeText(opencodeText);
       } catch (err) {
         console.error('Error in selectionchange handler', err);
       }
@@ -554,9 +554,7 @@ function App() {
               </thead>
               <tbody>
                 {(() => {
-                  const selection = window.getSelection();
-                  const opencodeText = getOpencodeTextFromSelection(selection);
-                  const codepoints = toCodePoints(opencodeText);
+                  const codepoints = toCodePoints(selectedOpencodeText);
                   return codepoints.map((cp, i) => {
                     const char = String.fromCodePoint(cp);
                     const hex = 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');
