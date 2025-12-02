@@ -403,6 +403,8 @@ function App() {
         }
 
         const opencodeText = getOpencodeTextFromSelection(selection);
+        console.log('opencodeText:', opencodeText);
+        console.log('opencodeText codepoints:', toCodePoints(opencodeText));
         const opencodeRuns = parseOpencodeRuns(opencodeText);
         
         // Build character list with domain and codepoint info
@@ -542,6 +544,36 @@ function App() {
           <div>
             <h3>Selected characters</h3>
             <CharacterTable characters={selectedChars} />
+            <h3 style={{ marginTop: 20 }}>Opencode Text Unicode Codepoints</h3>
+            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+              <thead>
+                <tr>
+                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Codepoint</th>
+                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(() => {
+                  const selection = window.getSelection();
+                  const opencodeText = getOpencodeTextFromSelection(selection);
+                  const codepoints = toCodePoints(opencodeText);
+                  return codepoints.map((cp, i) => {
+                    const char = String.fromCodePoint(cp);
+                    const hex = 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');
+                    let name = '';
+                    try {
+                      name = unicodeName(char) || '';
+                    } catch (e) {}
+                    return (
+                      <tr key={i}>
+                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>{hex}</td>
+                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>{name}</td>
+                      </tr>
+                    );
+                  });
+                })()}
+              </tbody>
+            </table>
           </div>
         ) : (
           <>
