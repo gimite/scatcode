@@ -32,6 +32,12 @@ async function loadData(domain) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
   const data = await response.json();
+
+  const charactersMap = {};
+  for (const ch of data.characters) {
+    charactersMap[parseInt(ch.codepoint, 16)] = ch;
+  }
+  data.charactersMap = charactersMap;
   console.log(data);
   domainData[domain] = data;
 
@@ -359,12 +365,24 @@ function App() {
         for (const run of opencodeRuns) {
           for (const ch of run.text) {
             const cp = ch.codePointAt(0);
-            const cpHex = cp.toString(16).toUpperCase();
+            const cpHex = cp.toString(16).toUpperCase().padStart(4, '0');
+            const codepointDisplay = run.domain
+              ? `${run.domain}/#${cpHex}`
+              : `U+${cpHex}`;
+            let name;
+            if (run.domain && domainData[run.domain]) {
+              const data = domainData[run.domain];
+              const charData = data.charactersMap[cp];
+              name = charData ? `${data.name.toUpperCase()} ${charData.name}` : '';
+            } else {
+              name = '';
+            }
             chars.push({
               char: ch,
-              codepoint: cpHex,
+              codepoint: codepointDisplay,
+              fontFamily: run.domain ? run.domain.replace(/\./g, ' ') : '',
               domain: run.domain || '',
-              unicodeName: '', // Could be enhanced with Unicode name lookup
+              name: name,
             });
           }
         }
@@ -488,25 +506,13 @@ function App() {
               </thead>
               <tbody>
                 {selectedChars.map((charInfo, i) => {
-                  const fontFamily = charInfo.domain ? charInfo.domain.replace(/\./g, ' ') : '';
-                  const codepointDisplay = charInfo.domain 
-                    ? `${charInfo.domain}/#${charInfo.codepoint}`
-                    : `U+${charInfo.codepoint}`;
-                  const name = charInfo.domain && domainData[charInfo.domain]
-                    ? (() => {
-                        const data = domainData[charInfo.domain];
-                        const charData = data.characters.find(c => c.codepoint.toUpperCase() === charInfo.codepoint);
-                        return charData ? `${data.name.toUpperCase()} ${charData.name}` : '';
-                      })()
-                    : charInfo.unicodeName;
-                  
                   return (
                     <tr key={i}>
-                      <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily }}>
+                      <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily: charInfo.fontFamily }}>
                         {charInfo.char}
                       </td>
-                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{codepointDisplay}</td>
-                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{name}</td>
+                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{charInfo.codepoint}</td>
+                      <td style={{ border: '1px solid #ccc', padding: '4px' }}>{charInfo.name}</td>
                     </tr>
                   );
                 })}
