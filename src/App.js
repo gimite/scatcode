@@ -1,6 +1,7 @@
 import { useEffect, Children, useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, FontFamily } from 'ckeditor5';
+import { unicodeName } from 'unicode-name';
 
 import 'ckeditor5/ckeditor5.css';
 import './App.css';
@@ -375,7 +376,7 @@ function App() {
               const charData = data.charactersMap[cp];
               name = charData ? `${data.name.toUpperCase()} ${charData.name}` : '';
             } else {
-              name = '';
+              name = unicodeName(ch) || '';
             }
             chars.push({
               char: ch,
