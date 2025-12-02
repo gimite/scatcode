@@ -221,6 +221,11 @@ function getOpencodeTextFromFontRuns(runs) {
   return result;
 }
 
+function getOpencodeTextFromSelection(selection) {
+  const runs = getSelectionTextFontRuns(selection);
+  return getOpencodeTextFromFontRuns(runs);
+}
+
 // Parse a text string encoded with Opencode markers into HTML where text runs are wrapped
 // in <span style="font-family: ..."> markers corresponding to the encoded domain.
 function escapeHtml(s) {
@@ -354,9 +359,7 @@ function App() {
     const handleCopy = (e) => {
       try {
         const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
-        const runs = getSelectionTextFontRuns();
-        console.log('Selection runs:', runs);
-        const opencodeText = getOpencodeTextFromFontRuns(runs);
+        const opencodeText = getOpencodeTextFromSelection();
         console.log('Opencode text:', opencodeText);
         console.log('Opencode text codepoints:', toCodePoints(opencodeText));
         cb.setData('text/plain', opencodeText);
@@ -399,11 +402,7 @@ function App() {
           return;
         }
 
-        // Get font runs with their associated domains
-        const runs = getSelectionTextFontRuns(selection);
-        const opencodeText = getOpencodeTextFromFontRuns(runs);
-        
-        // Parse the opencode text to get domain information for each character
+        const opencodeText = getOpencodeTextFromSelection(selection);
         const opencodeRuns = parseOpencodeRuns(opencodeText);
         
         // Build character list with domain and codepoint info
