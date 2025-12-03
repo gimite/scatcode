@@ -1,12 +1,32 @@
 import { useEffect, Children, useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { ClassicEditor, Essentials, Paragraph, FontFamily } from 'ckeditor5';
+import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import { unicodeName } from 'unicode-name';
 
 import 'ckeditor5/ckeditor5.css';
 import './App.css';
 
 const toCodePoints = (str) => Array.from(str, ch => ch.codePointAt(0));
+
+// Custom Save button plugin for CKEditor
+class SaveButtonPlugin extends Plugin {
+  init() {
+    const editor = this.editor;
+    
+    editor.ui.componentFactory.add('saveButton', locale => {
+      const view = new ButtonView(locale);
+      view.set({
+        label: 'Save',
+        withText: true,
+        tooltip: true
+      });
+      view.on('execute', () => {
+        console.log('Save button clicked - placeholder implementation');
+      });
+      return view;
+    });
+  }
+}
 
 function getOpencodeDomainTagHtml(domain) {
   return '&#xe0001;' +
@@ -469,85 +489,95 @@ function App() {
         </header>
         <div className="editor-container">
           <CKEditor
-          editor={ ClassicEditor }
-          onReady={(editor) => {
-            editorRef.current = editor;
-            // Use CKEditor's Clipboard plugin to intercept pasted text and transform Opencode runs
-            const clipboard = editor.plugins.get('ClipboardPipeline');
-            if (!clipboard) {
-              console.error('Clipboard plugin not found in CKEditor instance');
-              return;
-            }
-
-            const clipboardHandler = (evt, data) => {
-              try {
-                console.log('CKEditor clipboard inputTransformation event', data);
-                const dt = data.dataTransfer;
-                if (!dt) return;
-                editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
-                const plain = dt.getData('text/plain') ?? '';
-                const html = parseOpencodeToHtml(plain);
-                console.log('Parsed HTML from Opencode:', html);
-                data.content = editor.data.processor.toView(html);
-              } catch (err) {
-                console.error('Error handling clipboard inputTransformation:', err);
+            editor={ ClassicEditor }
+            onReady={(editor) => {
+              editorRef.current = editor;
+              
+              // Use CKEditor's Clipboard plugin to intercept pasted text and transform Opencode runs
+              const clipboard = editor.plugins.get('ClipboardPipeline');
+              if (!clipboard) {
+                console.error('Clipboard plugin not found in CKEditor instance');
+                return;
               }
-            };
 
-            clipboard.on('inputTransformation', clipboardHandler);
-            editor.on('destroy', () => {
-              clipboard.off('inputTransformation', clipboardHandler);
-              editorRef.current = null;
-            });
-
-            // Make plain Enter behave like Shift+Enter (insert a <br/>) instead of creating
-            // a new paragraph.
-            try {
-              editor.keystrokes.set('Enter', (keyEvtData, cancel) => {
-                const domEvent = keyEvtData.domEvent;
-                // Keep modifier combos intact (Ctrl/Cmd/Alt/Shift+Enter should remain usable)
-                if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
-                if (domEvent.shiftKey) return; // let default Shift+Enter behavior remain
-                // Prefer to use the editor's shiftEnter command (if present) which inserts a soft break <br/>
-                if (editor.commands.get('shiftEnter')) {
-                  try { editor.execute('shiftEnter'); } catch (e) { /* ignore if command fails */ }
-                }
-                cancel();
-              });
-            } catch (err) {
-              console.warn('Could not override Enter keystroke to insert <br/>:', err);
-            }
-
-            // Ensure typed input always uses the default font, regardless of the font
-            // at the current position. We remove the `fontFamily` model attribute
-            // from the selection right before typing so inserted text won't inherit
-            // any font family defined on ancestor spans.
-            const view = editor.editing.view;
-            view.document.on('keydown', (evt, data) => {
-              try {
-                const domEvent = data.domEvent;
-                // Ignore modifier combos (Ctrl/Cmd/Alt) and navigation keys.
-                if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
-                const key = domEvent.key;
-                // If this is basic typing (single printable character) or Enter/Tab,
-                // remove the fontFamily attribute so the typed character uses default.
-                if ((key && key.length === 1) || key === 'Enter' || key === 'Tab') {
+              const clipboardHandler = (evt, data) => {
+                try {
+                  console.log('CKEditor clipboard inputTransformation event', data);
+                  const dt = data.dataTransfer;
+                  if (!dt) return;
                   editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
+                  const plain = dt.getData('text/plain') ?? '';
+                  const html = parseOpencodeToHtml(plain);
+                  console.log('Parsed HTML from Opencode:', html);
+                  data.content = editor.data.processor.toView(html);
+                } catch (err) {
+                  console.error('Error handling clipboard inputTransformation:', err);
                 }
+              };
+
+              clipboard.on('inputTransformation', clipboardHandler);
+              editor.on('destroy', () => {
+                clipboard.off('inputTransformation', clipboardHandler);
+                editorRef.current = null;
+              });
+
+              // Make plain Enter behave like Shift+Enter (insert a <br/>) instead of creating
+              // a new paragraph.
+              try {
+                editor.keystrokes.set('Enter', (keyEvtData, cancel) => {
+                  const domEvent = keyEvtData.domEvent;
+                  // Keep modifier combos intact (Ctrl/Cmd/Alt/Shift+Enter should remain usable)
+                  if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
+                  if (domEvent.shiftKey) return; // let default Shift+Enter behavior remain
+                  // Prefer to use the editor's shiftEnter command (if present) which inserts a soft break <br/>
+                  if (editor.commands.get('shiftEnter')) {
+                    try { editor.execute('shiftEnter'); } catch (e) { /* ignore if command fails */ }
+                  }
+                  cancel();
+                });
               } catch (err) {
-                // Do not break typing; log for debugging.
-                console.error('Error enforcing default font on typing:', err);
+                console.warn('Could not override Enter keystroke to insert <br/>:', err);
               }
-            }, { priority: 'high' });
-          }}
-          config={ {
-            licenseKey: 'GPL',
-            plugins: [ Essentials, Paragraph, FontFamily ],
-            fontFamily: {
-              supportAllValues: true,
-            },
-            initialData: parseOpencodeToHtml(editorContentOpencodeText),
-          } }
+
+              // Ensure typed input always uses the default font, regardless of the font
+              // at the current position. We remove the `fontFamily` model attribute
+              // from the selection right before typing so inserted text won't inherit
+              // any font family defined on ancestor spans.
+              const view = editor.editing.view;
+              view.document.on('keydown', (evt, data) => {
+                try {
+                  const domEvent = data.domEvent;
+                  // Ignore modifier combos (Ctrl/Cmd/Alt) and navigation keys.
+                  if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
+                  const key = domEvent.key;
+                  // If this is basic typing (single printable character) or Enter/Tab,
+                  // remove the fontFamily attribute so the typed character uses default.
+                  if ((key && key.length === 1) || key === 'Enter' || key === 'Tab') {
+                    editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
+                  }
+                } catch (err) {
+                  // Do not break typing; log for debugging.
+                  console.error('Error enforcing default font on typing:', err);
+                }
+              }, { priority: 'high' });
+            }}
+            config={ {
+              licenseKey: 'GPL',
+              plugins: [ Essentials, Paragraph, FontFamily, SaveButtonPlugin ],
+              fontFamily: {
+                supportAllValues: true,
+              },
+              toolbar: {
+                items: [
+                  'saveButton',
+                  '|',
+                  'fontFamily',
+                  '|',
+                  'undo', 'redo'
+                ]
+              },
+              initialData: parseOpencodeToHtml(editorContentOpencodeText),
+            } }
           />
         </div>
 
