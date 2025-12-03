@@ -21,7 +21,47 @@ class SaveButtonPlugin extends Plugin {
         tooltip: true
       });
       view.on('execute', () => {
-        console.log('Save button clicked - placeholder implementation');
+        // Get the HTML content from the editor
+        const html = editor.getData();
+        
+        // Parse the HTML to extract font runs
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        
+        // Extract text with font family information
+        const runs = [];
+        const extractRuns = (node) => {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            if (text) {
+              const fontFamily = getInlineFontFamily(node) || '';
+              runs.push({ text, fontFamily });
+            }
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            for (const child of node.childNodes) {
+              extractRuns(child);
+            }
+          }
+        };
+        extractRuns(tempDiv);
+        
+        // Convert to Opencode text
+        const opencodeText = getOpencodeTextFromFontRuns(runs);
+        
+        // Create a Blob with UTF-8 encoding
+        const blob = new Blob([opencodeText], { type: 'text/plain;charset=utf-8' });
+        
+        // Create a download link and trigger it
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'opencode-text.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        console.log('Saved Opencode text:', opencodeText);
       });
       return view;
     });
