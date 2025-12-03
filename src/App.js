@@ -296,6 +296,18 @@ function App() {
   const [selectedChars, setSelectedChars] = useState(null);
   const [selectedOpencodeText, setSelectedOpencodeText] = useState('');
 
+  const editorContentOpencodeText =
+    'I love ' +
+    '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
+    '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
+    '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F196C}\u{F1954}\u{e0001}\u{e007f}, ' +
+    '\u{e0001}\u{e0074}\u{e0065}\u{e006e}\u{e0067}\u{e0077}\u{e0061}\u{e0072}\u{e002e}\u{e0067}' +
+    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{E000}' +
+    '\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} and ' +
+    '\u{e0001}\u{e006c}\u{e0069}\u{e0070}\u{e0061}\u{e0072}\u{e0078}\u{e0065}\u{e002e}\u{e0067}' +
+    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
+    'lineparine\u{e0001}\u{e007f}!';
+
   const domainPresets = {
     'sitelenpona': 'sitelenpona.gimite.net',
     'tengwar': 'tengwar.gimite.net',
@@ -535,7 +547,7 @@ function App() {
           fontFamily: {
             supportAllValues: true,
           },
-          initialData: '<p style="font-family: Arial, Helvetica, sans-serif;">Hello from CKEditor 5 in React!</p>',
+          initialData: parseOpencodeToHtml(editorContentOpencodeText),
         } }
       />
 
@@ -544,7 +556,8 @@ function App() {
           <div>
             <h3>Selected characters</h3>
             <CharacterTable characters={selectedChars} />
-            <h3 style={{ marginTop: 20 }}>Opencode Text Unicode Codepoints</h3>
+
+            <h3 style={{ marginTop: 20 }}>How they are encoded</h3>
             <table style={{ borderCollapse: 'collapse', width: '100%' }}>
               <thead>
                 <tr>
@@ -558,10 +571,7 @@ function App() {
                   return codepoints.map((cp, i) => {
                     const char = String.fromCodePoint(cp);
                     const hex = 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');
-                    let name = '';
-                    try {
-                      name = unicodeName(char) || '';
-                    } catch (e) {}
+                    let name = unicodeName(char) || '';
                     return (
                       <tr key={i}>
                         <td style={{ border: '1px solid #ccc', padding: '4px' }}>{hex}</td>
