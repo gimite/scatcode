@@ -20,43 +20,62 @@ function getOpencodeDomainTagHtml(domain) {
 // console.log(getOpencodeDomainTagHtml('liparxe.gimite.net'));
 
 const loadedDomains = new Set();
+const loadingPromises = new Map();
 const domainData = {};
 
 async function loadData(domain) {
+  // If already loaded, return immediately
   if (loadedDomains.has(domain)) {
     return;
   }
-  loadedDomains.add(domain);
-  console.log(`Loading opencode data for domain: ${domain}`);
-
-  const response = await fetch(`https://${domain}/opencode.json`);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+  
+  // If currently loading, wait for the existing promise
+  if (loadingPromises.has(domain)) {
+    return loadingPromises.get(domain);
   }
-  const data = await response.json();
+  
+  // Start a new load
+  const loadPromise = (async () => {
+    try {
+      console.log(`Loading opencode data for domain: ${domain}`);
 
-  const charactersMap = {};
-  for (const ch of data.characters) {
-    charactersMap[parseInt(ch.codepoint, 16)] = ch;
-  }
-  data.charactersMap = charactersMap;
-  console.log(data);
-  domainData[domain] = data;
+      const response = await fetch(`https://${domain}/opencode.json`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
 
-  const styleSrcs = data.fallbackFont.src.map((src) => {
-    const urlExp = JSON.stringify(src.url);
-    const formatExp = JSON.stringify(src.format);
-    return `url(${urlExp}) format(${formatExp})`;
-  });
-  const style = document.createElement('style');
-  const fontFamilyExp = JSON.stringify(domain.replace(/\./g, ' '));
-  style.textContent = `
-    @font-face {
-      font-family: ${fontFamilyExp};
-      src: ${styleSrcs.join(', ')};
+      const charactersMap = {};
+      for (const ch of data.characters) {
+        charactersMap[parseInt(ch.codepoint, 16)] = ch;
+      }
+      data.charactersMap = charactersMap;
+      console.log(data);
+      domainData[domain] = data;
+
+      const styleSrcs = data.fallbackFont.src.map((src) => {
+        const urlExp = JSON.stringify(src.url);
+        const formatExp = JSON.stringify(src.format);
+        return `url(${urlExp}) format(${formatExp})`;
+      });
+      const style = document.createElement('style');
+      const fontFamilyExp = JSON.stringify(domain.replace(/\./g, ' '));
+      style.textContent = `
+        @font-face {
+          font-family: ${fontFamilyExp};
+          src: ${styleSrcs.join(', ')};
+        }
+      `;
+      document.head.appendChild(style);
+      
+      loadedDomains.add(domain);
+    } finally {
+      loadingPromises.delete(domain);
     }
-  `;
-  document.head.appendChild(style);
+  })();
+  
+  loadingPromises.set(domain, loadPromise);
+  return loadPromise;
 }
 
 function OpencodeText({ children }) {
@@ -285,8 +304,8 @@ function CharacterTable({ characters }) {
 
 function App() {
   const editorRef = useRef(null);
-  const [domainPreset, setDomainPreset] = useState('custom');
-  const [domainInput, setDomainInput] = useState('');
+  const [domainPreset, setDomainPreset] = useState('sitelenpona');
+  const [domainInput, setDomainInput] = useState('sitelenpona.gimite.net');
   const [tableDomain, setTableDomain] = useState('');
   const [tableDomainData, setTableDomainData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -320,10 +339,12 @@ function App() {
   }
 
   const loadDomainData = async (domain) => {
+    console.log(`Loading domain table data for: ${domain}`);
     setLoading(true);
     setError(null);
     try {
       await loadData(domain);
+      console.log(`Loaded domain table data for: ${domain}`);
       setTableDomain(domain);
       setTableDomainData(domainData[domain]);
     } catch (err) {
@@ -345,6 +366,11 @@ function App() {
       await loadDomainData(domain);
     }
   }
+
+  // Load sitelenpona data on mount
+  useEffect(() => {
+    loadDomainData('sitelenpona.gimite.net');
+  }, []);
 
   // Global copy handler: capture copied HTML and plain text anywhere in the window.
   useEffect(() => {
