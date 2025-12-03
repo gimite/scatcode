@@ -436,173 +436,175 @@ function App() {
   }, []);
 
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <h1>Opencode</h1>
-      </header>
-      <div className="editor-container">
-        <CKEditor
-        editor={ ClassicEditor }
-        onReady={(editor) => {
-          editorRef.current = editor;
-          // Use CKEditor's Clipboard plugin to intercept pasted text and transform Opencode runs
-          const clipboard = editor.plugins.get('ClipboardPipeline');
-          if (!clipboard) {
-            console.error('Clipboard plugin not found in CKEditor instance');
-            return;
-          }
-
-          const clipboardHandler = (evt, data) => {
-            try {
-              console.log('CKEditor clipboard inputTransformation event', data);
-              const dt = data.dataTransfer;
-              if (!dt) return;
-              editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
-              const plain = dt.getData('text/plain') ?? '';
-              const html = parseOpencodeToHtml(plain);
-              console.log('Parsed HTML from Opencode:', html);
-              data.content = editor.data.processor.toView(html);
-            } catch (err) {
-              console.error('Error handling clipboard inputTransformation:', err);
+    <div className="app-root">
+      <div className="app-container">
+        <header className="app-header">
+          <h1>Opencode</h1>
+        </header>
+        <div className="editor-container">
+          <CKEditor
+          editor={ ClassicEditor }
+          onReady={(editor) => {
+            editorRef.current = editor;
+            // Use CKEditor's Clipboard plugin to intercept pasted text and transform Opencode runs
+            const clipboard = editor.plugins.get('ClipboardPipeline');
+            if (!clipboard) {
+              console.error('Clipboard plugin not found in CKEditor instance');
+              return;
             }
-          };
 
-          clipboard.on('inputTransformation', clipboardHandler);
-          editor.on('destroy', () => {
-            clipboard.off('inputTransformation', clipboardHandler);
-            editorRef.current = null;
-          });
-
-          // Make plain Enter behave like Shift+Enter (insert a <br/>) instead of creating
-          // a new paragraph.
-          try {
-            editor.keystrokes.set('Enter', (keyEvtData, cancel) => {
-              const domEvent = keyEvtData.domEvent;
-              // Keep modifier combos intact (Ctrl/Cmd/Alt/Shift+Enter should remain usable)
-              if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
-              if (domEvent.shiftKey) return; // let default Shift+Enter behavior remain
-              // Prefer to use the editor's shiftEnter command (if present) which inserts a soft break <br/>
-              if (editor.commands.get('shiftEnter')) {
-                try { editor.execute('shiftEnter'); } catch (e) { /* ignore if command fails */ }
-              }
-              cancel();
-            });
-          } catch (err) {
-            console.warn('Could not override Enter keystroke to insert <br/>:', err);
-          }
-
-          // Ensure typed input always uses the default font, regardless of the font
-          // at the current position. We remove the `fontFamily` model attribute
-          // from the selection right before typing so inserted text won't inherit
-          // any font family defined on ancestor spans.
-          const view = editor.editing.view;
-          view.document.on('keydown', (evt, data) => {
-            try {
-              const domEvent = data.domEvent;
-              // Ignore modifier combos (Ctrl/Cmd/Alt) and navigation keys.
-              if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
-              const key = domEvent.key;
-              // If this is basic typing (single printable character) or Enter/Tab,
-              // remove the fontFamily attribute so the typed character uses default.
-              if ((key && key.length === 1) || key === 'Enter' || key === 'Tab') {
+            const clipboardHandler = (evt, data) => {
+              try {
+                console.log('CKEditor clipboard inputTransformation event', data);
+                const dt = data.dataTransfer;
+                if (!dt) return;
                 editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
+                const plain = dt.getData('text/plain') ?? '';
+                const html = parseOpencodeToHtml(plain);
+                console.log('Parsed HTML from Opencode:', html);
+                data.content = editor.data.processor.toView(html);
+              } catch (err) {
+                console.error('Error handling clipboard inputTransformation:', err);
               }
+            };
+
+            clipboard.on('inputTransformation', clipboardHandler);
+            editor.on('destroy', () => {
+              clipboard.off('inputTransformation', clipboardHandler);
+              editorRef.current = null;
+            });
+
+            // Make plain Enter behave like Shift+Enter (insert a <br/>) instead of creating
+            // a new paragraph.
+            try {
+              editor.keystrokes.set('Enter', (keyEvtData, cancel) => {
+                const domEvent = keyEvtData.domEvent;
+                // Keep modifier combos intact (Ctrl/Cmd/Alt/Shift+Enter should remain usable)
+                if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
+                if (domEvent.shiftKey) return; // let default Shift+Enter behavior remain
+                // Prefer to use the editor's shiftEnter command (if present) which inserts a soft break <br/>
+                if (editor.commands.get('shiftEnter')) {
+                  try { editor.execute('shiftEnter'); } catch (e) { /* ignore if command fails */ }
+                }
+                cancel();
+              });
             } catch (err) {
-              // Do not break typing; log for debugging.
-              console.error('Error enforcing default font on typing:', err);
+              console.warn('Could not override Enter keystroke to insert <br/>:', err);
             }
-          }, { priority: 'high' });
-        }}
-        config={ {
-          licenseKey: 'GPL',
-          plugins: [ Essentials, Paragraph, FontFamily ],
-          fontFamily: {
-            supportAllValues: true,
-          },
-          initialData: parseOpencodeToHtml(editorContentOpencodeText),
-        } }
-        />
-      </div>
 
-      <div className="content-section">
-        {selectedChars ? (
-          <div>
-            <h3>Selected characters</h3>
-            <CharacterTable characters={selectedChars} />
+            // Ensure typed input always uses the default font, regardless of the font
+            // at the current position. We remove the `fontFamily` model attribute
+            // from the selection right before typing so inserted text won't inherit
+            // any font family defined on ancestor spans.
+            const view = editor.editing.view;
+            view.document.on('keydown', (evt, data) => {
+              try {
+                const domEvent = data.domEvent;
+                // Ignore modifier combos (Ctrl/Cmd/Alt) and navigation keys.
+                if (domEvent.ctrlKey || domEvent.metaKey || domEvent.altKey) return;
+                const key = domEvent.key;
+                // If this is basic typing (single printable character) or Enter/Tab,
+                // remove the fontFamily attribute so the typed character uses default.
+                if ((key && key.length === 1) || key === 'Enter' || key === 'Tab') {
+                  editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
+                }
+              } catch (err) {
+                // Do not break typing; log for debugging.
+                console.error('Error enforcing default font on typing:', err);
+              }
+            }, { priority: 'high' });
+          }}
+          config={ {
+            licenseKey: 'GPL',
+            plugins: [ Essentials, Paragraph, FontFamily ],
+            fontFamily: {
+              supportAllValues: true,
+            },
+            initialData: parseOpencodeToHtml(editorContentOpencodeText),
+          } }
+          />
+        </div>
 
-            <h3>How they are encoded</h3>
-            <table className="character-table">
-              <thead>
-                <tr>
-                  <th>Codepoint</th>
-                  <th>Name</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(() => {
-                  const codepoints = toCodePoints(selectedOpencodeText);
-                  return codepoints.map((cp, i) => {
-                    const char = String.fromCodePoint(cp);
-                    const hex = 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');
-                    let name = unicodeName(char) || '';
-                    return (
-                      <tr key={i}>
-                        <td>{hex}</td>
-                        <td>{name}</td>
-                      </tr>
-                    );
-                  });
-                })()}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <>
-            <h3>Available characters</h3>
-            <form onSubmit={handleCharacterTableSubmit} className="domain-selector-form">
-              <select 
-                value={domainPreset}
-                onChange={handlePresetChange}
-              >
-                <option value="sitelenpona">Sitelen Pona</option>
-                <option value="tengwar">Tengwar</option>
-                <option value="liparxe">Liparxe</option>
-                <option value="custom">Custom domain...</option>
-              </select>
-              <input
-                type="text"
-                value={domainInput}
-                onChange={(e) => setDomainInput(e.target.value)}
-                placeholder="example.com"
-                disabled={domainPreset !== 'custom'}
-              />
-            </form>
+        <div className="content-section">
+          {selectedChars ? (
+            <div>
+              <h3>Selected characters</h3>
+              <CharacterTable characters={selectedChars} />
 
-            {loading && <div className="status-message status-loading">Loading...</div>}
-            {error && <div className="status-message status-error">{error}</div>}
-
-            {tableDomainData && (
-              <div>
-                <CharacterTable 
-                  characters={tableDomainData.characters.map((ch) => {
-                    const domainFontFamily = tableDomain.replace(/\./g, ' ');
-                    const cpHex = ch.codepoint;
-                    const cp = parseInt(cpHex, 16);
-                    const rendered = Number.isNaN(cp) ? '' : String.fromCodePoint(cp);
-                    const fullCodepoint = `${tableDomain}/#${cpHex}`;
-                    const fullName = tableDomainData.name.toUpperCase() + ' ' + ch.name;
-                    return {
-                      char: rendered,
-                      codepoint: fullCodepoint,
-                      name: fullName,
-                      fontFamily: domainFontFamily,
-                    };
-                  })}
+              <h3>How they are encoded</h3>
+              <table className="character-table">
+                <thead>
+                  <tr>
+                    <th>Codepoint</th>
+                    <th>Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(() => {
+                    const codepoints = toCodePoints(selectedOpencodeText);
+                    return codepoints.map((cp, i) => {
+                      const char = String.fromCodePoint(cp);
+                      const hex = 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');
+                      let name = unicodeName(char) || '';
+                      return (
+                        <tr key={i}>
+                          <td>{hex}</td>
+                          <td>{name}</td>
+                        </tr>
+                      );
+                    });
+                  })()}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <>
+              <h3>Available characters</h3>
+              <form onSubmit={handleCharacterTableSubmit} className="domain-selector-form">
+                <select 
+                  value={domainPreset}
+                  onChange={handlePresetChange}
+                >
+                  <option value="sitelenpona">Sitelen Pona</option>
+                  <option value="tengwar">Tengwar</option>
+                  <option value="liparxe">Liparxe</option>
+                  <option value="custom">Custom domain...</option>
+                </select>
+                <input
+                  type="text"
+                  value={domainInput}
+                  onChange={(e) => setDomainInput(e.target.value)}
+                  placeholder="example.com"
+                  disabled={domainPreset !== 'custom'}
                 />
-              </div>
-            )}
-          </>
-        )}
+              </form>
+
+              {loading && <div className="status-message status-loading">Loading...</div>}
+              {error && <div className="status-message status-error">{error}</div>}
+
+              {tableDomainData && (
+                <div>
+                  <CharacterTable 
+                    characters={tableDomainData.characters.map((ch) => {
+                      const domainFontFamily = tableDomain.replace(/\./g, ' ');
+                      const cpHex = ch.codepoint;
+                      const cp = parseInt(cpHex, 16);
+                      const rendered = Number.isNaN(cp) ? '' : String.fromCodePoint(cp);
+                      const fullCodepoint = `${tableDomain}/#${cpHex}`;
+                      const fullName = tableDomainData.name.toUpperCase() + ' ' + ch.name;
+                      return {
+                        char: rendered,
+                        codepoint: fullCodepoint,
+                        name: fullName,
+                        fontFamily: domainFontFamily,
+                      };
+                    })}
+                  />
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
