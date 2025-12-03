@@ -27,6 +27,7 @@ async function loadData(domain) {
     return;
   }
   loadedDomains.add(domain);
+  console.log(`Loading opencode data for domain: ${domain}`);
 
   const response = await fetch(`https://${domain}/opencode.json`);
   if (!response.ok) {
@@ -76,12 +77,6 @@ function OpencodeText({ children }) {
     return <span key={index} style={{fontFamily}}>{run.text}</span>;
   });
 
-  useEffect(() => {
-    for (const d of domains) {
-      loadData(d).catch(console.error);
-    }
-  }, [text]);
-  
   return <>{elements}</>;
 }
 
@@ -107,6 +102,9 @@ function parseOpencodeRuns(text) {
       isInDomain = true;
     } else if (cp === 0xe007f && isInDomain) {
       isInDomain = false;
+      if (domain !== '') {
+        loadData(domain).catch(console.error);
+      }
     } else if (cp >= 0xe0020 && cp < 0xe007f && isInDomain) {
       // Domain is encoded as ASCII codepoints (cp - 0xe0000)
       const ascii = String.fromCodePoint(cp - 0xe0000);
@@ -302,8 +300,8 @@ function App() {
     '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
     '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F196C}\u{F1954}\u{e0001}\u{e007f}, ' +
     '\u{e0001}\u{e0074}\u{e0065}\u{e006e}\u{e0067}\u{e0077}\u{e0061}\u{e0072}\u{e002e}\u{e0067}' +
-    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{E000}' +
-    '\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} and ' +
+    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
+    '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} and ' +
     '\u{e0001}\u{e006c}\u{e0069}\u{e0070}\u{e0061}\u{e0072}\u{e0078}\u{e0065}\u{e002e}\u{e0067}' +
     '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
     'lineparine\u{e0001}\u{e007f}!';
@@ -458,17 +456,6 @@ function App() {
 
   return (
     <div>
-      <div>
-        <OpencodeText>
-          I love
-          &#xe0001;&#xe0073;&#xe0069;&#xe0074;&#xe0065;&#xe006c;&#xe0065;&#xe006e;&#xe0070;&#xe006f;&#xe006e;&#xe0061;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xe007f;&#xF196C;&#xF1954;
-          &#xe0001;&#xe007f;,
-          &#xe0001;&#xe0074;&#xe0065;&#xe006e;&#xe0067;&#xe0077;&#xe0061;&#xe0072;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xE000;&#xE046;&#xE007;&#xE040;&#xE014;
-          &#xe0001;&#xe007f; and
-          &#xe0001;&#xe006c;&#xe0069;&#xe0070;&#xe0061;&#xe0072;&#xe0078;&#xe0065;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xe007f;lineparine
-          &#xe0001;&#xe007f;!
-        </OpencodeText>
-      </div>
       <CKEditor
         editor={ ClassicEditor }
         onReady={(editor) => {
