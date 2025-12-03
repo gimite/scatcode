@@ -312,25 +312,6 @@ function App() {
     'liparxe': 'liparxe.gimite.net',
   };
 
-  const insertHtml = (html) => {
-    if (!editorRef.current) {
-      console.error('Editor is not ready');
-      return;
-    }
-    try {
-      const editor = editorRef.current;
-      const viewFragment = editor.data.processor.toView(html);
-      const modelFragment = editor.data.toModel(viewFragment);
-      editor.model.change(writer => {
-        // Ensure default font is used for the inserted content
-        writer.removeSelectionAttribute('fontFamily');
-        editor.model.insertContent(modelFragment, editor.model.document.selection);
-      });
-    } catch (err) {
-      console.error('Failed to insert HTML into CKEditor', err);
-    }
-  };
-
   const handleCharacterTableSubmit = async (e) => {
     e.preventDefault();
     const domain = domainInput.trim();
@@ -456,6 +437,7 @@ function App() {
 
   return (
     <div>
+      <h1>Opencode</h1>
       <CKEditor
         editor={ ClassicEditor }
         onReady={(editor) => {
