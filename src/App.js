@@ -271,7 +271,7 @@ function CharacterTable({ characters }) {
         )}
         {characters.map((charInfo, i) => (
           <tr key={i}>
-            <td style={{ fontFamily: charInfo.fontFamily }}>
+            <td className="character" style={{ fontFamily: charInfo.fontFamily }}>
               {charInfo.char}
             </td>
             <td>{charInfo.codepoint}</td>

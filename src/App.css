@@ -48,11 +48,15 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: #2d3748;
-  margin-top: 0;
+  margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   border-bottom: 3px solid #667eea;
   padding-bottom: 0.5rem;
   display: inline-block;
+}
+
+.content-section h3:first-child {
+  margin-top: 0;
 }
 
 .domain-selector-form {
@@ -150,7 +154,7 @@
   border-bottom: 1px solid #e2e8f0;
 }
 
-.character-table td:first-child {
+.character-table td.character {
   text-align: center;
   font-size: 1.5rem;
   font-weight: 500;
