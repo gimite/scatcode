@@ -257,25 +257,25 @@ function parseOpencodeToHtml(text) {
 
 function CharacterTable({ characters }) {
   return (
-    <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+    <table className="character-table">
       <thead>
         <tr>
-          <th style={{ border: '1px solid #ccc', padding: '4px' }}>Character</th>
-          <th style={{ border: '1px solid #ccc', padding: '4px' }}>Codepoint</th>
-          <th style={{ border: '1px solid #ccc', padding: '4px' }}>Name</th>
+          <th>Character</th>
+          <th>Codepoint</th>
+          <th>Name</th>
         </tr>
       </thead>
       <tbody>
         {characters.length === 0 && (
-          <tr><td colSpan={3} style={{ border: '1px solid #ccc', padding: 8 }}>No characters found.</td></tr>
+          <tr><td colSpan={3} className="no-data-message">No characters found.</td></tr>
         )}
         {characters.map((charInfo, i) => (
           <tr key={i}>
-            <td style={{ border: '1px solid #ccc', padding: '4px', textAlign: 'center', fontFamily: charInfo.fontFamily }}>
+            <td style={{ fontFamily: charInfo.fontFamily }}>
               {charInfo.char}
             </td>
-            <td style={{ border: '1px solid #ccc', padding: '4px' }}>{charInfo.codepoint}</td>
-            <td style={{ border: '1px solid #ccc', padding: '4px' }}>{charInfo.name}</td>
+            <td>{charInfo.codepoint}</td>
+            <td>{charInfo.name}</td>
           </tr>
         ))}
       </tbody>
@@ -436,9 +436,12 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h1>Opencode</h1>
-      <CKEditor
+    <div className="app-container">
+      <header className="app-header">
+        <h1>Opencode</h1>
+      </header>
+      <div className="editor-container">
+        <CKEditor
         editor={ ClassicEditor }
         onReady={(editor) => {
           editorRef.current = editor;
@@ -518,20 +521,21 @@ function App() {
           },
           initialData: parseOpencodeToHtml(editorContentOpencodeText),
         } }
-      />
+        />
+      </div>
 
-      <div style={{ marginTop: 20 }}>
+      <div className="content-section">
         {selectedChars ? (
           <div>
             <h3>Selected characters</h3>
             <CharacterTable characters={selectedChars} />
 
-            <h3 style={{ marginTop: 20 }}>How they are encoded</h3>
-            <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+            <h3>How they are encoded</h3>
+            <table className="character-table">
               <thead>
                 <tr>
-                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Codepoint</th>
-                  <th style={{ border: '1px solid #ccc', padding: '4px' }}>Name</th>
+                  <th>Codepoint</th>
+                  <th>Name</th>
                 </tr>
               </thead>
               <tbody>
@@ -543,8 +547,8 @@ function App() {
                     let name = unicodeName(char) || '';
                     return (
                       <tr key={i}>
-                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>{hex}</td>
-                        <td style={{ border: '1px solid #ccc', padding: '4px' }}>{name}</td>
+                        <td>{hex}</td>
+                        <td>{name}</td>
                       </tr>
                     );
                   });
@@ -555,11 +559,10 @@ function App() {
         ) : (
           <>
             <h3>Available characters</h3>
-            <form onSubmit={handleCharacterTableSubmit}>
+            <form onSubmit={handleCharacterTableSubmit} className="domain-selector-form">
               <select 
                 value={domainPreset}
                 onChange={handlePresetChange}
-                style={{ marginRight: 16 }}
               >
                 <option value="sitelenpona">Sitelen Pona</option>
                 <option value="tengwar">Tengwar</option>
@@ -571,16 +574,15 @@ function App() {
                 value={domainInput}
                 onChange={(e) => setDomainInput(e.target.value)}
                 placeholder="example.com"
-                style={{ marginRight: 8 }}
                 disabled={domainPreset !== 'custom'}
               />
             </form>
 
-            {loading && <div style={{ marginTop: 8 }}>Loading...</div>}
-            {error && <div style={{ marginTop: 8, color: 'red' }}>{error}</div>}
+            {loading && <div className="status-message status-loading">Loading...</div>}
+            {error && <div className="status-message status-error">{error}</div>}
 
             {tableDomainData && (
-              <div style={{ marginTop: 12 }}>
+              <div>
                 <CharacterTable 
                   characters={tableDomainData.characters.map((ch) => {
                     const domainFontFamily = tableDomain.replace(/\./g, ' ');
