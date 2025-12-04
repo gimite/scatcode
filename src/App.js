@@ -397,8 +397,8 @@ function CharacterTable({ characters }) {
       <thead>
         <tr>
           <th>Character</th>
-          <th>Codepoint</th>
           <th>Name</th>
+          <th>Codepoint</th>
         </tr>
       </thead>
       <tbody>
@@ -410,8 +410,8 @@ function CharacterTable({ characters }) {
             <td className="character" style={{ fontFamily: charInfo.fontFamily }}>
               {charInfo.char}
             </td>
-            <td>{charInfo.codepoint}</td>
             <td>{charInfo.name}</td>
+            <td>{charInfo.codepoint}</td>
           </tr>
         ))}
       </tbody>
@@ -562,7 +562,7 @@ function App() {
             const cp = ch.codePointAt(0);
             const cpHex = cp.toString(16).toUpperCase().padStart(4, '0');
             const codepointDisplay = run.domain
-              ? `${run.domain}/#${cpHex}`
+              ? `${run.domain}#${cpHex}`
               : `U+${cpHex}`;
             let name;
             if (run.domain && domainData[run.domain]) {
@@ -755,7 +755,7 @@ function App() {
                       const cpHex = ch.codepoint;
                       const cp = parseInt(cpHex, 16);
                       const rendered = Number.isNaN(cp) ? '' : String.fromCodePoint(cp);
-                      const fullCodepoint = `${tableDomain}/#${cpHex}`;
+                      const fullCodepoint = `${tableDomain}#${cpHex}`;
                       const fullName = tableDomainData.name.toUpperCase() + ' ' + ch.name;
                       return {
                         char: rendered,
