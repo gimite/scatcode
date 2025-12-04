@@ -68,6 +68,55 @@ class SaveButtonPlugin extends Plugin {
   }
 }
 
+// Custom Load button plugin for CKEditor
+class LoadButtonPlugin extends Plugin {
+  init() {
+    const editor = this.editor;
+    
+    editor.ui.componentFactory.add('loadButton', locale => {
+      const view = new ButtonView(locale);
+      view.set({
+        label: 'Load',
+        withText: true,
+        tooltip: true
+      });
+      view.on('execute', () => {
+        // Create a hidden file input element
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.txt,text/plain';
+        
+        input.onchange = async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          
+          try {
+            // Read the file as text with UTF-8 encoding
+            const text = await file.text();
+            console.log('Loaded Opencode text:', text);
+            
+            // Parse the Opencode text to HTML
+            const html = parseOpencodeToHtml(text);
+            console.log('Parsed HTML:', html);
+            
+            // Set the editor content
+            editor.setData(html);
+            
+            console.log('Successfully loaded file into editor');
+          } catch (err) {
+            console.error('Error loading file:', err);
+            alert('Error loading file: ' + err.message);
+          }
+        };
+        
+        // Trigger the file picker
+        input.click();
+      });
+      return view;
+    });
+  }
+}
+
 function getOpencodeDomainTagHtml(domain) {
   return '&#xe0001;' +
     Array.from(
@@ -603,12 +652,13 @@ function App() {
             }}
             config={ {
               licenseKey: 'GPL',
-              plugins: [ Essentials, Paragraph, FontFamily, SaveButtonPlugin ],
+              plugins: [ Essentials, Paragraph, FontFamily, SaveButtonPlugin, LoadButtonPlugin ],
               fontFamily: {
                 supportAllValues: true,
               },
               toolbar: {
                 items: [
+                  'loadButton',
                   'saveButton',
                   '|',
                   'fontFamily',
