@@ -45,23 +45,23 @@ class SaveButtonPlugin extends Plugin {
         };
         extractRuns(tempDiv);
         
-        // Convert to Opencode text
-        const opencodeText = getOpencodeTextFromFontRuns(runs);
+        // Convert to Scatcode text
+        const scatcodeText = getScatcodeTextFromFontRuns(runs);
         
         // Create a Blob with UTF-8 encoding
-        const blob = new Blob([opencodeText], { type: 'text/plain;charset=utf-8' });
+        const blob = new Blob([scatcodeText], { type: 'text/plain;charset=utf-8' });
         
         // Create a download link and trigger it
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'opencode-text.txt';
+        a.download = 'scatcode-text.txt';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
         
-        console.log('Saved Opencode text:', opencodeText);
+        console.log('Saved Scatcode text:', scatcodeText);
       });
       return view;
     });
@@ -93,10 +93,10 @@ class LoadButtonPlugin extends Plugin {
           try {
             // Read the file as text with UTF-8 encoding
             const text = await file.text();
-            console.log('Loaded Opencode text:', text);
+            console.log('Loaded Scatcode text:', text);
             
-            // Parse the Opencode text to HTML
-            const html = parseOpencodeToHtml(text);
+            // Parse the Scatcode text to HTML
+            const html = parseScatcodeToHtml(text);
             console.log('Parsed HTML:', html);
             
             // Set the editor content
@@ -117,7 +117,7 @@ class LoadButtonPlugin extends Plugin {
   }
 }
 
-function getOpencodeDomainTagHtml(domain) {
+function getScatcodeDomainTagHtml(domain) {
   return '&#xe0001;' +
     Array.from(
       domain,
@@ -126,7 +126,7 @@ function getOpencodeDomainTagHtml(domain) {
     '&#xe007f;'
 }
 
-// console.log(getOpencodeDomainTagHtml('liparxe.gimite.net'));
+// console.log(getScatcodeDomainTagHtml('liparxe.gimite.net'));
 
 const loadedDomains = new Set();
 const loadingPromises = new Map();
@@ -146,9 +146,9 @@ async function loadData(domain) {
   // Start a new load
   const loadPromise = (async () => {
     try {
-      console.log(`Loading opencode data for domain: ${domain}`);
+      console.log(`Loading scatcode data for domain: ${domain}`);
 
-      const response = await fetch(`https://${domain}/opencode.json`);
+      const response = await fetch(`https://${domain}/scatcode.json`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -187,17 +187,17 @@ async function loadData(domain) {
   return loadPromise;
 }
 
-function OpencodeText({ children }) {
+function ScatcodeText({ children }) {
   const childArray = Children.toArray(children);
   for (const c of childArray) {
     if (typeof c !== 'string' && typeof c !== 'number') {
-      throw new Error('OpencodeText: children must be plain text (string or number)');
+      throw new Error('ScatcodeText: children must be plain text (string or number)');
     }
   }
   const text = childArray.length === 0 ? '' : childArray.map(c => String(c)).join('');
 
   // Use the shared parser to obtain runs of {domain, text}
-  const runs = parseOpencodeRuns(text);
+  const runs = parseScatcodeRuns(text);
   const domains = new Set();
   const elements = runs.map((run, index) => {
     if (run.domain && run.domain !== '') domains.add(run.domain);
@@ -208,9 +208,9 @@ function OpencodeText({ children }) {
   return <>{elements}</>;
 }
 
-// Parse opencode encoded text into an array of runs [{domain, text}].
+// Parse scatcode encoded text into an array of runs [{domain, text}].
 // `domain` is '' for the default domain, otherwise contains the domain string.
-function parseOpencodeRuns(text) {
+function parseScatcodeRuns(text) {
   const runs = [];
   let domain = '';
   let chunk = '';
@@ -320,7 +320,7 @@ function getSelectionTextFontRuns(selection = window.getSelection()) {
   return merged;
 }
 
-function getOpencodeTextFromFontRuns(runs) {
+function getScatcodeTextFromFontRuns(runs) {
   let result = '';
   let lastDomain = '';
   for (const run of runs) {
@@ -347,12 +347,12 @@ function getOpencodeTextFromFontRuns(runs) {
   return result;
 }
 
-function getOpencodeTextFromSelection(selection) {
+function getScatcodeTextFromSelection(selection) {
   const runs = getSelectionTextFontRuns(selection);
-  return getOpencodeTextFromFontRuns(runs);
+  return getScatcodeTextFromFontRuns(runs);
 }
 
-// Parse a text string encoded with Opencode markers into HTML where text runs are wrapped
+// Parse a text string encoded with Scatcode markers into HTML where text runs are wrapped
 // in <span style="font-family: ..."> markers corresponding to the encoded domain.
 function escapeHtml(s) {
   return String(s).replace(/&/g, '&amp;')
@@ -367,8 +367,8 @@ function escapeCssString(s) {
   return String(s).replace(/'/g, "\\'");
 }
 
-function parseOpencodeToHtml(text) {
-  const runs = parseOpencodeRuns(text);
+function parseScatcodeToHtml(text) {
+  const runs = parseScatcodeRuns(text);
   let result = '';
   for (const run of runs) {
     const chunkHtml = escapeHtml(run.text);
@@ -420,9 +420,9 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedChars, setSelectedChars] = useState(null);
-  const [selectedOpencodeText, setSelectedOpencodeText] = useState('');
+  const [selectedScatcodeText, setSelectedScatcodeText] = useState('');
 
-  const editorContentOpencodeText =
+  const editorContentScatcodeText =
     'I love ' +
     '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
     '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
@@ -486,10 +486,10 @@ function App() {
     const handleCopy = (e) => {
       try {
         const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
-        const opencodeText = getOpencodeTextFromSelection();
-        console.log('Opencode text:', opencodeText);
-        console.log('Opencode text codepoints:', toCodePoints(opencodeText));
-        cb.setData('text/plain', opencodeText);
+        const scatcodeText = getScatcodeTextFromSelection();
+        console.log('Scatcode text:', scatcodeText);
+        console.log('Scatcode text codepoints:', toCodePoints(scatcodeText));
+        cb.setData('text/plain', scatcodeText);
         e.preventDefault();
       } catch (err) {
         console.error('Error in copy handler', err);
@@ -529,12 +529,12 @@ function App() {
           return;
         }
 
-        const opencodeText = getOpencodeTextFromSelection(selection);
-        const opencodeRuns = parseOpencodeRuns(opencodeText);
+        const scatcodeText = getScatcodeTextFromSelection(selection);
+        const scatcodeRuns = parseScatcodeRuns(scatcodeText);
         
         // Build character list with domain and codepoint info
         const chars = [];
-        for (const run of opencodeRuns) {
+        for (const run of scatcodeRuns) {
           for (const ch of run.text) {
             const cp = ch.codePointAt(0);
             const cpHex = cp.toString(16).toUpperCase().padStart(4, '0');
@@ -560,7 +560,7 @@ function App() {
         }
         
         setSelectedChars(chars);
-        setSelectedOpencodeText(opencodeText);
+        setSelectedScatcodeText(scatcodeText);
       } catch (err) {
         console.error('Error in selectionchange handler', err);
       }
@@ -574,7 +574,7 @@ function App() {
     <div className="app-root">
       <div className="app-container">
         <header className="app-header">
-          <h1>Opencode</h1>
+          <h1>Scatcode</h1>
         </header>
         <div className="editor-container">
           <CKEditor
@@ -582,7 +582,7 @@ function App() {
             onReady={(editor) => {
               editorRef.current = editor;
               
-              // Use CKEditor's Clipboard plugin to intercept pasted text and transform Opencode runs
+              // Use CKEditor's Clipboard plugin to intercept pasted text and transform Scatcode runs
               const clipboard = editor.plugins.get('ClipboardPipeline');
               if (!clipboard) {
                 console.error('Clipboard plugin not found in CKEditor instance');
@@ -596,8 +596,8 @@ function App() {
                   if (!dt) return;
                   editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
                   const plain = dt.getData('text/plain') ?? '';
-                  const html = parseOpencodeToHtml(plain);
-                  console.log('Parsed HTML from Opencode:', html);
+                  const html = parseScatcodeToHtml(plain);
+                  console.log('Parsed HTML from Scatcode:', html);
                   data.content = editor.data.processor.toView(html);
                 } catch (err) {
                   console.error('Error handling clipboard inputTransformation:', err);
@@ -662,7 +662,7 @@ function App() {
                   'saveButton',
                 ]
               },
-              initialData: parseOpencodeToHtml(editorContentOpencodeText),
+              initialData: parseScatcodeToHtml(editorContentScatcodeText),
             } }
           />
         </div>
@@ -683,7 +683,7 @@ function App() {
                 </thead>
                 <tbody>
                   {(() => {
-                    const codepoints = toCodePoints(selectedOpencodeText);
+                    const codepoints = toCodePoints(selectedScatcodeText);
                     return codepoints.map((cp, i) => {
                       const char = String.fromCodePoint(cp);
                       const hex = 'U+' + cp.toString(16).toUpperCase().padStart(4, '0');

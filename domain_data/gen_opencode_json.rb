@@ -16,7 +16,7 @@ for (domain_name, name_regex) in [
     ["tengwar", /^TENGWAR (.+)$/],
     ["liparxe", nil],
   ]
-  data = open("#{domain_name}.opencode_basic.json") { |f| JSON.load(f) }
+  data = open("#{domain_name}.scatcode_basic.json") { |f| JSON.load(f) }
   if name_regex
     data["characters"] = ucsur_characters.filter_map do |ch|
       name_match = ch["fullName"].match(name_regex)
@@ -32,7 +32,7 @@ for (domain_name, name_regex) in [
   end
 
   FileUtils.mkdir_p(domain_name)
-  File.open("#{domain_name}/opencode.json", "w") do |f|
+  File.open("#{domain_name}/scatcode.json", "w") do |f|
     f.write(JSON.pretty_generate(data))
   end
 end
