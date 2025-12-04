@@ -660,10 +660,6 @@ function App() {
                 items: [
                   'loadButton',
                   'saveButton',
-                  '|',
-                  'fontFamily',
-                  '|',
-                  'undo', 'redo'
                 ]
               },
               initialData: parseOpencodeToHtml(editorContentOpencodeText),
