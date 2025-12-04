@@ -423,18 +423,6 @@ function App() {
   const [selectedChars, setSelectedChars] = useState(null);
   const [selectedScatcodeText, setSelectedScatcodeText] = useState('');
 
-  const oldEditorContentScatcodeText =
-    'I love ' +
-    '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
-    '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
-    '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F196C}\u{F1954}\u{e0001}\u{e007f}, ' +
-    '\u{e0001}\u{e0074}\u{e0065}\u{e006e}\u{e0067}\u{e0077}\u{e0061}\u{e0072}\u{e002e}\u{e0067}' +
-    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
-    '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} and ' +
-    '\u{e0001}\u{e006c}\u{e0069}\u{e0070}\u{e0061}\u{e0072}\u{e0078}\u{e0065}\u{e002e}\u{e0067}' +
-    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
-    'lineparine\u{e0001}\u{e007f}!\nHello.';
-
   const editorContentScatcodeText = 
     'Scatcode is an experimental character encoding that can support any characters. ' +
     'It supports non-Unicode characters like ' +
