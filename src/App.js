@@ -392,6 +392,25 @@ function parseScatcodeToHtml(text) {
 }
 
 function CharacterTable({ characters }) {
+  const handleCharacterClick = (event) => {
+    try {
+      // Select the text content of the clicked cell
+      const cell = event.currentTarget;
+      const range = document.createRange();
+      range.selectNodeContents(cell);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      
+      // Execute the copy command (this will trigger the global copy handler)
+      document.execCommand('copy');
+      
+      console.log('Selected and copied character from cell');
+    } catch (err) {
+      console.error('Failed to select and copy character:', err);
+    }
+  };
+
   return (
     <table className="character-table">
       <thead>
@@ -407,7 +426,12 @@ function CharacterTable({ characters }) {
         )}
         {characters.map((charInfo, i) => (
           <tr key={i}>
-            <td className="character" style={{ fontFamily: charInfo.fontFamily }}>
+            <td 
+              className="character" 
+              style={{ fontFamily: charInfo.fontFamily, cursor: 'pointer' }}
+              onClick={handleCharacterClick}
+              title="Click to copy"
+            >
               {charInfo.char}
             </td>
             <td>{charInfo.name}</td>
