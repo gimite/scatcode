@@ -431,15 +431,15 @@ function App() {
     '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1960}\u{F1954}\u{e0001}\u{e007f} (Sitelen Pona), ' +
     '\u{e0001}\u{e0074}\u{e0065}\u{e006e}\u{e0067}\u{e0077}\u{e0061}\u{e0072}\u{e002e}\u{e0067}' +
     '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
-    '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} (Tengwar) and ' +
+    '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} (Tengwar), and ' +
     '\u{e0001}\u{e006c}\u{e0069}\u{e0070}\u{e0061}\u{e0072}\u{e0078}\u{e0065}\u{e002e}\u{e0067}' +
     '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
     'liparxe\u{e0001}\u{e007f} (Liparxe). ' +
-    'And even you can add your own characters!\n\n' +
-    'You can try Scatcode in this editor. Try:\n' +
-    '• Copy&paste characters from the character table below.\n' +
-    '• Copy text over to your favirite text editor (the text would look garbled there) and paste it' +
-    ' back here to see the characters are recovered.\n' +
+    'You can even add your own characters!\n\n' +
+    'You can try Scatcode in this editor. Try:\n\n' +
+    '• Copy and paste characters from the character table below.\n' +
+    '• Copy text to your favorite text editor (the text will look garbled there) and paste it' +
+    ' back here to see the characters recovered.\n' +
     '• Select text here like ' +
     '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
     '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
