@@ -391,7 +391,7 @@ function parseScatcodeToHtml(text) {
   return result;
 }
 
-function CharacterTable({ characters }) {
+function CharacterTable({ characters, onCopy }) {
   const handleCharacterClick = (event) => {
     try {
       // Select the text content of the clicked cell
@@ -404,6 +404,9 @@ function CharacterTable({ characters }) {
       
       // Execute the copy command (this will trigger the global copy handler)
       document.execCommand('copy');
+      
+      // Show toast notification
+      if (onCopy) onCopy();
       
       console.log('Selected and copied character from cell');
     } catch (err) {
@@ -453,6 +456,7 @@ function App() {
   const [error, setError] = useState(null);
   const [selectedChars, setSelectedChars] = useState(null);
   const [selectedScatcodeText, setSelectedScatcodeText] = useState('');
+  const [showToast, setShowToast] = useState(false);
 
   const editorContentScatcodeText = 
     'Scatcode is an experimental character encoding that can support any characters. ' +
@@ -527,6 +531,12 @@ function App() {
   useEffect(() => {
     loadDomainData('sitelenpona.gimite.net');
   }, []);
+
+  // Toast notification handler
+  const handleCopyToast = () => {
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  };
 
   // Global copy handler: capture copied HTML and plain text anywhere in the window.
   useEffect(() => {
@@ -619,6 +629,7 @@ function App() {
 
   return (
     <div className="app-root">
+      {showToast && <div className="toast">Copied!</div>}
       <div className="app-container">
         <header className="app-header">
           <h1>Scatcode</h1>
@@ -718,7 +729,7 @@ function App() {
           {selectedChars ? (
             <div>
               <h3>Selected characters</h3>
-              <CharacterTable characters={selectedChars} />
+              <CharacterTable characters={selectedChars} onCopy={handleCopyToast} />
 
               <h3>How they are encoded</h3>
               <table className="character-table">
@@ -774,6 +785,7 @@ function App() {
               {tableDomainData && (
                 <div>
                   <CharacterTable 
+                    onCopy={handleCopyToast}
                     characters={tableDomainData.characters.map((ch) => {
                       const domainFontFamily = tableDomain.replace(/\./g, ' ');
                       const cpHex = ch.codepoint;
