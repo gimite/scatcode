@@ -352,14 +352,13 @@ function getScatcodeTextFromSelection(selection) {
   return getScatcodeTextFromFontRuns(runs);
 }
 
-// Parse a text string encoded with Scatcode markers into HTML where text runs are wrapped
-// in <span style="font-family: ..."> markers corresponding to the encoded domain.
 function escapeHtml(s) {
   return String(s).replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/'/g, '&#39;')
+    .replace(/\n/g, '<br/>');
 }
 
 function escapeCssString(s) {
@@ -367,6 +366,8 @@ function escapeCssString(s) {
   return String(s).replace(/'/g, "\\'");
 }
 
+// Parse a text string encoded with Scatcode markers into HTML where text runs are wrapped
+// in <span style="font-family: ..."> markers corresponding to the encoded domain.
 function parseScatcodeToHtml(text) {
   const runs = parseScatcodeRuns(text);
   let result = '';
@@ -432,7 +433,7 @@ function App() {
     '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} and ' +
     '\u{e0001}\u{e006c}\u{e0069}\u{e0070}\u{e0061}\u{e0072}\u{e0078}\u{e0065}\u{e002e}\u{e0067}' +
     '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
-    'lineparine\u{e0001}\u{e007f}!';
+    'lineparine\u{e0001}\u{e007f}!\nHello.';
 
   const domainPresets = {
     'sitelenpona': 'sitelenpona.gimite.net',
