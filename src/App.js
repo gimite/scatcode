@@ -278,7 +278,7 @@ function getSelectionTextFontRuns(selection = window.getSelection()) {
       ? range.commonAncestorContainer.parentElement
       : range.commonAncestorContainer;
 
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT, {
       acceptNode(node) {
         return range.intersectsNode(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
       }
@@ -295,14 +295,21 @@ function getSelectionTextFontRuns(selection = window.getSelection()) {
         node = walker.nextNode();
         continue;
       }
-      let start = 0;
-      let end = node.length;
-      if (node === range.startContainer) start = range.startOffset;
-      if (node === range.endContainer) end = range.endOffset;
-      if (end > start) {
-        const text = node.data.slice(start, end);
+      
+      if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === 'BR') {
+        // Insert a newline for <br> elements
         const fontFamily = getInlineFontFamily(node) || '';
-        runs.push({ text, fontFamily });
+        runs.push({ text: '\n', fontFamily });
+      } else if (node.nodeType === Node.TEXT_NODE) {
+        let start = 0;
+        let end = node.length;
+        if (node === range.startContainer) start = range.startOffset;
+        if (node === range.endContainer) end = range.endOffset;
+        if (end > start) {
+          const text = node.data.slice(start, end);
+          const fontFamily = getInlineFontFamily(node) || '';
+          runs.push({ text, fontFamily });
+        }
       }
       node = walker.nextNode();
     }
@@ -437,7 +444,7 @@ function App() {
     'liparxe\u{e0001}\u{e007f} (Liparxe). ' +
     'You can even add your own characters!\n\n' +
     'You can try Scatcode in this editor. Try:\n\n' +
-    '• Copy and paste characters from the character table below.\n' +
+    '• Copy characters from the character table below and paste them here.\n' +
     '• Copy text to your favorite text editor (the text will look garbled there) and paste it' +
     ' back here to see the characters recovered.\n' +
     '• Select text here like ' +
