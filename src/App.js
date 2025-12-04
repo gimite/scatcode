@@ -436,13 +436,31 @@ function App() {
     'lineparine\u{e0001}\u{e007f}!\nHello.';
 
   const editorContentScatcodeText = 
-    'Scatcode is a text encoding format that allows you to mix multiple writing systems (like Sitelen Pona, Tengwar, or Liparxe) within a single plain text file. It uses special Unicode tag characters to mark which domain (font/script) each text segment belongs to.\n\n' +
-    'This editor lets you:\n' +
-    '• Type and edit text using different scripts\n' +
-    '• Copy/paste with proper encoding preservation\n' +
-    '• Save and load Scatcode-encoded text files\n' +
-    '• View character details for any selected text\n\n' +
-    'Try selecting text to see how characters are encoded!';
+    'Scatcode is an experimental character encoding that can support any characters. ' +
+    'It supports non-Unicode characters like ' +
+    '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
+    '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
+    '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1960}\u{F1954}\u{e0001}\u{e007f} (Sitelen Pona), ' +
+    '\u{e0001}\u{e0074}\u{e0065}\u{e006e}\u{e0067}\u{e0077}\u{e0061}\u{e0072}\u{e002e}\u{e0067}' +
+    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
+    '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} (Tengwar) and ' +
+    '\u{e0001}\u{e006c}\u{e0069}\u{e0070}\u{e0061}\u{e0072}\u{e0078}\u{e0065}\u{e002e}\u{e0067}' +
+    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
+    'liparxe\u{e0001}\u{e007f} (Liparxe). ' +
+    'And even you can add your own characters!\n\n' +
+    'You can try Scatcode in this editor. Try:\n' +
+    '• Copy&paste characters from the character table below.\n' +
+    '• Copy text over to your favirite text editor (the text would look garbled there) and paste it' +
+    ' back here to see the characters are recovered.\n' +
+    '• Select text here like ' +
+    '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
+    '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
+    '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1942}\u{F1941}\u{e0001}\u{e007f} ' +
+    'to see the character details and how they are encoded.\n\n' +
+    'How does it work?\n\n' +
+    '• In Scatcode, each character belongs to a "domain" identified by a domain name ' +
+    '(e.g., sitelenpona.gimite.net for Sitelen Pona).\n' +
+    '• It uses special Unicode tag characters to mark which domain each text segment belongs to.';
 
   const domainPresets = {
     'sitelenpona': 'sitelenpona.gimite.net',
