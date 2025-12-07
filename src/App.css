@@ -22,10 +22,14 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0;
-  padding: 1rem 0;
 }
 
-.app-header span, .app-header img {
+.app-header img {
+  vertical-align: middle;
+  margin-right: 1rem;
+}
+
+.app-header span {
   vertical-align: middle;
 }
 

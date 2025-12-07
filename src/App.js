@@ -633,7 +633,7 @@ function App() {
       <div className="app-container">
         <header className="app-header">
           <h1>
-            <img src="/logo.png" alt="Scatcode" width="128" height="128" />
+            <img src="/logo.png" alt="" width="128" height="128" />
             <span>Scatcode</span>
           </h1>
         </header>
