@@ -32,27 +32,8 @@ class SaveButtonPlugin extends Plugin {
         const range = document.createRange();
         range.selectNodeContents(editableElement);
         
-        // Create a temporary selection
-        const tempSelection = window.getSelection();
-        const originalRanges = [];
-        
-        // Save the current selection
-        for (let i = 0; i < tempSelection.rangeCount; i++) {
-          originalRanges.push(tempSelection.getRangeAt(i));
-        }
-        
-        // Set our temporary selection
-        tempSelection.removeAllRanges();
-        tempSelection.addRange(range);
-        
         // Convert to Scatcode text using the shared function
         const scatcodeText = getScatcodeTextFromSelection([range]);
-        
-        // Restore the original selection
-        tempSelection.removeAllRanges();
-        for (const r of originalRanges) {
-          tempSelection.addRange(r);
-        }
         
         // Create a Blob with UTF-8 encoding
         const blob = new Blob([scatcodeText], { type: 'text/plain;charset=utf-8' });
