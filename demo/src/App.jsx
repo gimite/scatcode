@@ -33,7 +33,7 @@ class SaveButtonPlugin extends Plugin {
         range.selectNodeContents(editableElement);
         
         // Convert to Scatcode text using the shared function
-        const scatcodeText = getScatcodeTextFromSelection([range]);
+        const scatcodeText = getScatcodeTextFromRanges([range]);
         
         // Create a Blob with UTF-8 encoding
         const blob = new Blob([scatcodeText], { type: 'text/plain;charset=utf-8' });
@@ -255,7 +255,7 @@ function getInlineFontFamily(node) {
  * considers inline `style="font-family:..."` attributes and does not resolve
  * CSS rules or computed styles.
  */
-function getSelectionTextFontRuns(ranges) {
+function getTextFontRunsFromRanges(ranges) {
   const runs = [];
   if (!ranges || ranges.length === 0) return runs;
 
@@ -340,8 +340,8 @@ function getScatcodeTextFromFontRuns(runs) {
   return result;
 }
 
-function getScatcodeTextFromSelection(ranges) {
-  const runs = getSelectionTextFontRuns(ranges);
+function getScatcodeTextFromRanges(ranges) {
+  const runs = getTextFontRunsFromRanges(ranges);
   return getScatcodeTextFromFontRuns(runs);
 }
 
@@ -534,7 +534,7 @@ function App() {
         for (let i = 0; i < selection.rangeCount; i++) {
           ranges.push(selection.getRangeAt(i));
         }
-        const scatcodeText = getScatcodeTextFromSelection(ranges);
+        const scatcodeText = getScatcodeTextFromRanges(ranges);
         console.log('Scatcode text:', scatcodeText);
         console.log('Scatcode text codepoints:', toCodePoints(scatcodeText));
         cb.setData('text/plain', scatcodeText);
@@ -581,7 +581,7 @@ function App() {
         for (let i = 0; i < selection.rangeCount; i++) {
           ranges.push(selection.getRangeAt(i));
         }
-        const scatcodeText = getScatcodeTextFromSelection(ranges);
+        const scatcodeText = getScatcodeTextFromRanges(ranges);
         const scatcodeRuns = parseScatcodeRuns(scatcodeText);
         
         // Build character list with domain and codepoint info
