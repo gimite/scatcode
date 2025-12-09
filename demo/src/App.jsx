@@ -46,7 +46,7 @@ class SaveButtonPlugin extends Plugin {
         tempSelection.addRange(range);
         
         // Convert to Scatcode text using the shared function
-        const scatcodeText = getScatcodeTextFromSelection(tempSelection);
+        const scatcodeText = getScatcodeTextFromSelection([range]);
         
         // Restore the original selection
         tempSelection.removeAllRanges();
@@ -268,18 +268,17 @@ function getInlineFontFamily(node) {
 }
 
 /**
- * From a Window Selection, return an array of {text, fontFamily} objects where
+ * From an array of Range objects, return an array of {text, fontFamily} objects where
  * `text` is a contiguous piece of selected text and `fontFamily` is the raw
  * inline style value applied on the node or an ancestor element. This only
  * considers inline `style="font-family:..."` attributes and does not resolve
  * CSS rules or computed styles.
  */
-function getSelectionTextFontRuns(selection = window.getSelection()) {
+function getSelectionTextFontRuns(ranges) {
   const runs = [];
-  if (!selection || selection.rangeCount === 0) return runs;
+  if (!ranges || ranges.length === 0) return runs;
 
-  for (let r = 0; r < selection.rangeCount; r++) {
-    const range = selection.getRangeAt(r);
+  for (const range of ranges) {
     const root = range.commonAncestorContainer.nodeType === Node.TEXT_NODE
       ? range.commonAncestorContainer.parentElement
       : range.commonAncestorContainer;
@@ -360,8 +359,8 @@ function getScatcodeTextFromFontRuns(runs) {
   return result;
 }
 
-function getScatcodeTextFromSelection(selection) {
-  const runs = getSelectionTextFontRuns(selection);
+function getScatcodeTextFromSelection(ranges) {
+  const runs = getSelectionTextFontRuns(ranges);
   return getScatcodeTextFromFontRuns(runs);
 }
 
@@ -549,7 +548,12 @@ function App() {
     const handleCopy = (e) => {
       try {
         const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
-        const scatcodeText = getScatcodeTextFromSelection();
+        const selection = window.getSelection();
+        const ranges = [];
+        for (let i = 0; i < selection.rangeCount; i++) {
+          ranges.push(selection.getRangeAt(i));
+        }
+        const scatcodeText = getScatcodeTextFromSelection(ranges);
         console.log('Scatcode text:', scatcodeText);
         console.log('Scatcode text codepoints:', toCodePoints(scatcodeText));
         cb.setData('text/plain', scatcodeText);
@@ -592,7 +596,11 @@ function App() {
           return;
         }
 
-        const scatcodeText = getScatcodeTextFromSelection(selection);
+        const ranges = [];
+        for (let i = 0; i < selection.rangeCount; i++) {
+          ranges.push(selection.getRangeAt(i));
+        }
+        const scatcodeText = getScatcodeTextFromSelection(ranges);
         const scatcodeRuns = parseScatcodeRuns(scatcodeText);
         
         // Build character list with domain and codepoint info
