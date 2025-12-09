@@ -21,32 +21,38 @@ class SaveButtonPlugin extends Plugin {
         tooltip: true
       });
       view.on('execute', () => {
-        // Get the HTML content from the editor
-        const html = editor.getData();
+        // Get the editor's editable element
+        const editableElement = editor.ui.view.editable.element;
+        if (!editableElement) {
+          console.error('Could not find editable element');
+          return;
+        }
         
-        // Parse the HTML to extract font runs
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
+        // Create a selection range that covers the entire editor content
+        const range = document.createRange();
+        range.selectNodeContents(editableElement);
         
-        // Extract text with font family information
-        const runs = [];
-        const extractRuns = (node) => {
-          if (node.nodeType === Node.TEXT_NODE) {
-            const text = node.textContent;
-            if (text) {
-              const fontFamily = getInlineFontFamily(node) || '';
-              runs.push({ text, fontFamily });
-            }
-          } else if (node.nodeType === Node.ELEMENT_NODE) {
-            for (const child of node.childNodes) {
-              extractRuns(child);
-            }
-          }
-        };
-        extractRuns(tempDiv);
+        // Create a temporary selection
+        const tempSelection = window.getSelection();
+        const originalRanges = [];
         
-        // Convert to Scatcode text
-        const scatcodeText = getScatcodeTextFromFontRuns(runs);
+        // Save the current selection
+        for (let i = 0; i < tempSelection.rangeCount; i++) {
+          originalRanges.push(tempSelection.getRangeAt(i));
+        }
+        
+        // Set our temporary selection
+        tempSelection.removeAllRanges();
+        tempSelection.addRange(range);
+        
+        // Convert to Scatcode text using the shared function
+        const scatcodeText = getScatcodeTextFromSelection(tempSelection);
+        
+        // Restore the original selection
+        tempSelection.removeAllRanges();
+        for (const r of originalRanges) {
+          tempSelection.addRange(r);
+        }
         
         // Create a Blob with UTF-8 encoding
         const blob = new Blob([scatcodeText], { type: 'text/plain;charset=utf-8' });
