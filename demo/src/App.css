@@ -12,6 +12,20 @@
 
 .app-header {
   margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.app-header img {
+  flex-shrink: 0;
+}
+
+.header-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .app-header h1 {
@@ -24,13 +38,10 @@
   margin: 0;
 }
 
-.app-header img {
-  vertical-align: middle;
-  margin-right: 1rem;
-}
-
-.app-header span {
-  vertical-align: middle;
+.subtitle {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.5;
 }
 
 .editor-container {
@@ -193,6 +204,20 @@
 @media (max-width: 768px) {
   .app-container {
     padding: 1rem;
+  }
+
+  .app-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .app-header img {
+    width: 96px;
+    height: 96px;
+  }
+
+  .header-text {
+    text-align: center;
   }
 
   .app-header h1 {
