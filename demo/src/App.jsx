@@ -631,6 +631,18 @@ function App() {
             <img src="/logo.png" alt="" width="128" height="128" />
             <span>Scatcode</span>
           </h1>
+          <div>
+            <ScatcodeText>
+              Character encoding for any characters:
+              &#xe0001;&#xe0073;&#xe0069;&#xe0074;&#xe0065;&#xe006c;&#xe0065;&#xe006e;&#xe0070;&#xe006f;&#xe006e;&#xe0061;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xe007f;&#xF1960;&#xF1954;
+              &#xe0001;&#xe007f;,
+              &#xe0001;&#xe0074;&#xe0065;&#xe006e;&#xe0067;&#xe0077;&#xe0061;&#xe0072;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xE000;&#xE046;&#xE007;&#xE040;&#xE014;
+              &#xe0001;&#xe007f;,
+              &#xe0001;&#xe006c;&#xe0069;&#xe0070;&#xe0061;&#xe0072;&#xe0078;&#xe0065;&#xe002e;&#xe0067;&#xe0069;&#xe006d;&#xe0069;&#xe0074;&#xe0065;&#xe002e;&#xe006e;&#xe0065;&#xe0074;&#xe007f;liparxe
+              &#xe0001;&#xe007f;,
+              and your own script
+            </ScatcodeText>
+          </div>
         </header>
         <div className="editor-container">
           <CKEditor
