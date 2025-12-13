@@ -10,6 +10,35 @@
   min-height: 100vh;
 }
 
+.language-switcher {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.language-switcher button {
+  padding: 0.5rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+.language-switcher button:hover {
+  border-color: #7b9ef5;
+  background: #f7fafc;
+  color: #2d3748;
+}
+
+.language-switcher button:active {
+  transform: scale(0.98);
+}
+
 .app-header {
   margin-bottom: 2rem;
   display: flex;

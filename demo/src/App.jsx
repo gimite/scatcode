@@ -622,10 +622,19 @@ function App() {
     return () => document.removeEventListener('selectionchange', handleSelectionChange);
   }, []);
 
+  const handleLanguageSwitch = (lang) => {
+    const newUrl = `/?lang=${lang}`;
+    window.history.pushState({}, '', newUrl);
+  };
+
   return (
     <div className="app-root">
       {showToast && <div className="toast">Copied!</div>}
       <div className="app-container">
+        <div className="language-switcher">
+          <button onClick={() => handleLanguageSwitch('en')}>English</button>
+          <button onClick={() => handleLanguageSwitch('tok')}>Toki Pona</button>
+        </div>
         <header className="app-header">
           <img src="/logo.png" alt="" width="128" height="128" />
           <div className="header-text">
