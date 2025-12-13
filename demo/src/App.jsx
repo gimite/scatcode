@@ -437,6 +437,10 @@ function App() {
   const [domainPreset, setDomainPreset] = useState('sitelenpona');
   const [domainInput, setDomainInput] = useState('sitelenpona.gimite.net');
   const [tableDomain, setTableDomain] = useState('');
+  const [language, setLanguage] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('lang') || 'en';
+  });
   const [tableDomainData, setTableDomainData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -625,6 +629,7 @@ function App() {
   const handleLanguageSwitch = (lang) => {
     const newUrl = `/?lang=${lang}`;
     window.history.pushState({}, '', newUrl);
+    setLanguage(lang);
   };
 
   return (
