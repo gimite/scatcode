@@ -2,6 +2,7 @@ import { useEffect, Children, useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import { unicodeName } from 'unicode-name';
+import Messages from './Messages';
 
 import 'ckeditor5/ckeditor5.css';
 import './App.css';
@@ -448,10 +449,7 @@ function App() {
   const [selectedScatcodeText, setSelectedScatcodeText] = useState('');
   const [showToast, setShowToast] = useState(false);
 
-  const titleMessage = {
-    en: 'Scatcode',
-    tok: '\u{E0001}\u{E0073}\u{E0069}\u{E0074}\u{E0065}\u{E006C}\u{E0065}\u{E006E}\u{E0070}\u{E006F}\u{E006E}\u{E0061}\u{E002E}\u{E0067}\u{E0069}\u{E006D}\u{E0069}\u{E0074}\u{E0065}\u{E002E}\u{E006E}\u{E0065}\u{E0074}\u{E007F}\u{F193F}\u{F1960}\u{F1976}',
-  };
+  const messages = Messages[language];
 
   const editorContentScatcodeText = 
     'Scatcode is an experimental character encoding that can support any characters. ' +
@@ -651,7 +649,7 @@ function App() {
         <header className="app-header">
           <img src="/logo.png" alt="" width="128" height="128" />
           <div className="header-text">
-            <h1><ScatcodeText>{titleMessage[language]}</ScatcodeText></h1>
+            <h1><ScatcodeText>{messages.title}</ScatcodeText></h1>
             <div className="subtitle">
               <ScatcodeText>
                 Character encoding for any characters:
