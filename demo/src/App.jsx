@@ -451,33 +451,6 @@ function App() {
 
   const messages = Messages[language];
 
-  const editorContentScatcodeText = 
-    'Scatcode is an experimental character encoding that can support any characters. ' +
-    'It supports non-Unicode characters like ' +
-    '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
-    '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
-    '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1960}\u{F1954}\u{e0001}\u{e007f} (Sitelen Pona), ' +
-    '\u{e0001}\u{e0074}\u{e0065}\u{e006e}\u{e0067}\u{e0077}\u{e0061}\u{e0072}\u{e002e}\u{e0067}' +
-    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
-    '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} (Tengwar), and ' +
-    '\u{e0001}\u{e006c}\u{e0069}\u{e0070}\u{e0061}\u{e0072}\u{e0078}\u{e0065}\u{e002e}\u{e0067}' +
-    '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
-    'liparxe\u{e0001}\u{e007f} (Liparxe). ' +
-    'You can even add your own characters!\n\n' +
-    'You can try Scatcode in this editor. Try:\n\n' +
-    '• Copy characters from the character table below and paste them here.\n' +
-    '• Copy text to your favorite text editor (the text will look garbled there) and paste it' +
-    ' back here to see the characters recovered.\n' +
-    '• Select text here like ' +
-    '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
-    '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
-    '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1942}\u{F1941}\u{e0001}\u{e007f} ' +
-    'to see the character details and how they are encoded.\n\n' +
-    'How does it work?\n\n' +
-    '• In Scatcode, each character belongs to a "domain" identified by a domain name ' +
-    '(e.g., sitelenpona.gimite.net for Sitelen Pona).\n' +
-    '• It uses special Unicode tag characters to mark which domain each text segment belongs to.';
-
   const domainPresets = {
     'sitelenpona': 'sitelenpona.gimite.net',
     'tengwar': 'tengwar.gimite.net',
@@ -635,6 +608,12 @@ function App() {
     setLanguage(lang);
   };
 
+  useEffect(() => {
+    if (!editorRef.current) return;
+    const html = parseScatcodeToHtml(messages.overview);
+    editorRef.current.setData(html);
+  }, [language]);
+
   return (
     <div className="app-root">
       {showToast && <div className="toast">Copied!</div>}
@@ -737,6 +716,9 @@ function App() {
                   console.error('Error enforcing default font on typing:', err);
                 }
               }, { priority: 'high' });
+
+              let html = parseScatcodeToHtml(messages.overview);
+              editor.setData(html);
             }}
             config={ {
               licenseKey: 'GPL',
@@ -750,7 +732,6 @@ function App() {
                   'saveButton',
                 ]
               },
-              initialData: parseScatcodeToHtml(editorContentScatcodeText),
             } }
           />
         </div>
