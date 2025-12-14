@@ -55,11 +55,16 @@ if @json_mode
 end
 
 ARGF.each_line do |line|
+  prev_type = nil
   for word in line.chomp.split(/\s+/)
     if sp = lasina_to_sp[word]
+      print_scatcode(" ", "") if prev_type  == :normal
       print_scatcode(sp, "sitelenpona.gimite.net")
+      prev_type = :sp
     else
+      print_scatcode(" ", "") if prev_type != nil
       print_scatcode(word, "")
+      prev_type = :normal
     end
   end
   print_scatcode("\n", "")
