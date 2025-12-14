@@ -648,7 +648,11 @@ function App() {
           {language === 'tok' ? (
             <button onClick={() => handleLanguageSwitch('en')}>English</button>
           ) : (
-            <button onClick={() => handleLanguageSwitch('tok')}>Toki Pona</button>
+            <button onClick={() => handleLanguageSwitch('tok')}>
+              <ScatcodeText>
+                &#xE0001;&#xE0073;&#xE0069;&#xE0074;&#xE0065;&#xE006C;&#xE0065;&#xE006E;&#xE0070;&#xE006F;&#xE006E;&#xE0061;&#xE002E;&#xE0067;&#xE0069;&#xE006D;&#xE0069;&#xE0074;&#xE0065;&#xE002E;&#xE006E;&#xE0065;&#xE0074;&#xE007F;&#xF196C;&#xF1954;
+              </ScatcodeText>
+            </button>
           )}
         </div>
         <header className="app-header">
