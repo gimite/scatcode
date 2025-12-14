@@ -9,6 +9,33 @@ import './App.css';
 
 const toCodePoints = (str) => Array.from(str, ch => ch.codePointAt(0));
 
+// Convert a string into a JSON string literal with non-ASCII printable characters
+// encoded as \u{xxxx} format (xxxx must be at least 4 digits)
+const toJsonStringLiteral = (str) => {
+  let result = '"';
+  for (const ch of str) {
+    const code = ch.charCodeAt(0);
+    // ASCII printable range: 0x20 (space) to 0x7E (~)
+    if (code >= 0x20 && code <= 0x7E) {
+      // Handle special characters that need escaping in JSON
+      if (ch === '"') {
+        result += '\\"';
+      } else if (ch === '\\') {
+        result += '\\\\';
+      } else {
+        result += ch;
+      }
+    } else {
+      // Encode non-ASCII printable characters as \u{xxxx}
+      const codePoint = ch.codePointAt(0);
+      const hexStr = codePoint.toString(16).toUpperCase().padStart(4, '0');
+      result += `\\u{${hexStr}}`;
+    }
+  }
+  result += '"';
+  return result;
+};
+
 // Custom Save button plugin for CKEditor
 class SaveButtonPlugin extends Plugin {
   init() {
@@ -515,8 +542,7 @@ function App() {
           ranges.push(selection.getRangeAt(i));
         }
         const scatcodeText = getScatcodeTextFromRanges(ranges);
-        console.log('Scatcode text:', scatcodeText);
-        console.log('Scatcode text codepoints:', toCodePoints(scatcodeText));
+        console.log('Scatcode text:', toJsonStringLiteral(scatcodeText));
         cb.setData('text/plain', scatcodeText);
         e.preventDefault();
       } catch (err) {
