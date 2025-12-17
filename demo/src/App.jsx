@@ -405,7 +405,7 @@ function parseScatcodeToHtml(text) {
   return result;
 }
 
-function CharacterTable({ characters, onCopy }) {
+function CharacterTable({ characters, messages, onCopy }) {
   const handleCharacterClick = (event) => {
     try {
       // Select the text content of the clicked cell
@@ -432,9 +432,9 @@ function CharacterTable({ characters, onCopy }) {
     <table className="character-table">
       <thead>
         <tr>
-          <th>Character</th>
-          <th>Name</th>
-          <th>Codepoint</th>
+          <th><ScatcodeText>{messages.character}</ScatcodeText></th>
+          <th><ScatcodeText>{messages.name}</ScatcodeText></th>
+          <th><ScatcodeText>{messages.codepoint}</ScatcodeText></th>
         </tr>
       </thead>
       <tbody>
@@ -762,15 +762,15 @@ function App() {
         <div className="content-section">
           {selectedChars ? (
             <div>
-              <h3>Selected characters</h3>
-              <CharacterTable characters={selectedChars} onCopy={handleCopyToast} />
+              <h3><ScatcodeText>{messages.selectedCharacters}</ScatcodeText></h3>
+              <CharacterTable characters={selectedChars} messages={messages} onCopy={handleCopyToast} />
 
-              <h3>How they are encoded</h3>
+              <h3><ScatcodeText>{messages.howTheyAreEncoded}</ScatcodeText></h3>
               <table className="character-table">
                 <thead>
                   <tr>
-                    <th>Codepoint</th>
-                    <th>Name</th>
+                    <th><ScatcodeText>{messages.codepoint}</ScatcodeText></th>
+                    <th><ScatcodeText>{messages.name}</ScatcodeText></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -793,7 +793,7 @@ function App() {
             </div>
           ) : (
             <>
-              <h3>Available characters</h3>
+              <h3><ScatcodeText>{messages.availableCharacters}</ScatcodeText></h3>
               <form onSubmit={handleCharacterTableSubmit} className="domain-selector-form">
                 <select 
                   value={domainPreset}
@@ -819,6 +819,7 @@ function App() {
               {tableDomainData && (
                 <div>
                   <CharacterTable 
+                    messages={messages}
                     onCopy={handleCopyToast}
                     characters={tableDomainData.characters.map((ch) => {
                       const domainFontFamily = tableDomain.replace(/\./g, ' ');
