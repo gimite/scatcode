@@ -656,7 +656,7 @@ function App() {
           )}
         </div>
         <header className="app-header">
-          <img src="/logo.png" alt="" width="128" height="128" />
+          <img src="/logo.png" alt="" />
           <div className="header-text">
             <h1><ScatcodeText>{messages.title}</ScatcodeText></h1>
             <div className="subtitle">

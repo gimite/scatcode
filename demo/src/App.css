@@ -1,7 +1,3 @@
-.app-root {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-}
-
 .app-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -49,6 +45,8 @@
 
 .app-header img {
   flex-shrink: 0;
+  width: 96px;
+  height: 96px;
 }
 
 .header-text {
@@ -235,11 +233,6 @@
 @media (max-width: 768px) {
   .app-container {
     padding: 1rem;
-  }
-
-  .app-header img {
-    width: 96px;
-    height: 96px;
   }
 
   .editor-container,
