@@ -124,6 +124,10 @@
   background: white;
 }
 
+.domain-selector-form input {
+  width: 15rem;
+}
+
 .domain-selector-form select:hover,
 .domain-selector-form input:hover {
   border-color: #667eea;
@@ -247,7 +251,9 @@
 
   .domain-selector-form select,
   .domain-selector-form input {
-    width: 100%;
+    width: -webkit-fill-available;
+    width: -moz-available;
+    width: stretch;
   }
 
   .character-table th,

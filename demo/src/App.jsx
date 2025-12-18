@@ -810,6 +810,7 @@ function App() {
                   onChange={(e) => setDomainInput(e.target.value)}
                   placeholder="example.com"
                   disabled={domainPreset !== 'custom'}
+                  size={1}
                 />
               </form>
 
