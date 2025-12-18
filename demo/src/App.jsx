@@ -188,6 +188,7 @@ async function loadData(domain) {
         @font-face {
           font-family: ${fontFamilyExp};
           src: ${styleSrcs.join(', ')};
+          font-display: block;
         }
       `;
       document.head.appendChild(style);
