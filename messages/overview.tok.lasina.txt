@@ -1,7 +1,7 @@
-nasin sitelen weka li wan pi nasin sitelen lipu lon ilo sona
+nasin sitelen weka li wan pi { nasin sitelen lipu } lon ilo sona
 kepeken nasin sitelen lipu la ilo sona li ante e sitelen tawa nanpa
 kepeken nasin sitelen weka la sina ken sitelen e sitelen ale
-sina ken sitelen e sitelen pona e 󠀁󠁴󠁥󠁮󠁧󠁷󠁡󠁲󠀮󠁧󠁩󠁭󠁩󠁴󠁥󠀮󠁮󠁥󠁴󠁿󠀁󠁿 ( sitelen [ telo e ni ken a ] ) e 󠀁󠁬󠁩󠁰󠁡󠁲󠁸󠁥󠀮󠁧󠁩󠁭󠁩󠁴󠁥󠀮󠁮󠁥󠁴󠁿liparxe󠀁󠁿 ( sitelen [ linja ijo pona a sina e ] )
+sina ken sitelen e sitelen - pona e 󠀁󠁴󠁥󠁮󠁧󠁷󠁡󠁲󠀮󠁧󠁩󠁭󠁩󠁴󠁥󠀮󠁮󠁥󠁴󠁿󠀁󠁿 ( sitelen [ telo e ni ken a ] ) e 󠀁󠁬󠁩󠁰󠁡󠁲󠁸󠁥󠀮󠁧󠁩󠁭󠁩󠁴󠁥󠀮󠁮󠁥󠁴󠁿liparxe󠀁󠁿 ( sitelen [ linja ijo pona a sina e ] )
 kin la sina ken pali e sitelen sina li ken sitelen e ona a
 sina ken kepeken nasin sitelen weka lon poki sitelen ni
 
@@ -18,10 +18,10 @@ o luka e sitelen lon poki ni o kule e ona la sina sona e ni
 sitelen ni li seme
 nasin sitelen weka li ante e sitelen ni tawa seme
 
-insa pi nasin sitelen weka li seme
+insa pi { nasin sitelen weka } li seme
 
 nasin sitelen weka la sitelen wan li lon kulupu wan
-sitelen pona li lon kulupu sitelenpona.gimite.net
+sitelen - pona li lon kulupu sitelenpona.gimite.net
 
 ilo li lukin e lipu kepeken nasin sitelen weka la ilo li wile sona e ni
 sitelen ni li lon kulupu seme
