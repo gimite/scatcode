@@ -429,34 +429,36 @@ function CharacterTable({ characters, messages, onCopy }) {
   };
 
   return (
-    <table className="character-table">
-      <thead>
-        <tr>
-          <th><ScatcodeText>{messages.character}</ScatcodeText></th>
-          <th><ScatcodeText>{messages.name}</ScatcodeText></th>
-          <th><ScatcodeText>{messages.codepoint}</ScatcodeText></th>
-        </tr>
-      </thead>
-      <tbody>
-        {characters.length === 0 && (
-          <tr><td colSpan={3} className="no-data-message">No characters found.</td></tr>
-        )}
-        {characters.map((charInfo, i) => (
-          <tr key={i}>
-            <td 
-              className="character" 
-              style={{ fontFamily: charInfo.fontFamily, cursor: 'pointer' }}
-              onClick={handleCharacterClick}
-              title="Click to copy"
-            >
-              {charInfo.char}
-            </td>
-            <td>{charInfo.name}</td>
-            <td>{charInfo.codepoint}</td>
+    <div className="character-table-wrapper">
+      <table className="character-table">
+        <thead>
+          <tr>
+            <th><ScatcodeText>{messages.character}</ScatcodeText></th>
+            <th><ScatcodeText>{messages.name}</ScatcodeText></th>
+            <th><ScatcodeText>{messages.codepoint}</ScatcodeText></th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {characters.length === 0 && (
+            <tr><td colSpan={3} className="no-data-message">No characters found.</td></tr>
+          )}
+          {characters.map((charInfo, i) => (
+            <tr key={i}>
+              <td 
+                className="character" 
+                style={{ fontFamily: charInfo.fontFamily, cursor: 'pointer' }}
+                onClick={handleCharacterClick}
+                title="Click to copy"
+              >
+                {charInfo.char}
+              </td>
+              <td>{charInfo.name}</td>
+              <td>{charInfo.codepoint}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -766,13 +768,14 @@ function App() {
               <CharacterTable characters={selectedChars} messages={messages} onCopy={handleCopyToast} />
 
               <h3><ScatcodeText>{messages.howTheyAreEncoded}</ScatcodeText></h3>
-              <table className="character-table">
-                <thead>
-                  <tr>
-                    <th><ScatcodeText>{messages.codepoint}</ScatcodeText></th>
-                    <th><ScatcodeText>{messages.name}</ScatcodeText></th>
-                  </tr>
-                </thead>
+              <div className="character-table-wrapper">
+                <table className="character-table">
+                  <thead>
+                    <tr>
+                      <th><ScatcodeText>{messages.codepoint}</ScatcodeText></th>
+                      <th><ScatcodeText>{messages.name}</ScatcodeText></th>
+                    </tr>
+                  </thead>
                 <tbody>
                   {(() => {
                     const codepoints = toCodePoints(selectedScatcodeText);
@@ -790,6 +793,7 @@ function App() {
                   })()}
                 </tbody>
               </table>
+              </div>
             </div>
           ) : (
             <>
