@@ -5,7 +5,7 @@ export default {
       'Character encoding for any characters: ' +
       '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
       '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
-      '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1960}\u{F1954}\u{e0001}\u{e007f}, ' +
+      '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1960}\u{F1996}\u{F1954}\u{e0001}\u{e007f}, ' +
       '\u{e0001}\u{e0074}\u{e0065}\u{e006e}\u{e0067}\u{e0077}\u{e0061}\u{e0072}\u{e002e}\u{e0067}' +
       '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
       '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f}, ' +
@@ -17,7 +17,7 @@ export default {
       'It supports non-Unicode characters like ' +
       '\u{e0001}\u{e0073}\u{e0069}\u{e0074}\u{e0065}\u{e006c}\u{e0065}\u{e006e}\u{e0070}\u{e006f}' +
       '\u{e006e}\u{e0061}\u{e002e}\u{e0067}\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}' +
-      '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1960}\u{F1954}\u{e0001}\u{e007f} (Sitelen Pona), ' +
+      '\u{e006e}\u{e0065}\u{e0074}\u{e007f}\u{F1960}\u{F1996}\u{F1954}\u{e0001}\u{e007f} (Sitelen Pona), ' +
       '\u{e0001}\u{e0074}\u{e0065}\u{e006e}\u{e0067}\u{e0077}\u{e0061}\u{e0072}\u{e002e}\u{e0067}' +
       '\u{e0069}\u{e006d}\u{e0069}\u{e0074}\u{e0065}\u{e002e}\u{e006e}\u{e0065}\u{e0074}\u{e007f}' +
       '\u{E000}\u{E046}\u{E007}\u{E040}\u{E014}\u{e0001}\u{e007f} (Tengwar), and ' +
