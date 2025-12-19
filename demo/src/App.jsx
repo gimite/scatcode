@@ -1,8 +1,11 @@
 import { useEffect, Children, useRef, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
+
 import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import { unicodeName } from 'unicode-name';
 import Messages from './Messages';
+import alignBottomSVG from './align-bottom.svg?raw';
+import fileUploadSVG from './file-upload.svg?raw';
 
 import 'ckeditor5/ckeditor5.css';
 import './App.css';
@@ -44,8 +47,9 @@ class SaveButtonPlugin extends Plugin {
     editor.ui.componentFactory.add('saveButton', locale => {
       const view = new ButtonView(locale);
       view.set({
+        icon: alignBottomSVG,
         label: 'Save',
-        withText: true,
+        withText: false,
         tooltip: true
       });
       view.on('execute', () => {
@@ -91,8 +95,9 @@ class LoadButtonPlugin extends Plugin {
     editor.ui.componentFactory.add('loadButton', locale => {
       const view = new ButtonView(locale);
       view.set({
+        icon: fileUploadSVG,
         label: 'Load',
-        withText: true,
+        withText: false,
         tooltip: true
       });
       view.on('execute', () => {
