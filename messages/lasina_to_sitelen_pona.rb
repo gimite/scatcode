@@ -18,6 +18,8 @@ for char_data in scatcode_data["characters"]
     lasina = "]"
   when "MIDDLE DOT"
     lasina = "*"
+  when "COLON"
+    lasina = ":"
   when "SCALING JOINER"
     lasina = "-"
   when "START OF LONG GLYPH"
