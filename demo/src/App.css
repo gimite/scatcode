@@ -270,36 +270,23 @@
 /* Toast notification */
 .toast {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: black;
   color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
   z-index: 10000;
-  animation: slideIn 0.3s ease-out, slideOut 0.3s ease-in 1.7s;
+  animation: fadeOut 0.3s ease-in 1.7s forwards;
 }
 
-@keyframes slideIn {
+@keyframes fadeOut {
   from {
-    transform: translateX(400px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOut {
-  from {
-    transform: translateX(0);
     opacity: 1;
   }
   to {
-    transform: translateX(400px);
     opacity: 0;
   }
 }
