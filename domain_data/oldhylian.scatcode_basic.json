@@ -1,0 +1,194 @@
+{
+  "name": "Old Hylian",
+  "fallbackFont": {
+    "src": [
+      {"url": "https://oldhylian.gimite.net/NuTsurunkoimai-Regular-v1.0.1.woff2", "format": "woff2"}
+    ]
+  },
+  "characters": [
+    {
+      "codepoint": "3042",
+      "name": "LETTER A"
+    },
+    {
+      "codepoint": "3044",
+      "name": "LETTER I"
+    },
+    {
+      "codepoint": "3046",
+      "name": "LETTER U"
+    },
+    {
+      "codepoint": "3048",
+      "name": "LETTER E"
+    },
+    {
+      "codepoint": "304A",
+      "name": "LETTER O"
+    },
+    {
+      "codepoint": "304B",
+      "name": "LETTER KA"
+    },
+    {
+      "codepoint": "304D",
+      "name": "LETTER KI"
+    },
+    {
+      "codepoint": "304F",
+      "name": "LETTER KU"
+    },
+    {
+      "codepoint": "3051",
+      "name": "LETTER KE"
+    },
+    {
+      "codepoint": "3053",
+      "name": "LETTER KO"
+    },
+    {
+      "codepoint": "3055",
+      "name": "LETTER SA"
+    },
+    {
+      "codepoint": "3057",
+      "name": "LETTER SI"
+    },
+    {
+      "codepoint": "3059",
+      "name": "LETTER SU"
+    },
+    {
+      "codepoint": "305B",
+      "name": "LETTER SE"
+    },
+    {
+      "codepoint": "305D",
+      "name": "LETTER SO"
+    },
+    {
+      "codepoint": "305F",
+      "name": "LETTER TA"
+    },
+    {
+      "codepoint": "3061",
+      "name": "LETTER TI"
+    },
+    {
+      "codepoint": "3064",
+      "name": "LETTER TU"
+    },
+    {
+      "codepoint": "3066",
+      "name": "LETTER TE"
+    },
+    {
+      "codepoint": "3068",
+      "name": "LETTER TO"
+    },
+    {
+      "codepoint": "306A",
+      "name": "LETTER NA"
+    },
+    {
+      "codepoint": "306B",
+      "name": "LETTER NI"
+    },
+    {
+      "codepoint": "306C",
+      "name": "LETTER NU"
+    },
+    {
+      "codepoint": "306D",
+      "name": "LETTER NE"
+    },
+    {
+      "codepoint": "306E",
+      "name": "LETTER NO"
+    },
+    {
+      "codepoint": "306F",
+      "name": "LETTER HA"
+    },
+    {
+      "codepoint": "3072",
+      "name": "LETTER HI"
+    },
+    {
+      "codepoint": "3075",
+      "name": "LETTER HU"
+    },
+    {
+      "codepoint": "3078",
+      "name": "LETTER HE"
+    },
+    {
+      "codepoint": "307B",
+      "name": "LETTER HO"
+    },
+    {
+      "codepoint": "307E",
+      "name": "LETTER MA"
+    },
+    {
+      "codepoint": "307F",
+      "name": "LETTER MI"
+    },
+    {
+      "codepoint": "3080",
+      "name": "LETTER MU"
+    },
+    {
+      "codepoint": "3081",
+      "name": "LETTER ME"
+    },
+    {
+      "codepoint": "3082",
+      "name": "LETTER MO"
+    },
+    {
+      "codepoint": "3084",
+      "name": "LETTER YA"
+    },
+    {
+      "codepoint": "3086",
+      "name": "LETTER YU"
+    },
+    {
+      "codepoint": "3088",
+      "name": "LETTER YO"
+    },
+    {
+      "codepoint": "3089",
+      "name": "LETTER RA"
+    },
+    {
+      "codepoint": "308A",
+      "name": "LETTER RI"
+    },
+    {
+      "codepoint": "308B",
+      "name": "LETTER RU"
+    },
+    {
+      "codepoint": "308C",
+      "name": "LETTER RE"
+    },
+    {
+      "codepoint": "308D",
+      "name": "LETTER RO"
+    },
+    {
+      "codepoint": "308F",
+      "name": "LETTER WA"
+    },
+    {
+      "codepoint": "3092",
+      "name": "LETTER WO"
+    },
+    {
+      "codepoint": "3093",
+      "name": "LETTER N"
+    }
+  ]
+}

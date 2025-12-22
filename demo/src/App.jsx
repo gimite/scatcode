@@ -490,6 +490,7 @@ function App() {
     'sitelenpona': 'sitelenpona.gimite.net',
     'tengwar': 'tengwar.gimite.net',
     'liparxe': 'liparxe.gimite.net',
+    'oldhylian': 'oldhylian.gimite.net',
   };
 
   const handleCharacterTableSubmit = async (e) => {
@@ -812,6 +813,7 @@ function App() {
                   <option value="sitelenpona">Sitelen Pona</option>
                   <option value="tengwar">Tengwar</option>
                   <option value="liparxe">Liparxe</option>
+                  <option value="oldhylian">Old Hylian</option>
                   <option value="custom">Custom domain...</option>
                 </select>
                 <input
