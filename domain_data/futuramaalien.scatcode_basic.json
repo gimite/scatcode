@@ -1,0 +1,178 @@
+{
+  "name": "Futurama Alien Alphabet",
+  "fallbackFont": {
+    "src": [
+      {"url": "https://futuramaalien.gimite.net/fr-fal1.woff", "format": "woff"}
+    ]
+  },
+  "characters": [
+    {
+      "codepoint": "0021",
+      "name": "EXCLAMATION MARK"
+    },
+    {
+      "codepoint": "0027",
+      "name": "QUOTATION MARK"
+    },
+    {
+      "codepoint": "002D",
+      "name": "HYPHEN"
+    },
+    {
+      "codepoint": "002E",
+      "name": "FULL STOP"
+    },
+    {
+      "codepoint": "0030",
+      "name": "DIGIT ZERO"
+    },
+    {
+      "codepoint": "0031",
+      "name": "DIGIT ONE"
+    },
+    {
+      "codepoint": "0032",
+      "name": "DIGIT TWO"
+    },
+    {
+      "codepoint": "0033",
+      "name": "DIGIT THREE"
+    },
+    {
+      "codepoint": "0034",
+      "name": "DIGIT FOUR"
+    },
+    {
+      "codepoint": "0035",
+      "name": "DIGIT FIVE"
+    },
+    {
+      "codepoint": "0036",
+      "name": "DIGIT SIX"
+    },
+    {
+      "codepoint": "0037",
+      "name": "DIGIT SEVEN"
+    },
+    {
+      "codepoint": "0038",
+      "name": "DIGIT EIGHT"
+    },
+    {
+      "codepoint": "0039",
+      "name": "DIGIT NINE"
+    },
+    {
+      "codepoint": "003A",
+      "name": "COLON"
+    },
+    {
+      "codepoint": "003B",
+      "name": "SEMICOLON"
+    },
+    {
+      "codepoint": "0041",
+      "name": "LETTER A"
+    },
+    {
+      "codepoint": "0042",
+      "name": "LETTER B"
+    },
+    {
+      "codepoint": "0043",
+      "name": "LETTER C"
+    },
+    {
+      "codepoint": "0044",
+      "name": "LETTER D"
+    },
+    {
+      "codepoint": "0045",
+      "name": "LETTER E"
+    },
+    {
+      "codepoint": "0046",
+      "name": "LETTER F"
+    },
+    {
+      "codepoint": "0047",
+      "name": "LETTER G"
+    },
+    {
+      "codepoint": "0048",
+      "name": "LETTER H"
+    },
+    {
+      "codepoint": "0049",
+      "name": "LETTER I"
+    },
+    {
+      "codepoint": "004A",
+      "name": "LETTER J"
+    },
+    {
+      "codepoint": "004B",
+      "name": "LETTER K"
+    },
+    {
+      "codepoint": "004C",
+      "name": "LETTER L"
+    },
+    {
+      "codepoint": "004D",
+      "name": "LETTER M"
+    },
+    {
+      "codepoint": "004E",
+      "name": "LETTER N"
+    },
+    {
+      "codepoint": "004F",
+      "name": "LETTER O"
+    },
+    {
+      "codepoint": "0050",
+      "name": "LETTER P"
+    },
+    {
+      "codepoint": "0051",
+      "name": "LETTER Q"
+    },
+    {
+      "codepoint": "0052",
+      "name": "LETTER R"
+    },
+    {
+      "codepoint": "0053",
+      "name": "LETTER S"
+    },
+    {
+      "codepoint": "0054",
+      "name": "LETTER T"
+    },
+    {
+      "codepoint": "0055",
+      "name": "LETTER U"
+    },
+    {
+      "codepoint": "0056",
+      "name": "LETTER V"
+    },
+    {
+      "codepoint": "0057",
+      "name": "LETTER W"
+    },
+    {
+      "codepoint": "0058",
+      "name": "LETTER X"
+    },
+    {
+      "codepoint": "0059",
+      "name": "LETTER Y"
+    },
+    {
+      "codepoint": "005A",
+      "name": "LETTER Z"
+    }
+  ]
+}

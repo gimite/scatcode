@@ -491,6 +491,7 @@ function App() {
     'tengwar': 'tengwar.gimite.net',
     'liparxe': 'liparxe.gimite.net',
     'oldhylian': 'oldhylian.gimite.net',
+    'futuramaalien': 'futuramaalien.gimite.net',
   };
 
   const handleCharacterTableSubmit = async (e) => {
@@ -814,6 +815,7 @@ function App() {
                   <option value="tengwar">Tengwar</option>
                   <option value="liparxe">Liparxe</option>
                   <option value="oldhylian">Old Hylian</option>
+                  <option value="futuramaalien">Futurama Alien Alphabet</option>
                   <option value="custom">Custom domain...</option>
                 </select>
                 <input
