@@ -1,0 +1,210 @@
+{
+  "name": "Proto Sinaitic",
+  "fallbackFont": {
+    "src": [
+      {"url": "https://protosinaitic.gimite.net/proto-sianitic.woff2", "format": "woff2"}
+    ]
+  },
+  "characters": [
+    {
+      "codepoint": "05D0",
+      "name": "LETTER ALEF"
+    },
+    {
+      "codepoint": "10900",
+      "name": "LETTER ALEF PHOENICIAN"
+    },
+    {
+      "codepoint": "05E2",
+      "name": "LETTER AYIN"
+    },
+    {
+      "codepoint": "1090F",
+      "name": "LETTER AYIN PHOENICIAN"
+    },
+    {
+      "codepoint": "10901",
+      "name": "LETTER BET PHOENICIAN"
+    },
+    {
+      "codepoint": "05D1",
+      "name": "LETTER BETH"
+    },
+    {
+      "codepoint": "05D3",
+      "name": "LETTER DAL"
+    },
+    {
+      "codepoint": "10903",
+      "name": "LETTER DELT PHOENICIAN"
+    },
+    {
+      "codepoint": "05DA",
+      "name": "LETTER FINAL KAF"
+    },
+    {
+      "codepoint": "05DD",
+      "name": "LETTER FINAL MEM"
+    },
+    {
+      "codepoint": "05DF",
+      "name": "LETTER FINAL NUN"
+    },
+    {
+      "codepoint": "05E3",
+      "name": "LETTER FINAL PEH"
+    },
+    {
+      "codepoint": "05E5",
+      "name": "LETTER FINAL TZADI"
+    },
+    {
+      "codepoint": "10902",
+      "name": "LETTER GAML PHOENICIAN"
+    },
+    {
+      "codepoint": "05D2",
+      "name": "LETTER GIMEL"
+    },
+    {
+      "codepoint": "10904",
+      "name": "LETTER HE PHOENICIAN"
+    },
+    {
+      "codepoint": "05D4",
+      "name": "LETTER HEI"
+    },
+    {
+      "codepoint": "05D7",
+      "name": "LETTER HET"
+    },
+    {
+      "codepoint": "10907",
+      "name": "LETTER HET PHOENICIAN"
+    },
+    {
+      "codepoint": "05DB",
+      "name": "LETTER KAF"
+    },
+    {
+      "codepoint": "1090A",
+      "name": "LETTER KAF PHOENICIAN"
+    },
+    {
+      "codepoint": "1090B",
+      "name": "LETTER LAMD PHOENICIAN"
+    },
+    {
+      "codepoint": "05DC",
+      "name": "LETTER LAMED"
+    },
+    {
+      "codepoint": "05DE",
+      "name": "LETTER MEM"
+    },
+    {
+      "codepoint": "1090C",
+      "name": "LETTER MEM PHOENICIAN"
+    },
+    {
+      "codepoint": "05E0",
+      "name": "LETTER NUN"
+    },
+    {
+      "codepoint": "1090D",
+      "name": "LETTER NUN PHOENICIAN"
+    },
+    {
+      "codepoint": "10910",
+      "name": "LETTER PE PHOENICIAN"
+    },
+    {
+      "codepoint": "05E4",
+      "name": "LETTER PEH"
+    },
+    {
+      "codepoint": "05E7",
+      "name": "LETTER QOF"
+    },
+    {
+      "codepoint": "10912",
+      "name": "LETTER QOF PHOENICIAN"
+    },
+    {
+      "codepoint": "05E8",
+      "name": "LETTER RESH"
+    },
+    {
+      "codepoint": "10913",
+      "name": "LETTER ROSH PHOENICIAN"
+    },
+    {
+      "codepoint": "05E1",
+      "name": "LETTER SAMEKH"
+    },
+    {
+      "codepoint": "1090E",
+      "name": "LETTER SEMK PHOENICIAN"
+    },
+    {
+      "codepoint": "1091F",
+      "name": "SEPARATOR"
+    },
+    {
+      "codepoint": "10914",
+      "name": "LETTER SHEN PHOENICIAN"
+    },
+    {
+      "codepoint": "05E9",
+      "name": "LETTER SHIN"
+    },
+    {
+      "codepoint": "10915",
+      "name": "LETTER TAU PHOENICIAN"
+    },
+    {
+      "codepoint": "05EA",
+      "name": "LETTER TAV"
+    },
+    {
+      "codepoint": "05D8",
+      "name": "LETTER TET"
+    },
+    {
+      "codepoint": "10908",
+      "name": "LETTER TET PHOENICIAN"
+    },
+    {
+      "codepoint": "10911",
+      "name": "LETTER TSADE PHOENICIAN"
+    },
+    {
+      "codepoint": "05E6",
+      "name": "LETTER TZADI"
+    },
+    {
+      "codepoint": "10905",
+      "name": "LETTER WAU PHOENICIAN"
+    },
+    {
+      "codepoint": "05D5",
+      "name": "LETTER WAV"
+    },
+    {
+      "codepoint": "05D9",
+      "name": "LETTER YOD"
+    },
+    {
+      "codepoint": "10909",
+      "name": "LETTER YOD PHOENICIAN"
+    },
+    {
+      "codepoint": "10906",
+      "name": "LETTER ZAI PHOENICIAN"
+    },
+    {
+      "codepoint": "05D6",
+      "name": "LETTER ZAIN"
+    }
+  ]
+}

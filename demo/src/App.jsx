@@ -493,6 +493,7 @@ function App() {
     'oldhylian': 'oldhylian.gimite.net',
     'futuramaalien': 'futuramaalien.gimite.net',
     'daedric': 'daedric.gimite.net',
+    'protosinaitic': 'protosinaitic.gimite.net',
   };
 
   const handleCharacterTableSubmit = async (e) => {
@@ -818,6 +819,7 @@ function App() {
                   <option value="oldhylian">Old Hylian</option>
                   <option value="futuramaalien">Futurama Alien Alphabet</option>
                   <option value="daedric">Daedric</option>
+                  <option value="protosinaitic">Proto Sinaitic</option>
                   <option value="custom">Custom domain...</option>
                 </select>
                 <input
