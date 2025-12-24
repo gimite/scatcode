@@ -1,0 +1,174 @@
+{
+  "name": "Daedric",
+  "fallbackFont": {
+    "src": [
+      {"url": "https://daedric.gimite.net/HayghinDaedric.woff2", "format": "woff2"}
+    ]
+  },
+  "characters": [
+    {
+      "codepoint": "0030",
+      "name": "DIGIT ZERO"
+    },
+    {
+      "codepoint": "0031",
+      "name": "DIGIT ONE"
+    },
+    {
+      "codepoint": "0032",
+      "name": "DIGIT TWO"
+    },
+    {
+      "codepoint": "0033",
+      "name": "DIGIT THREE"
+    },
+    {
+      "codepoint": "0034",
+      "name": "DIGIT FOUR"
+    },
+    {
+      "codepoint": "0035",
+      "name": "DIGIT FIVE"
+    },
+    {
+      "codepoint": "0036",
+      "name": "DIGIT SIX"
+    },
+    {
+      "codepoint": "0037",
+      "name": "DIGIT SEVEN"
+    },
+    {
+      "codepoint": "0038",
+      "name": "DIGIT EIGHT"
+    },
+    {
+      "codepoint": "0039",
+      "name": "DIGIT NINE"
+    },
+    {
+      "codepoint": "0041",
+      "name": "LETTER AYEM"
+    },
+    {
+      "codepoint": "0042",
+      "name": "LETTER BEDT"
+    },
+    {
+      "codepoint": "0043",
+      "name": "LETTER CESS"
+    },
+    {
+      "codepoint": "0044",
+      "name": "LETTER DOHT"
+    },
+    {
+      "codepoint": "0045",
+      "name": "LETTER EKEM"
+    },
+    {
+      "codepoint": "0046",
+      "name": "LETTER HEFHED"
+    },
+    {
+      "codepoint": "0047",
+      "name": "LETTER GETH"
+    },
+    {
+      "codepoint": "0048",
+      "name": "LETTER HEKEM"
+    },
+    {
+      "codepoint": "0049",
+      "name": "LETTER IYA"
+    },
+    {
+      "codepoint": "004A",
+      "name": "LETTER JEB"
+    },
+    {
+      "codepoint": "004B",
+      "name": "LETTER KOHT"
+    },
+    {
+      "codepoint": "004C",
+      "name": "LETTER LYR"
+    },
+    {
+      "codepoint": "004D",
+      "name": "LETTER MEHT"
+    },
+    {
+      "codepoint": "004E",
+      "name": "LETTER NEHT"
+    },
+    {
+      "codepoint": "004F",
+      "name": "LETTER OHT"
+    },
+    {
+      "codepoint": "0050",
+      "name": "LETTER PAYEM"
+    },
+    {
+      "codepoint": "0051",
+      "name": "LETTER QUAM"
+    },
+    {
+      "codepoint": "0052",
+      "name": "LETTER ROHT"
+    },
+    {
+      "codepoint": "0053",
+      "name": "LETTER SEHT"
+    },
+    {
+      "codepoint": "0054",
+      "name": "LETTER TAYEM"
+    },
+    {
+      "codepoint": "0055",
+      "name": "LETTER YOODT"
+    },
+    {
+      "codepoint": "0056",
+      "name": "LETTER VEHK"
+    },
+    {
+      "codepoint": "0057",
+      "name": "LETTER WEB"
+    },
+    {
+      "codepoint": "0058",
+      "name": "LETTER XAYAH"
+    },
+    {
+      "codepoint": "0059",
+      "name": "LETTER YAHKEM"
+    },
+    {
+      "codepoint": "005A",
+      "name": "LETTER ZYR"
+    },
+    {
+      "codepoint": "0064",
+      "name": "LETTER DOHT VARIANT"
+    },
+    {
+      "codepoint": "0068",
+      "name": "LETTER HEKEM VARIANT"
+    },
+    {
+      "codepoint": "006A",
+      "name": "LETTER JEB VARIANT"
+    },
+    {
+      "codepoint": "0075",
+      "name": "LETTER YOODT VARIANT"
+    },
+    {
+      "codepoint": "0079",
+      "name": "LETTER YAHKEM VARIANT"
+    }
+  ]
+}
