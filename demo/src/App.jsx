@@ -152,7 +152,33 @@ const loadedDomains = new Set();
 const loadingPromises = new Map();
 const domainData = {};
 
+function validateDomain(domain) {
+  // Basic domain validation
+  if (!domain) {
+    return 'Domain cannot be empty';
+  }
+  
+  // Check for valid domain format (allow letters, numbers, dots, and hyphens)
+  const domainRegex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/i;
+  if (!domainRegex.test(domain)) {
+    return 'Invalid domain format (e.g., example.com)';
+  }
+  
+  // Check if it has at least one dot
+  if (!domain.includes('.')) {
+    return 'Domain must include a top-level domain (e.g., .com, .net)';
+  }
+  
+  return null; // Valid
+};
+
 async function loadData(domain) {
+  const validationError = validateDomain(domain);
+  if (validationError) {
+    console.error(`Domain validation failed for "${domain}": ${validationError}`);
+    return;
+  }
+
   // If already loaded, return immediately
   if (loadedDomains.has(domain)) {
     return;
@@ -494,26 +520,6 @@ function App() {
     'futuramaalien': 'futuramaalien.gimite.net',
     'daedric': 'daedric.gimite.net',
     'protosinaitic': 'protosinaitic.gimite.net',
-  };
-
-  const validateDomain = (domain) => {
-    // Basic domain validation
-    if (!domain) {
-      return 'Domain cannot be empty';
-    }
-    
-    // Check for valid domain format (allow letters, numbers, dots, and hyphens)
-    const domainRegex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/i;
-    if (!domainRegex.test(domain)) {
-      return 'Invalid domain format (e.g., example.com)';
-    }
-    
-    // Check if it has at least one dot
-    if (!domain.includes('.')) {
-      return 'Domain must include a top-level domain (e.g., .com, .net)';
-    }
-    
-    return null; // Valid
   };
 
   const handleCharacterTableSubmit = async (e) => {
