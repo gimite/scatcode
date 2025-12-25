@@ -8,203 +8,91 @@
   "characters": [
     {
       "codepoint": "05D0",
-      "name": "LETTER ALEF"
-    },
-    {
-      "codepoint": "10900",
-      "name": "LETTER ALEF PHOENICIAN"
+      "name": "LETTER ALP"
     },
     {
       "codepoint": "05E2",
-      "name": "LETTER AYIN"
-    },
-    {
-      "codepoint": "1090F",
-      "name": "LETTER AYIN PHOENICIAN"
-    },
-    {
-      "codepoint": "10901",
-      "name": "LETTER BET PHOENICIAN"
+      "name": "LETTER AYN"
     },
     {
       "codepoint": "05D1",
-      "name": "LETTER BETH"
+      "name": "LETTER BAYT"
     },
     {
       "codepoint": "05D3",
-      "name": "LETTER DAL"
-    },
-    {
-      "codepoint": "10903",
-      "name": "LETTER DELT PHOENICIAN"
-    },
-    {
-      "codepoint": "05DA",
-      "name": "LETTER FINAL KAF"
-    },
-    {
-      "codepoint": "05DD",
-      "name": "LETTER FINAL MEM"
-    },
-    {
-      "codepoint": "05DF",
-      "name": "LETTER FINAL NUN"
-    },
-    {
-      "codepoint": "05E3",
-      "name": "LETTER FINAL PEH"
-    },
-    {
-      "codepoint": "05E5",
-      "name": "LETTER FINAL TZADI"
-    },
-    {
-      "codepoint": "10902",
-      "name": "LETTER GAML PHOENICIAN"
+      "name": "LETTER DAG"
     },
     {
       "codepoint": "05D2",
-      "name": "LETTER GIMEL"
-    },
-    {
-      "codepoint": "10904",
-      "name": "LETTER HE PHOENICIAN"
+      "name": "LETTER GAML"
     },
     {
       "codepoint": "05D4",
-      "name": "LETTER HEI"
+      "name": "LETTER HILLUL"
     },
     {
       "codepoint": "05D7",
-      "name": "LETTER HET"
-    },
-    {
-      "codepoint": "10907",
-      "name": "LETTER HET PHOENICIAN"
+      "name": "LETTER HAYT"
     },
     {
       "codepoint": "05DB",
-      "name": "LETTER KAF"
-    },
-    {
-      "codepoint": "1090A",
-      "name": "LETTER KAF PHOENICIAN"
-    },
-    {
-      "codepoint": "1090B",
-      "name": "LETTER LAMD PHOENICIAN"
+      "name": "LETTER KAP"
     },
     {
       "codepoint": "05DC",
-      "name": "LETTER LAMED"
+      "name": "LETTER LAMD"
     },
     {
       "codepoint": "05DE",
-      "name": "LETTER MEM"
-    },
-    {
-      "codepoint": "1090C",
-      "name": "LETTER MEM PHOENICIAN"
+      "name": "LETTER MAYM"
     },
     {
       "codepoint": "05E0",
-      "name": "LETTER NUN"
-    },
-    {
-      "codepoint": "1090D",
-      "name": "LETTER NUN PHOENICIAN"
-    },
-    {
-      "codepoint": "10910",
-      "name": "LETTER PE PHOENICIAN"
+      "name": "LETTER NAHS"
     },
     {
       "codepoint": "05E4",
-      "name": "LETTER PEH"
+      "name": "LETTER PAY"
     },
     {
       "codepoint": "05E7",
-      "name": "LETTER QOF"
-    },
-    {
-      "codepoint": "10912",
-      "name": "LETTER QOF PHOENICIAN"
+      "name": "LETTER QUP"
     },
     {
       "codepoint": "05E8",
-      "name": "LETTER RESH"
-    },
-    {
-      "codepoint": "10913",
-      "name": "LETTER ROSH PHOENICIAN"
+      "name": "LETTER RAS"
     },
     {
       "codepoint": "05E1",
-      "name": "LETTER SAMEKH"
-    },
-    {
-      "codepoint": "1090E",
-      "name": "LETTER SEMK PHOENICIAN"
-    },
-    {
-      "codepoint": "1091F",
-      "name": "SEPARATOR"
-    },
-    {
-      "codepoint": "10914",
-      "name": "LETTER SHEN PHOENICIAN"
+      "name": "LETTER SAMK"
     },
     {
       "codepoint": "05E9",
-      "name": "LETTER SHIN"
-    },
-    {
-      "codepoint": "10915",
-      "name": "LETTER TAU PHOENICIAN"
+      "name": "LETTER TAD"
     },
     {
       "codepoint": "05EA",
-      "name": "LETTER TAV"
+      "name": "LETTER TAW"
     },
     {
       "codepoint": "05D8",
-      "name": "LETTER TET"
-    },
-    {
-      "codepoint": "10908",
-      "name": "LETTER TET PHOENICIAN"
-    },
-    {
-      "codepoint": "10911",
-      "name": "LETTER TSADE PHOENICIAN"
+      "name": "LETTER TAB"
     },
     {
       "codepoint": "05E6",
-      "name": "LETTER TZADI"
-    },
-    {
-      "codepoint": "10905",
-      "name": "LETTER WAU PHOENICIAN"
+      "name": "LETTER SAD"
     },
     {
       "codepoint": "05D5",
-      "name": "LETTER WAV"
+      "name": "LETTER WAW"
     },
     {
       "codepoint": "05D9",
-      "name": "LETTER YOD"
-    },
-    {
-      "codepoint": "10909",
-      "name": "LETTER YOD PHOENICIAN"
-    },
-    {
-      "codepoint": "10906",
-      "name": "LETTER ZAI PHOENICIAN"
+      "name": "LETTER YAD"
     },
     {
       "codepoint": "05D6",
-      "name": "LETTER ZAIN"
+      "name": "LETTER ZAYN"
     }
   ]
 }
