@@ -1,18 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://scatcode.gimite.net/scatcode.schema.json",
-  "title": "Scatcode Configuration",
-  "description": "Schema for scatcode configuration file defining custom character sets",
+  "title": "Scatcode Domain Definition",
+  "description": "Schema for Scatcode character domain definition files",
   "type": "object",
-  "required": ["name", "characters"],
+  "required": ["name", "fallbackFont", "characters"],
   "properties": {
     "name": {
       "type": "string",
-      "description": "The name of the character set"
+      "description": "The name of the character domain"
     },
     "fallbackFont": {
       "type": "object",
-      "description": "Optional fallback font configuration",
+      "description": "Fallback font configuration",
       "properties": {
         "src": {
           "type": "array",
@@ -27,7 +27,7 @@
               },
               "format": {
                 "type": "string",
-                "description": "Font format (e.g., woff2, woff, truetype)",
+                "description": "Font format as in Web font definition (e.g., woff2, woff)",
                 "examples": ["woff2", "woff", "truetype", "opentype"]
               }
             }
@@ -46,7 +46,7 @@
         "properties": {
           "codepoint": {
             "type": "string",
-            "description": "Hexadecimal Unicode codepoint (without U+ prefix)",
+            "description": "Hexadecimal codepoint",
             "pattern": "^[0-9A-Fa-f]+$"
           },
           "name": {
