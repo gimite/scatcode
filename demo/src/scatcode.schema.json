@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://scatcode.gimite.net/scatcode.schema.json",
+  "title": "Scatcode Configuration",
+  "description": "Schema for scatcode configuration file defining custom character sets",
+  "type": "object",
+  "required": ["name", "characters"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the character set"
+    },
+    "fallbackFont": {
+      "type": "object",
+      "description": "Optional fallback font configuration",
+      "properties": {
+        "src": {
+          "type": "array",
+          "description": "Array of font source definitions",
+          "items": {
+            "type": "object",
+            "required": ["url", "format"],
+            "properties": {
+              "url": {
+                "type": "string",
+                "description": "URL to the font file"
+              },
+              "format": {
+                "type": "string",
+                "description": "Font format (e.g., woff2, woff, truetype)",
+                "examples": ["woff2", "woff", "truetype", "opentype"]
+              }
+            }
+          },
+          "minItems": 1
+        }
+      },
+      "required": ["src"]
+    },
+    "characters": {
+      "type": "array",
+      "description": "Array of character definitions",
+      "items": {
+        "type": "object",
+        "required": ["codepoint", "name"],
+        "properties": {
+          "codepoint": {
+            "type": "string",
+            "description": "Hexadecimal Unicode codepoint (without U+ prefix)",
+            "pattern": "^[0-9A-Fa-f]+$"
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name of the character"
+          }
+        }
+      },
+      "minItems": 1
+    }
+  }
+}

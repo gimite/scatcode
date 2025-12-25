@@ -3,9 +3,11 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 
 import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import { unicodeName } from 'unicode-name';
+import Ajv from 'ajv';
 import Messages from './Messages';
 import alignBottomSVG from './align-bottom.svg?raw';
 import fileUploadSVG from './file-upload.svg?raw';
+import scatcodeSchema from './scatcode.schema.json';
 
 import 'ckeditor5/ckeditor5.css';
 import './App.css';
@@ -199,6 +201,16 @@ async function loadData(domain) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
+
+      // Validate JSON against schema
+      const ajv = new Ajv();
+      const validate = ajv.compile(scatcodeSchema);
+      const valid = validate(data);
+      
+      if (!valid) {
+        console.error(`Schema validation failed for ${domain}:`, validate.errors);
+        throw new Error(`Invalid scatcode.json format: ${ajv.errorsText(validate.errors)}`);
+      }
 
       const charactersMap = {};
       for (const ch of data.characters) {
