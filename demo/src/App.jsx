@@ -508,7 +508,7 @@ function CharacterTable({ characters, messages, onCopy }) {
 
 function App() {
   const editorRef = useRef(null);
-  const [domainPreset, setDomainPreset] = useState('sitelenpona');
+  const [domainPreset, setDomainPreset] = useState('sitelenpona.gimite.net');
   const [domainInput, setDomainInput] = useState('sitelenpona.gimite.net');
   const [tableDomain, setTableDomain] = useState('');
   const [language, setLanguage] = useState(() => {
@@ -523,16 +523,6 @@ function App() {
   const [showToast, setShowToast] = useState(false);
 
   const messages = Messages[language];
-
-  const domainPresets = {
-    'sitelenpona': 'sitelenpona.gimite.net',
-    'tengwar': 'tengwar.gimite.net',
-    'liparxe': 'liparxe.gimite.net',
-    'oldhylian': 'oldhylian.gimite.net',
-    'futuramaalien': 'futuramaalien.gimite.net',
-    'daedric': 'daedric.gimite.net',
-    'protosinaitic': 'protosinaitic.gimite.net',
-  };
 
   const handleCharacterTableSubmit = async (e) => {
     e.preventDefault();
@@ -572,10 +562,9 @@ function App() {
     const preset = e.target.value;
     setDomainPreset(preset);
     
-    if (preset !== 'custom') {
-      const domain = domainPresets[preset];
-      setDomainInput(domain);
-      await loadDomainData(domain);
+    if (preset !== '') {
+      setDomainInput(preset);
+      await loadDomainData(preset);
     }
   }
 
@@ -860,21 +849,22 @@ function App() {
                   value={domainPreset}
                   onChange={handlePresetChange}
                 >
-                  <option value="sitelenpona">Sitelen Pona</option>
-                  <option value="tengwar">Tengwar</option>
-                  <option value="liparxe">Liparxe</option>
-                  <option value="oldhylian">Old Hylian</option>
-                  <option value="futuramaalien">Futurama Alien Alphabet</option>
-                  <option value="daedric">Daedric</option>
-                  <option value="protosinaitic">Proto Sinaitic</option>
-                  <option value="custom">Custom domain...</option>
+                  <option value="sitelenpona.gimite.net">Sitelen Pona</option>
+                  <option value="tengwar.gimite.net">Tengwar</option>
+                  <option value="liparxe.gimite.net">Liparxe</option>
+                  <option value="oldhylian.gimite.net">Old Hylian</option>
+                  <option value="futuramaalien.gimite.net">Futurama Alien Alphabet</option>
+                  <option value="daedric.gimite.net">Daedric</option>
+                  <option value="protosinaitic.gimite.net">Proto-Sinaitic</option>
+                  <option value="linearelamite.gimite.net">Linear Elamite</option>
+                  <option value="">Custom domain...</option>
                 </select>
                 <input
                   type="text"
                   value={domainInput}
                   onChange={(e) => setDomainInput(e.target.value)}
                   placeholder="example.com"
-                  disabled={domainPreset !== 'custom'}
+                  disabled={domainPreset !== ''}
                   size={1}
                 />
               </form>

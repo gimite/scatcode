@@ -1,0 +1,298 @@
+{
+  "name": "Linear Elamite",
+  "fallbackFont": {
+    "src": [
+      {"url": "https://linearelamite.gimite.net/GEASLiberationSans-Regular.woff2", "format": "woff2"}
+    ]
+  },
+  "characters": [
+    {
+      "codepoint": "E26D",
+      "name": "LETTER A"
+    },
+    {
+      "codepoint": "E09A",
+      "name": "LETTER E"
+    },
+    {
+      "codepoint": "E179",
+      "name": "LETTER H"
+    },
+    {
+      "codepoint": "E290",
+      "name": "LETTER H2"
+    },
+    {
+      "codepoint": "E2CC",
+      "name": "LETTER HA"
+    },
+    {
+      "codepoint": "E0F7",
+      "name": "LETTER HI"
+    },
+    {
+      "codepoint": "E090",
+      "name": "LETTER HI2"
+    },
+    {
+      "codepoint": "E279",
+      "name": "LETTER HU"
+    },
+    {
+      "codepoint": "E277",
+      "name": "LETTER HU HA"
+    },
+    {
+      "codepoint": "E098",
+      "name": "LETTER HU2"
+    },
+    {
+      "codepoint": "E029",
+      "name": "LETTER I"
+    },
+    {
+      "codepoint": "E0B8",
+      "name": "LETTER K"
+    },
+    {
+      "codepoint": "E069",
+      "name": "LETTER K2"
+    },
+    {
+      "codepoint": "E1B3",
+      "name": "LETTER KA"
+    },
+    {
+      "codepoint": "E2F4",
+      "name": "LETTER KI"
+    },
+    {
+      "codepoint": "E0F3",
+      "name": "LETTER KI2"
+    },
+    {
+      "codepoint": "E0B5",
+      "name": "LETTER KU"
+    },
+    {
+      "codepoint": "E115",
+      "name": "LETTER KO"
+    },
+    {
+      "codepoint": "E2D7",
+      "name": "LETTER L"
+    },
+    {
+      "codepoint": "E00B",
+      "name": "LETTER LA"
+    },
+    {
+      "codepoint": "E127",
+      "name": "LETTER LI"
+    },
+    {
+      "codepoint": "E1A1",
+      "name": "LETTER LI2"
+    },
+    {
+      "codepoint": "E057",
+      "name": "LETTER LI3"
+    },
+    {
+      "codepoint": "E054",
+      "name": "LETTER LU"
+    },
+    {
+      "codepoint": "E2D0",
+      "name": "LETTER M"
+    },
+    {
+      "codepoint": "E2C6",
+      "name": "LETTER MWAE"
+    },
+    {
+      "codepoint": "E12B",
+      "name": "LETTER ME"
+    },
+    {
+      "codepoint": "E030",
+      "name": "LETTER MI"
+    },
+    {
+      "codepoint": "E042",
+      "name": "LETTER MO"
+    },
+    {
+      "codepoint": "E299",
+      "name": "LETTER MU2"
+    },
+    {
+      "codepoint": "E2C2",
+      "name": "LETTER N"
+    },
+    {
+      "codepoint": "E001",
+      "name": "LETTER NA"
+    },
+    {
+      "codepoint": "E1B0",
+      "name": "LETTER NE"
+    },
+    {
+      "codepoint": "E0AC",
+      "name": "LETTER NI"
+    },
+    {
+      "codepoint": "E078",
+      "name": "LETTER NU"
+    },
+    {
+      "codepoint": "E132",
+      "name": "LETTER P"
+    },
+    {
+      "codepoint": "E068",
+      "name": "LETTER P2"
+    },
+    {
+      "codepoint": "E0CA",
+      "name": "LETTER PA"
+    },
+    {
+      "codepoint": "E0E8",
+      "name": "LETTER PE"
+    },
+    {
+      "codepoint": "E0E1",
+      "name": "LETTER PI"
+    },
+    {
+      "codepoint": "E294",
+      "name": "LETTER PI2"
+    },
+    {
+      "codepoint": "E0C6",
+      "name": "LETTER PU"
+    },
+    {
+      "codepoint": "E170",
+      "name": "LETTER PO"
+    },
+    {
+      "codepoint": "E050",
+      "name": "LETTER R"
+    },
+    {
+      "codepoint": "E26F",
+      "name": "LETTER RA"
+    },
+    {
+      "codepoint": "E220",
+      "name": "LETTER RI"
+    },
+    {
+      "codepoint": "E051",
+      "name": "LETTER RI2"
+    },
+    {
+      "codepoint": "E00E",
+      "name": "LETTER RU"
+    },
+    {
+      "codepoint": "E066",
+      "name": "LETTER RU2"
+    },
+    {
+      "codepoint": "E0F9",
+      "name": "LETTER S"
+    },
+    {
+      "codepoint": "E1CA",
+      "name": "LETTER SA"
+    },
+    {
+      "codepoint": "E0A0",
+      "name": "LETTER SI"
+    },
+    {
+      "codepoint": "E040",
+      "name": "LETTER SU"
+    },
+    {
+      "codepoint": "E0A8",
+      "name": "LETTER SO"
+    },
+    {
+      "codepoint": "E060",
+      "name": "LETTER SH"
+    },
+    {
+      "codepoint": "E018",
+      "name": "LETTER SHA"
+    },
+    {
+      "codepoint": "E0B3",
+      "name": "LETTER SHE"
+    },
+    {
+      "codepoint": "E0B0",
+      "name": "LETTER SHI"
+    },
+    {
+      "codepoint": "E264",
+      "name": "LETTER SHU"
+    },
+    {
+      "codepoint": "E008",
+      "name": "LETTER T"
+    },
+    {
+      "codepoint": "E260",
+      "name": "LETTER TA"
+    },
+    {
+      "codepoint": "E070",
+      "name": "LETTER TE"
+    },
+    {
+      "codepoint": "E270",
+      "name": "LETTER TI"
+    },
+    {
+      "codepoint": "E271",
+      "name": "LETTER TU"
+    },
+    {
+      "codepoint": "E021",
+      "name": "LETTER O"
+    },
+    {
+      "codepoint": "E00A",
+      "name": "LETTER W"
+    },
+    {
+      "codepoint": "E05B",
+      "name": "LETTER WA"
+    },
+    {
+      "codepoint": "E0D4",
+      "name": "LETTER Z"
+    },
+    {
+      "codepoint": "E2E6",
+      "name": "LETTER ZA"
+    },
+    {
+      "codepoint": "E0D0",
+      "name": "LETTER ZE"
+    },
+    {
+      "codepoint": "E003",
+      "name": "LETTER ZU"
+    },
+    {
+      "codepoint": "E110",
+      "name": "LETTER ZO"
+    }
+  ]
+}

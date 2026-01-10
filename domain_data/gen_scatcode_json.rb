@@ -19,6 +19,7 @@ for (domain_name, name_regex) in [
     ["futuramaalien", nil],
     ["daedric", nil],
     ["protosinaitic", nil],
+    ["linearelamite", nil],
   ]
   data = open("#{domain_name}.scatcode_basic.json") { |f| JSON.load(f) }
   if name_regex
