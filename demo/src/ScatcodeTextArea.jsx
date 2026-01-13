@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import alignBottomSVG from './align-bottom.svg?raw';
@@ -105,6 +106,12 @@ class LoadButtonPlugin extends Plugin {
 }
 
 function ScatcodeTextArea({ editorRef, value }) {
+  useEffect(() => {
+    if (!editorRef.current) return;
+    const html = parseScatcodeToHtml(value);
+    editorRef.current.setData(html);
+  }, [value]);
+
   return (
     <CKEditor
       editor={ ClassicEditor }

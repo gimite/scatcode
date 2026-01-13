@@ -225,12 +225,6 @@ function App() {
     setLanguage(lang);
   };
 
-  useEffect(() => {
-    if (!editorRef.current) return;
-    const html = parseScatcodeToHtml(messages.overview);
-    editorRef.current.setData(html);
-  }, [language]);
-
   return (
     <div className="app-root">
       {showToast && <div className="toast">Copied!</div>}
