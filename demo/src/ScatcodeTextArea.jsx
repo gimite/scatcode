@@ -104,7 +104,7 @@ class LoadButtonPlugin extends Plugin {
   }
 }
 
-function ScatcodeTextArea({ editorRef, messages }) {
+function ScatcodeTextArea({ editorRef, value }) {
   return (
     <CKEditor
       editor={ ClassicEditor }
@@ -179,7 +179,7 @@ function ScatcodeTextArea({ editorRef, messages }) {
           }
         }, { priority: 'high' });
 
-        let html = parseScatcodeToHtml(messages.overview);
+        let html = parseScatcodeToHtml(value);
         editor.setData(html);
       }}
       config={ {

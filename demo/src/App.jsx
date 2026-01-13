@@ -281,7 +281,7 @@ function App() {
           </div>
         </header>
         <div className="editor-container">
-          <ScatcodeTextArea editorRef={editorRef} messages={messages} />
+          <ScatcodeTextArea editorRef={editorRef} value={messages.overview} />
         </div>
 
         <div className="content-section">
