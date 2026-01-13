@@ -4,12 +4,10 @@ import Messages from './Messages';
 import ScatcodeTextArea from './ScatcodeTextArea';
 import ScatcodeText, {
   toCodePoints,
-  toJsonStringLiteral,
   validateDomain,
   loadData,
   domainData,
   parseScatcodeRuns,
-  parseScatcodeToHtml,
   getScatcodeTextFromRanges,
 } from './ScatcodeText';
 
