@@ -104,7 +104,7 @@ class LoadButtonPlugin extends Plugin {
   }
 }
 
-function Editor({ editorRef, messages }) {
+function ScatcodeTextArea({ editorRef, messages }) {
   return (
     <CKEditor
       editor={ ClassicEditor }
@@ -199,4 +199,4 @@ function Editor({ editorRef, messages }) {
   );
 }
 
-export default Editor;
+export default ScatcodeTextArea;

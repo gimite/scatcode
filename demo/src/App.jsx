@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { unicodeName } from 'unicode-name';
 import Messages from './Messages';
-import Editor from './Editor';
+import ScatcodeTextArea from './ScatcodeTextArea';
 import ScatcodeText, {
   toCodePoints,
   toJsonStringLiteral,
@@ -281,7 +281,7 @@ function App() {
           </div>
         </header>
         <div className="editor-container">
-          <Editor editorRef={editorRef} messages={messages} />
+          <ScatcodeTextArea editorRef={editorRef} messages={messages} />
         </div>
 
         <div className="content-section">
