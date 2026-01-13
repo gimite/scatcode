@@ -73,7 +73,7 @@ function CharacterTable({ characters, messages, onCopy }) {
 }
 
 function App() {
-  const editorRef = useRef(null);
+  const editableElementRef = useRef(null);
   const [domainPreset, setDomainPreset] = useState('sitelenpona.gimite.net');
   const [domainInput, setDomainInput] = useState('sitelenpona.gimite.net');
   const [tableDomain, setTableDomain] = useState('');
@@ -152,12 +152,8 @@ function App() {
         const selection = window.getSelection();
         const selectedText = selection.toString();
         
-        // Check if the selection is inside CKEditor
-        if (!editorRef.current) {
-          setSelectedChars(null);
-          return;
-        }
-        const editorElement = editorRef.current.ui.view.editable.element;
+        // Check if the selection is inside the text area.
+        const editorElement = editableElementRef.current;
         if (!editorElement) {
           setSelectedChars(null);
           return;
@@ -252,7 +248,7 @@ function App() {
           </div>
         </header>
         <div className="editor-container">
-          <ScatcodeTextArea editorRef={editorRef} value={messages.overview} />
+          <ScatcodeTextArea editableElementRef={editableElementRef} value={messages.overview} />
         </div>
 
         <div className="content-section">

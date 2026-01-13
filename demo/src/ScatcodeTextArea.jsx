@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import alignBottomSVG from './align-bottom.svg?raw';
@@ -105,7 +105,9 @@ class LoadButtonPlugin extends Plugin {
   }
 }
 
-function ScatcodeTextArea({ editorRef, value }) {
+function ScatcodeTextArea({ value, editableElementRef }) {
+  const editorRef = useRef(null);
+
   useEffect(() => {
     if (!editorRef.current) return;
     const html = parseScatcodeToHtml(value);
@@ -117,6 +119,9 @@ function ScatcodeTextArea({ editorRef, value }) {
       editor={ ClassicEditor }
       onReady={(editor) => {
         editorRef.current = editor;
+        if (editableElementRef) {
+          editableElementRef.current = editor.ui.view.editable.element;
+        }
         
         // Use CKEditor's Clipboard plugin to intercept pasted text and transform Scatcode runs
         const clipboard = editor.plugins.get('ClipboardPipeline');
