@@ -3,8 +3,8 @@ import Ajv from 'ajv';
 import scatcodeSchema from './scatcode.schema.json';
 
 // Shared state for domain data
-export const loadedDomains = new Set();
-export const loadingPromises = new Map();
+const loadedDomains = new Set();
+const loadingPromises = new Map();
 export const domainData = {};
 
 // Convert a string to an array of codepoints
@@ -37,7 +37,7 @@ export const toJsonStringLiteral = (str) => {
   return result;
 };
 
-export function getScatcodeDomainTagHtml(domain) {
+function getScatcodeDomainTagHtml(domain) {
   return '&#xe0001;' +
     Array.from(
       domain,
@@ -180,7 +180,7 @@ export function parseScatcodeRuns(text) {
  * the `style="font-family:..."` is present. This DOES NOT look up CSS rules,
  * only inline style attribute values.
  */
-export function getInlineFontFamily(node) {
+function getInlineFontFamily(node) {
   let el = node && node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
   while (el && el.nodeType === Node.ELEMENT_NODE) {
     if (el.style && el.style.fontFamily) {
@@ -198,7 +198,7 @@ export function getInlineFontFamily(node) {
  * considers inline `style="font-family:..."` attributes and does not resolve
  * CSS rules or computed styles.
  */
-export function getTextFontRunsFromRanges(ranges) {
+function getTextFontRunsFromRanges(ranges) {
   const runs = [];
   if (!ranges || ranges.length === 0) return runs;
 
@@ -256,7 +256,7 @@ export function getTextFontRunsFromRanges(ranges) {
   return merged;
 }
 
-export function getScatcodeTextFromFontRuns(runs) {
+function getScatcodeTextFromFontRuns(runs) {
   let result = '';
   let lastDomain = '';
   for (const run of runs) {
@@ -288,7 +288,7 @@ export function getScatcodeTextFromRanges(ranges) {
   return getScatcodeTextFromFontRuns(runs);
 }
 
-export function escapeHtml(s) {
+function escapeHtml(s) {
   return String(s).replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -297,7 +297,7 @@ export function escapeHtml(s) {
     .replace(/\n/g, '<br/>');
 }
 
-export function escapeCssString(s) {
+function escapeCssString(s) {
   // We will wrap in single quotes, so escape single quotes if any
   return String(s).replace(/'/g, "\\'");
 }
