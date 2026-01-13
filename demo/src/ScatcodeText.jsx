@@ -320,6 +320,25 @@ export function parseScatcodeToHtml(text) {
   return result;
 }
 
+function handleCopy(e) {
+  try {
+    const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
+    const selection = window.getSelection();
+    const ranges = [];
+    for (let i = 0; i < selection.rangeCount; i++) {
+      ranges.push(selection.getRangeAt(i));
+    }
+    const scatcodeText = getScatcodeTextFromRanges(ranges);
+    console.log('Scatcode text:', toJsonStringLiteral(scatcodeText));
+    cb.setData('text/plain', scatcodeText);
+    e.preventDefault();
+  } catch (err) {
+    console.error('Error in copy handler', err);
+  }
+}
+
+document.addEventListener('copy', handleCopy);
+
 // ScatcodeText component
 export default function ScatcodeText({ children }) {
   const childArray = Children.toArray(children);

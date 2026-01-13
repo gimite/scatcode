@@ -145,29 +145,6 @@ function App() {
     setTimeout(() => setShowToast(false), 2000);
   };
 
-  // Global copy handler: capture copied HTML and plain text anywhere in the window.
-  useEffect(() => {
-    const handleCopy = (e) => {
-      try {
-        const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
-        const selection = window.getSelection();
-        const ranges = [];
-        for (let i = 0; i < selection.rangeCount; i++) {
-          ranges.push(selection.getRangeAt(i));
-        }
-        const scatcodeText = getScatcodeTextFromRanges(ranges);
-        console.log('Scatcode text:', toJsonStringLiteral(scatcodeText));
-        cb.setData('text/plain', scatcodeText);
-        e.preventDefault();
-      } catch (err) {
-        console.error('Error in copy handler', err);
-      }
-    };
-
-    document.addEventListener('copy', handleCopy);
-    return () => document.removeEventListener('copy', handleCopy);
-  }, []);
-
   // Handle text selection: show table of selected characters
   useEffect(() => {
     const handleSelectionChange = () => {
