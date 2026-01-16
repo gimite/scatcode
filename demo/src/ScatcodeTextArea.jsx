@@ -3,7 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import alignBottomSVG from './align-bottom.svg?raw';
 import fileUploadSVG from './file-upload.svg?raw';
-import { parseScatcodeToHtml, getScatcodeTextFromRanges } from './ScatcodeText';
+import { parseScatcodeToHtml, getScatcodeTextFromRanges } from 'scatcode-text';
 
 import 'ckeditor5/ckeditor5.css';
 

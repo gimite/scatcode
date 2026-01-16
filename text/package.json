@@ -1,0 +1,20 @@
+{
+  "name": "scatcode-text",
+  "version": "0.1.0",
+  "description": "Library for rendering and handling Scatcode encoded text",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "build": "echo 'No build step required for now'"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1"
+  }
+}
