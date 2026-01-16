@@ -1,4 +1,3 @@
-import { Children } from 'react';
 import Ajv from 'ajv';
 import scatcodeSchema from './scatcode.schema.json';
 
@@ -337,24 +336,62 @@ function handleCopy(e) {
   }
 }
 
-document.addEventListener('copy', handleCopy);
-
-// ScatcodeText component
-export function ScatcodeText({ children }) {
-  const childArray = Children.toArray(children);
-  for (const c of childArray) {
-    if (typeof c !== 'string' && typeof c !== 'number') {
-      throw new Error('ScatcodeText: children must be plain text (string or number)');
-    }
+// Register global copy handler once
+let copyHandlerRegistered = false;
+function registerCopyHandler() {
+  if (!copyHandlerRegistered) {
+    document.addEventListener('copy', handleCopy);
+    copyHandlerRegistered = true;
   }
-  const text = childArray.length === 0 ? '' : childArray.map(c => String(c)).join('');
-
-  // Use the shared parser to obtain runs of {domain, text}
-  const runs = parseScatcodeRuns(text);
-  const elements = runs.map((run, index) => {
-    const style = run.domain && run.domain !== '' ? {fontFamily: run.domain.replace(/\./g, ' ')} : {};
-    return <span key={index} style={style}>{run.text}</span>;
-  });
-
-  return <>{elements}</>;
 }
+
+// Define the web component
+class ScatcodeTextElement extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: 'open' });
+  }
+
+  connectedCallback() {
+    // Register the global copy handler
+    registerCopyHandler();
+    
+    // Get text content from the element
+    const text = this.textContent || '';
+    
+    // Parse the scatcode text
+    const runs = parseScatcodeRuns(text);
+    
+    // Clear shadow root
+    this.shadowRoot.innerHTML = '';
+    
+    // Create spans for each run
+    runs.forEach(run => {
+      const span = document.createElement('span');
+      span.textContent = run.text;
+      
+      if (run.domain && run.domain !== '') {
+        const fontFamily = run.domain.replace(/\./g, ' ');
+        span.style.fontFamily = fontFamily;
+      }
+      
+      this.shadowRoot.appendChild(span);
+    });
+  }
+  
+  // Observe changes to text content
+  static get observedAttributes() {
+    return [];
+  }
+  
+  // Provide a method to update the text
+  setText(text) {
+    this.textContent = text;
+    this.connectedCallback();
+  }
+}
+
+// Register the custom element
+customElements.define('scatcode-text', ScatcodeTextElement);
+
+export { ScatcodeTextElement };

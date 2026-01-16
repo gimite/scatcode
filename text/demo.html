@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scatcode Text Web Component Demo</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      color: #333;
+    }
+    .example {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 5px;
+    }
+    .example h3 {
+      margin-top: 0;
+    }
+    scatcode-text {
+      display: inline;
+      font-size: 1.2em;
+    }
+    .code {
+      background: #282c34;
+      color: #abb2bf;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Scatcode Text Web Component Demo</h1>
+  
+  <p>
+    The <code>&lt;scatcode-text&gt;</code> web component renders text with embedded domain-specific fonts
+    using the Scatcode encoding format.
+  </p>
+
+  <div class="example">
+    <h3>Example 1: Basic Text</h3>
+    <p>This is plain text in a scatcode-text element:</p>
+    <scatcode-text>Hello, World!</scatcode-text>
+  </div>
+
+  <div class="example">
+    <h3>Example 2: Domain-Specific Font</h3>
+    <p>Text with a specific domain font (e.g., sitelen-pona.scatcode.gimite.net):</p>
+    <scatcode-text>󠀁󠁳󠁩󠁴󠁥󠁬󠁥󠁮󠀭󠁰󠁯󠁮󠁡󠀮󠁳󠁣󠁡󠁴󠁣󠁯󠁤󠁥󠀮󠁧󠁩󠁭󠁩󠁴󠁥󠀮󠁮󠁥󠁴󠀿toki pona</scatcode-text>
+  </div>
+
+  <div class="example">
+    <h3>Example 3: Mixed Domains</h3>
+    <p>Text with multiple domain switches:</p>
+    <scatcode-text>Regular text 󠀁󠁳󠁩󠁴󠁥󠁬󠁥󠁮󠀭󠁰󠁯󠁮󠁡󠀮󠁳󠁣󠁡󠁴󠁣󠁯󠁤󠁥󠀮󠁧󠁩󠁭󠁩󠁴󠁥󠀮󠁮󠁥󠁴󠀿special font󠀁󠀿 and back to regular</scatcode-text>
+  </div>
+
+  <div class="example">
+    <h3>Usage in HTML</h3>
+    <div class="code">
+      &lt;scatcode-text&gt;Your text here&lt;/scatcode-text&gt;
+    </div>
+  </div>
+
+  <div class="example">
+    <h3>Usage in JavaScript</h3>
+    <div class="code">
+// Create element<br>
+const element = document.createElement('scatcode-text');<br>
+element.textContent = 'Your text here';<br>
+document.body.appendChild(element);<br>
+<br>
+// Or update existing element<br>
+const el = document.querySelector('scatcode-text');<br>
+el.setText('New text');
+    </div>
+  </div>
+
+  <script type="module">
+    // Import the web component
+    import './scatcode-text-element.js';
+    
+    console.log('Scatcode Text Web Component loaded');
+  </script>
+</body>
+</html>
