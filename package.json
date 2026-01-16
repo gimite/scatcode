@@ -1,8 +1,9 @@
 {
-  "name": "scatcode-monorepo",
+  "name": "scatcode",
   "private": true,
   "workspaces": [
     "demo",
-    "text"
+    "text",
+    "text-area"
   ]
 }

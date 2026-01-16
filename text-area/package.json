@@ -1,0 +1,22 @@
+{
+  "name": "scatcode-text-area",
+  "version": "0.1.0",
+  "description": "React component for editing Scatcode encoded text with CKEditor",
+  "type": "module",
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "build": "echo 'No build step required for now'"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-react": "^11.0.0",
+    "ckeditor5": "^47.2.0",
+    "scatcode-text": "0.1.0"
+  }
+}

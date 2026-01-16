@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { unicodeName } from 'unicode-name';
 import Messages from './Messages';
-import ScatcodeTextArea from './ScatcodeTextArea';
+import ScatcodeTextArea from 'scatcode-text-area';
 import {
   ScatcodeText,
   toCodePoints,
