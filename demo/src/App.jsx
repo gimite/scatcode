@@ -2,15 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import { unicodeName } from 'unicode-name';
 import Messages from './Messages';
 import ScatcodeTextArea from 'scatcode-text-area';
+import { ScatcodeText } from 'scatcode-text';
 import {
-  ScatcodeText,
   toCodePoints,
   validateDomain,
   loadData,
   domainData,
   parseScatcodeRuns,
   getScatcodeTextFromRanges,
-} from 'scatcode-text';
+} from 'scatcode-core';
 
 import './App.css';
 
