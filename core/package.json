@@ -3,15 +3,36 @@
   "version": "0.1.0",
   "description": "Core library for Scatcode text encoding and parsing",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "main": "./dist/scatcode-core.umd.js",
+  "module": "./dist/scatcode-core.es.js",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "import": "./dist/scatcode-core.es.js",
+      "require": "./dist/scatcode-core.umd.js"
+    }
   },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "scripts": {
-    "build": "echo 'No build step required for now'"
+    "build": "vite build",
+    "prepublishOnly": "npm run build"
   },
+  "keywords": [
+    "scatcode",
+    "text-encoding",
+    "unicode",
+    "font",
+    "web-component"
+  ],
+  "author": "",
+  "license": "MIT",
   "dependencies": {
     "ajv": "^8.17.1"
+  },
+  "devDependencies": {
+    "vite": "^6.0.5"
   }
 }
