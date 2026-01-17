@@ -1,7 +1,7 @@
 {
-  "name": "scatcode-text",
+  "name": "scatcode-core",
   "version": "0.1.0",
-  "description": "Library for rendering and handling Scatcode encoded text",
+  "description": "Core library for Scatcode text encoding and parsing",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -11,10 +11,7 @@
   "scripts": {
     "build": "echo 'No build step required for now'"
   },
-  "peerDependencies": {
-    "react": "^19.0.0"
-  },
   "dependencies": {
-    "scatcode-core": "^0.1.0"
+    "ajv": "^8.17.1"
   }
 }

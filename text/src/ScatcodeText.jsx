@@ -1,5 +1,5 @@
 import { Children } from 'react';
-import { parseScatcodeRuns, handleCopy } from './Scatcode.js';
+import { parseScatcodeRuns, handleCopy } from 'scatcode-core';
 
 document.addEventListener('copy', handleCopy);
 

@@ -2,6 +2,7 @@
   "name": "scatcode",
   "private": true,
   "workspaces": [
+    "core",
     "demo",
     "text",
     "text-area"
