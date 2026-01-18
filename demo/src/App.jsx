@@ -5,7 +5,6 @@ import ScatcodeTextArea from 'scatcode-text-area';
 import { ScatcodeText } from 'scatcode-text';
 import {
   toCodePoints,
-  validateDomain,
   loadData,
   domainData,
   parseScatcodeRuns,

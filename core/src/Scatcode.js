@@ -45,7 +45,7 @@ function getScatcodeDomainTagHtml(domain) {
     '&#xe007f;'
 }
 
-export function validateDomain(domain) {
+function validateDomain(domain) {
   // Basic domain validation
   if (!domain) {
     throw new Error('Domain cannot be empty');

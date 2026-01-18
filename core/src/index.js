@@ -2,7 +2,6 @@
 export {
   toCodePoints,
   toJsonStringLiteral,
-  validateDomain,
   loadData,
   parseScatcodeRuns,
   getScatcodeTextFromRanges,
