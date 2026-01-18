@@ -4,7 +4,6 @@ import Messages from './Messages';
 import ScatcodeTextArea from 'scatcode-text-area';
 import { ScatcodeText } from 'scatcode-text';
 import {
-  toCodePoints,
   loadDomainData,
   getDomainData,
   parseScatcodeRuns,
@@ -12,6 +11,10 @@ import {
 } from 'scatcode-core';
 
 import './App.css';
+
+function toCodePoints(str) {
+  return Array.from(str, ch => ch.codePointAt(0));
+}
 
 function CharacterTable({ characters, messages, onCopy }) {
   const handleCharacterClick = (event) => {

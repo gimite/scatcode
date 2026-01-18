@@ -6,12 +6,9 @@ const loadedDomains = new Set();
 const loadingPromises = new Map();
 export const domainData = {};
 
-// Convert a string to an array of codepoints
-export const toCodePoints = (str) => Array.from(str, ch => ch.codePointAt(0));
-
 // Convert a string into a JSON string literal with non-ASCII printable characters
 // encoded as \u{xxxx} format (xxxx must be at least 4 digits)
-export const toJsonStringLiteral = (str) => {
+function toJsonStringLiteral(str) {
   let result = '"';
   for (const ch of str) {
     const code = ch.charCodeAt(0);

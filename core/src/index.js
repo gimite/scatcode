@@ -1,7 +1,5 @@
 // Core scatcode functionality
 export {
-  toCodePoints,
-  toJsonStringLiteral,
   loadDomainData,
   getDomainData,
   parseScatcodeRuns,
