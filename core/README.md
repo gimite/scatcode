@@ -21,10 +21,10 @@ npm install scatcode-core
 ### Parsing Scatcode Text
 
 ```javascript
-import { parseScatcodeRuns } from 'scatcode-core';
+import { getScatcodeRunsFromScatcodeText } from 'scatcode-core';
 
 const text = "..."; // Your scatcode-encoded text
-const runs = parseScatcodeRuns(text);
+const runs = getScatcodeRunsFromScatcodeText(text);
 // Returns: [{ domain: 'example.com', text: '...' }, ...]
 ```
 
@@ -56,9 +56,9 @@ if (!error) {
 - `toJsonStringLiteral(str)` - Convert string to JSON literal with escaped Unicode
 - `validateDomain(domain)` - Validate domain format
 - `loadData(domain)` - Load scatcode.json from a domain
-- `parseScatcodeRuns(text)` - Parse encoded text into runs
+- `getScatcodeRunsFromScatcodeText(text)` - Parse encoded text into runs
 - `getScatcodeTextFromRanges(ranges)` - Extract scatcode text from selection ranges
-- `parseScatcodeToHtml(text)` - Convert scatcode text to HTML
+- `getHtmlFromScatcodeText(text)` - Convert scatcode text to HTML
 - `handleCopy(event)` - Copy event handler for preserving encoding
 - `domainData` - Object containing loaded domain data
 - `ScatcodeTextElement` - Web component class

@@ -3,7 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import alignBottomSVG from './align-bottom.svg?raw';
 import fileUploadSVG from './file-upload.svg?raw';
-import { parseScatcodeToHtml, getScatcodeTextFromRanges, registerCopyHandler } from 'scatcode-core';
+import { getHtmlFromScatcodeText, getScatcodeTextFromRanges, registerCopyHandler } from 'scatcode-core';
 
 import 'ckeditor5/ckeditor5.css';
 
@@ -84,7 +84,7 @@ class LoadButtonPlugin extends Plugin {
             console.log('Loaded Scatcode text:', text);
             
             // Parse the Scatcode text to HTML
-            const html = parseScatcodeToHtml(text);
+            const html = getHtmlFromScatcodeText(text);
             console.log('Parsed HTML:', html);
             
             // Set the editor content
@@ -114,7 +114,7 @@ function ScatcodeTextArea({ value, editableElementRef }) {
 
   useEffect(() => {
     if (!editorRef.current) return;
-    const html = parseScatcodeToHtml(value);
+    const html = getHtmlFromScatcodeText(value);
     editorRef.current.setData(html);
   }, [value]);
 
@@ -141,7 +141,7 @@ function ScatcodeTextArea({ value, editableElementRef }) {
             if (!dt) return;
             editor.model.change(writer => writer.removeSelectionAttribute('fontFamily'));
             const plain = dt.getData('text/plain') ?? '';
-            const html = parseScatcodeToHtml(plain);
+            const html = getHtmlFromScatcodeText(plain);
             console.log('Parsed HTML from Scatcode:', html);
             data.content = editor.data.processor.toView(html);
           } catch (err) {
@@ -195,7 +195,7 @@ function ScatcodeTextArea({ value, editableElementRef }) {
           }
         }, { priority: 'high' });
 
-        let html = parseScatcodeToHtml(value);
+        let html = getHtmlFromScatcodeText(value);
         editor.setData(html);
       }}
       config={ {

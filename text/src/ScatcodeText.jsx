@@ -1,5 +1,5 @@
 import { Children, useEffect } from 'react';
-import { parseScatcodeRuns, registerCopyHandler } from 'scatcode-core';
+import { getScatcodeRunsFromScatcodeText, registerCopyHandler } from 'scatcode-core';
 
 // ScatcodeText component
 export function ScatcodeText({ children }) {
@@ -16,7 +16,7 @@ export function ScatcodeText({ children }) {
   const text = childArray.length === 0 ? '' : childArray.map(c => String(c)).join('');
 
   // Use the shared parser to obtain runs of {domain, text}
-  const runs = parseScatcodeRuns(text);
+  const runs = getScatcodeRunsFromScatcodeText(text);
   const elements = runs.map((run, index) => {
     const style = run.domain && run.domain !== '' ? {fontFamily: run.domain.replace(/\./g, ' ')} : {};
     return <span key={index} style={style}>{run.text}</span>;

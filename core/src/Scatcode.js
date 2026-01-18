@@ -138,7 +138,7 @@ export function getDomainData(domain) {
 
 // Parse scatcode encoded text into an array of runs [{domain, text}].
 // `domain` is '' for the default domain, otherwise contains the domain string.
-export function parseScatcodeRuns(text) {
+export function getScatcodeRunsFromScatcodeText(text) {
   const runs = [];
   let domain = '';
   let chunk = '';
@@ -302,8 +302,8 @@ function escapeCssString(s) {
 
 // Parse a text string encoded with Scatcode markers into HTML where text runs are wrapped
 // in <span style="font-family: ..."> markers corresponding to the encoded domain.
-export function parseScatcodeToHtml(text) {
-  const runs = parseScatcodeRuns(text);
+export function getHtmlFromScatcodeText(text) {
+  const runs = getScatcodeRunsFromScatcodeText(text);
   let result = '';
   for (const run of runs) {
     const chunkHtml = escapeHtml(run.text);

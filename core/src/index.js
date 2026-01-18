@@ -2,9 +2,9 @@
 export {
   loadDomainData,
   getDomainData,
-  parseScatcodeRuns,
+  getScatcodeRunsFromScatcodeText,
   getScatcodeTextFromRanges,
-  parseScatcodeToHtml,
+  getHtmlFromScatcodeText,
   registerCopyHandler
 } from './Scatcode.js';
 

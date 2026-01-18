@@ -6,7 +6,7 @@ import { ScatcodeText } from 'scatcode-text';
 import {
   loadDomainData,
   getDomainData,
-  parseScatcodeRuns,
+  getScatcodeRunsFromScatcodeText,
   getScatcodeTextFromRanges,
 } from 'scatcode-core';
 
@@ -168,7 +168,7 @@ function App() {
           ranges.push(selection.getRangeAt(i));
         }
         const scatcodeText = getScatcodeTextFromRanges(ranges);
-        const scatcodeRuns = parseScatcodeRuns(scatcodeText);
+        const scatcodeRuns = getScatcodeRunsFromScatcodeText(scatcodeText);
         
         // Build character list with domain and codepoint info
         const chars = [];

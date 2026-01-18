@@ -1,4 +1,4 @@
-import { parseScatcodeRuns, registerCopyHandler } from './Scatcode.js';
+import { getScatcodeRunsFromScatcodeText, registerCopyHandler } from './Scatcode.js';
 
 
 // Define the web component
@@ -16,7 +16,7 @@ class ScatcodeTextElement extends HTMLElement {
     const text = this.textContent || '';
     
     // Parse the scatcode text
-    const runs = parseScatcodeRuns(text);
+    const runs = getScatcodeRunsFromScatcodeText(text);
     
     // Clear shadow root
     this.shadowRoot.innerHTML = '';
