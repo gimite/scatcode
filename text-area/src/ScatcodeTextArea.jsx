@@ -3,7 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { ClassicEditor, Essentials, Paragraph, FontFamily, ButtonView, Plugin } from 'ckeditor5';
 import alignBottomSVG from './align-bottom.svg?raw';
 import fileUploadSVG from './file-upload.svg?raw';
-import { parseScatcodeToHtml, getScatcodeTextFromRanges } from 'scatcode-core';
+import { parseScatcodeToHtml, getScatcodeTextFromRanges, registerCopyHandler } from 'scatcode-core';
 
 import 'ckeditor5/ckeditor5.css';
 
@@ -107,6 +107,10 @@ class LoadButtonPlugin extends Plugin {
 
 function ScatcodeTextArea({ value, editableElementRef }) {
   const editorRef = useRef(null);
+
+  useEffect(() => {
+    registerCopyHandler();
+  }, []);
 
   useEffect(() => {
     if (!editorRef.current) return;

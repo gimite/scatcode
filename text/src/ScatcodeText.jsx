@@ -1,10 +1,12 @@
-import { Children } from 'react';
-import { parseScatcodeRuns, handleCopy } from 'scatcode-core';
-
-document.addEventListener('copy', handleCopy);
+import { Children, useEffect } from 'react';
+import { parseScatcodeRuns, registerCopyHandler } from 'scatcode-core';
 
 // ScatcodeText component
 export function ScatcodeText({ children }) {
+  useEffect(() => {
+    registerCopyHandler();
+  }, []);
+
   const childArray = Children.toArray(children);
   for (const c of childArray) {
     if (typeof c !== 'string' && typeof c !== 'number') {

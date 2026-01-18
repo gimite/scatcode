@@ -5,7 +5,7 @@ export {
   parseScatcodeRuns,
   getScatcodeTextFromRanges,
   parseScatcodeToHtml,
-  handleCopy
+  registerCopyHandler
 } from './Scatcode.js';
 
 // Web component

@@ -318,7 +318,7 @@ export function parseScatcodeToHtml(text) {
   return result;
 }
 
-export function handleCopy(e) {
+function handleCopy(e) {
   try {
     const cb = e.clipboardData || (window.clipboardData && window.clipboardData.getData ? window.clipboardData : null);
     const selection = window.getSelection();
@@ -332,5 +332,14 @@ export function handleCopy(e) {
     e.preventDefault();
   } catch (err) {
     console.error('Error in copy handler', err);
+  }
+}
+
+// Register global copy handler once
+let copyHandlerRegistered = false;
+export function registerCopyHandler() {
+  if (!copyHandlerRegistered) {
+    document.addEventListener('copy', handleCopy);
+    copyHandlerRegistered = true;
   }
 }

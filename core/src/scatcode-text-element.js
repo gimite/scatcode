@@ -1,13 +1,5 @@
-import { parseScatcodeRuns, handleCopy } from './Scatcode.js';
+import { parseScatcodeRuns, registerCopyHandler } from './Scatcode.js';
 
-// Register global copy handler once
-let copyHandlerRegistered = false;
-function registerCopyHandler() {
-  if (!copyHandlerRegistered) {
-    document.addEventListener('copy', handleCopy);
-    copyHandlerRegistered = true;
-  }
-}
 
 // Define the web component
 class ScatcodeTextElement extends HTMLElement {
