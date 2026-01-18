@@ -2,12 +2,12 @@
 export {
   toCodePoints,
   toJsonStringLiteral,
-  loadData,
+  loadDomainData,
+  getDomainData,
   parseScatcodeRuns,
   getScatcodeTextFromRanges,
   parseScatcodeToHtml,
-  handleCopy,
-  domainData
+  handleCopy
 } from './Scatcode.js';
 
 // Web component

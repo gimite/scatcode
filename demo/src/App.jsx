@@ -5,8 +5,8 @@ import ScatcodeTextArea from 'scatcode-text-area';
 import { ScatcodeText } from 'scatcode-text';
 import {
   toCodePoints,
-  loadData,
-  domainData,
+  loadDomainData,
+  getDomainData,
   parseScatcodeRuns,
   getScatcodeTextFromRanges,
 } from 'scatcode-core';
@@ -91,20 +91,20 @@ function App() {
   const handleCharacterTableSubmit = async (e) => {
     e.preventDefault();
     const domain = domainInput.trim();
-    await loadDomainData(domain);
+    await loadTableDomainData(domain);
   }
 
-  const loadDomainData = async (domain) => {
+  const loadTableDomainData = async (domain) => {
     console.log(`Loading domain table data for: ${domain}`);
     setLoading(true);
     setTableDomain('');
     setTableDomainData(null);
     setError(null);
     try {
-      await loadData(domain);
+      const domainData = await loadDomainData(domain);
       console.log(`Loaded domain table data for: ${domain}`);
       setTableDomain(domain);
-      setTableDomainData(domainData[domain]);
+      setTableDomainData(domainData);
     } catch (err) {
       setError(String(err));
       setTableDomain('');
@@ -120,13 +120,13 @@ function App() {
     
     if (preset !== '') {
       setDomainInput(preset);
-      await loadDomainData(preset);
+      await loadTableDomainData(preset);
     }
   }
 
   // Load sitelenpona data on mount
   useEffect(() => {
-    loadDomainData('sitelenpona.gimite.net');
+    loadTableDomainData('sitelenpona.gimite.net');
   }, []);
 
   // Toast notification handler
@@ -177,8 +177,8 @@ function App() {
               ? `${run.domain}#${cpHex}`
               : `U+${cpHex}`;
             let name;
-            if (run.domain && domainData[run.domain]) {
-              const data = domainData[run.domain];
+            if (run.domain && getDomainData(run.domain)) {
+              const data = getDomainData(run.domain);
               const charData = data.charactersMap[cp];
               name = charData ? `${data.name.toUpperCase()} ${charData.name}` : '';
             } else {

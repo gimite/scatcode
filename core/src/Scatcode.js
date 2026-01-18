@@ -63,7 +63,7 @@ function validateDomain(domain) {
   }
 }
 
-export async function loadData(domain) {
+async function fetchDomainData(domain) {
   validateDomain(domain);
 
   // If already loaded, return immediately
@@ -130,6 +130,15 @@ export async function loadData(domain) {
   return loadPromise;
 }
 
+export async function loadDomainData(domain) {
+  await fetchDomainData(domain);
+  return domainData[domain];
+}
+
+export function getDomainData(domain) {
+  return domainData[domain];
+}
+
 // Parse scatcode encoded text into an array of runs [{domain, text}].
 // `domain` is '' for the default domain, otherwise contains the domain string.
 export function parseScatcodeRuns(text) {
@@ -153,7 +162,7 @@ export function parseScatcodeRuns(text) {
     } else if (cp === 0xe007f && isInDomain) {
       isInDomain = false;
       if (domain !== '') {
-        loadData(domain).catch(console.error);
+        fetchDomainData(domain).catch(console.error);
       }
     } else if (cp >= 0xe0020 && cp < 0xe007f && isInDomain) {
       // Domain is encoded as ASCII codepoints (cp - 0xe0000)
