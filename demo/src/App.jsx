@@ -92,22 +92,14 @@ function App() {
   const handleCharacterTableSubmit = async (e) => {
     e.preventDefault();
     const domain = domainInput.trim();
-    
-    // Validate domain
-    const validationError = validateDomain(domain);
-    if (validationError) {
-      setError(validationError);
-      setTableDomain('');
-      setTableDomainData(null);
-      return;
-    }
-    
     await loadDomainData(domain);
   }
 
   const loadDomainData = async (domain) => {
     console.log(`Loading domain table data for: ${domain}`);
     setLoading(true);
+    setTableDomain('');
+    setTableDomainData(null);
     setError(null);
     try {
       await loadData(domain);

@@ -48,29 +48,23 @@ function getScatcodeDomainTagHtml(domain) {
 export function validateDomain(domain) {
   // Basic domain validation
   if (!domain) {
-    return 'Domain cannot be empty';
+    throw new Error('Domain cannot be empty');
   }
   
   // Check for valid domain format (allow letters, numbers, dots, and hyphens)
   const domainRegex = /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]$/i;
   if (!domainRegex.test(domain)) {
-    return 'Invalid domain format (e.g., example.com)';
+    throw new Error('Invalid domain format (e.g., example.com)');
   }
   
   // Check if it has at least one dot
   if (!domain.includes('.')) {
-    return 'Domain must include a top-level domain (e.g., .com, .net)';
+    throw new Error('Domain must include a top-level domain (e.g., .com, .net)');
   }
-  
-  return null; // Valid
 }
 
 export async function loadData(domain) {
-  const validationError = validateDomain(domain);
-  if (validationError) {
-    console.error(`Domain validation failed for "${domain}": ${validationError}`);
-    return;
-  }
+  validateDomain(domain);
 
   // If already loaded, return immediately
   if (loadedDomains.has(domain)) {
@@ -99,7 +93,6 @@ export async function loadData(domain) {
       const valid = validate(data);
       
       if (!valid) {
-        console.error(`Schema validation failed for ${domain}:`, validate.errors);
         throw new Error(`Invalid scatcode.json format: ${ajv.errorsText(validate.errors)}`);
       }
 
