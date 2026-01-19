@@ -290,3 +290,27 @@
     opacity: 0;
   }
 }
+
+/* HTML snippet styling */
+.html-snippet {
+  margin-top: 1rem;
+  background: #f7fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.html-snippet pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.html-snippet code {
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #2d3748;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

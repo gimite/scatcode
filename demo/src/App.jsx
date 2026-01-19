@@ -277,6 +277,14 @@ function App() {
                 </tbody>
               </table>
               </div>
+
+              <h3><ScatcodeText>{messages.htmlSnippet || 'HTML Snippet'}</ScatcodeText></h3>
+              <div className="html-snippet">
+                <pre><code>{`<script type="module" src="https://scatcode.gimite.net/scatcode-core-0.1.0.es.js"></script>\n<scatcode-text>${Array.from(selectedScatcodeText, ch => {
+                  const cp = ch.codePointAt(0);
+                  return `&#x${cp.toString(16).toUpperCase()};`;
+                }).join('')}</scatcode-text>`}</code></pre>
+              </div>
             </div>
           ) : (
             <>

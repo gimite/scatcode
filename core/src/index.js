@@ -1,4 +1,3 @@
-// Core scatcode functionality
 export {
   loadDomainData,
   getDomainData,
@@ -8,5 +7,4 @@ export {
   registerCopyHandler
 } from './Scatcode.js';
 
-// Web component
-export { ScatcodeTextElement } from './scatcode-text-element.js';
+import './scatcode-text-element.js';
