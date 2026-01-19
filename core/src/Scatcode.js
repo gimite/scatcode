@@ -269,6 +269,10 @@ function getScatcodeTextFromFontRuns(runs) {
     }
     result += text;
   }
+  if (lastDomain !== '') {
+    result += String.fromCodePoint(0xe0001);
+    result += String.fromCodePoint(0xe007f);
+  }
   return result;
 }
 
