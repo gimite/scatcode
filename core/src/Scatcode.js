@@ -33,15 +33,6 @@ function toJsonStringLiteral(str) {
   return result;
 };
 
-function getScatcodeDomainTagHtml(domain) {
-  return '&#xe0001;' +
-    Array.from(
-      domain,
-      ch => "&#x" + (ch.codePointAt(0) + 0xe0000).toString(16) + ";"
-    ).join("") +
-    '&#xe007f;'
-}
-
 function validateDomain(domain) {
   // Basic domain validation
   if (!domain) {
