@@ -16,6 +16,20 @@ function toCodePoints(str) {
   return Array.from(str, ch => ch.codePointAt(0));
 }
 
+function convertToHtmlEntities(text) {
+  return Array.from(text, ch => {
+    const cp = ch.codePointAt(0);
+    // Keep safe ASCII printable characters as-is
+    // Exclude special HTML characters: < > & " '
+    if (cp >= 0x20 && cp <= 0x7E && 
+        ch !== '<' && ch !== '>' && ch !== '&' && ch !== '"' && ch !== "'") {
+      return ch;
+    }
+    // Convert everything else to HTML entities
+    return `&#x${cp.toString(16).toUpperCase()};`;
+  }).join('');
+}
+
 function CharacterTable({ characters, messages, onCopy }) {
   const handleCharacterClick = (event) => {
     try {
@@ -278,12 +292,9 @@ function App() {
               </table>
               </div>
 
-              <h3><ScatcodeText>{messages.htmlSnippet || 'HTML Snippet'}</ScatcodeText></h3>
+              <h3><ScatcodeText>{messages.htmlSnippet}</ScatcodeText></h3>
               <div className="html-snippet">
-                <pre><code>{`<script type="module" src="https://scatcode.gimite.net/scatcode-core-0.1.0.es.js"></script>\n<scatcode-text>${Array.from(selectedScatcodeText, ch => {
-                  const cp = ch.codePointAt(0);
-                  return `&#x${cp.toString(16).toUpperCase()};`;
-                }).join('')}</scatcode-text>`}</code></pre>
+                <pre><code>{`<script type="module" src="https://scatcode.gimite.net/scatcode-core-0.1.0.es.js"></script>\n<scatcode-text>${convertToHtmlEntities(selectedScatcodeText)}</scatcode-text>`}</code></pre>
               </div>
             </div>
           ) : (
