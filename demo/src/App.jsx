@@ -257,6 +257,11 @@ function App() {
         <div className="editor-container">
           <ScatcodeTextArea editableElementRef={editableElementRef} value={messages.overview} />
         </div>
+        <div className="learn-more-link">
+          <a href="https://github.com/gimite/scatcode" target="_blank" rel="noopener noreferrer">
+            <ScatcodeText>{messages.learnMore}</ScatcodeText>
+          </a>
+        </div>
 
         <div className="content-section">
           {selectedChars ? (

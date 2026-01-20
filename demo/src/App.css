@@ -314,3 +314,16 @@
   white-space: pre-wrap;
   word-break: break-all;
 }
+
+.learn-more-link {
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.learn-more-link a {
+  display: inline-block;
+  color: #667eea;
+  font-weight: 500;
+  font-size: 0.95rem;
+}

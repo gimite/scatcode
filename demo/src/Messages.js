@@ -45,6 +45,7 @@ export default {
     selectedCharacters: 'Selected characters',
     howTheyAreEncoded: 'How they are encoded',
     htmlSnippet: 'Embed this text in HTML',
+    learnMore: 'Learn more...',
   },
   tok: {
     title: '\u{E0001}\u{E0073}\u{E0069}\u{E0074}\u{E0065}\u{E006C}\u{E0065}\u{E006E}\u{E0070}\u{E006F}\u{E006E}\u{E0061}\u{E002E}\u{E0067}\u{E0069}\u{E006D}\u{E0069}\u{E0074}\u{E0065}\u{E002E}\u{E006E}\u{E0065}\u{E0074}\u{E007F}\u{F193F}\u{F1960}\u{F1976}',
@@ -57,5 +58,6 @@ export default {
     selectedCharacters: "\u{E0001}\u{E0073}\u{E0069}\u{E0074}\u{E0065}\u{E006C}\u{E0065}\u{E006E}\u{E0070}\u{E006F}\u{E006E}\u{E0061}\u{E002E}\u{E0067}\u{E0069}\u{E006D}\u{E0069}\u{E0074}\u{E0065}\u{E002E}\u{E006E}\u{E0065}\u{E0074}\u{E007F}\u{F1960}\u{F191E}",
     howTheyAreEncoded: "\u{E0001}\u{E0073}\u{E0069}\u{E0074}\u{E0065}\u{E006C}\u{E0065}\u{E006E}\u{E0070}\u{E006F}\u{E006E}\u{E0061}\u{E002E}\u{E0067}\u{E0069}\u{E006D}\u{E0069}\u{E0074}\u{E0065}\u{E002E}\u{E006E}\u{E0065}\u{E0074}\u{E007F}\u{F1946}\u{F1927}\u{F1906}\u{F1969}\u{F193D}\u{F1941}",
     htmlSnippet: "\u{E0001}\u{E0073}\u{E0069}\u{E0074}\u{E0065}\u{E006C}\u{E0065}\u{E006E}\u{E0070}\u{E006F}\u{E006E}\u{E0061}\u{E002E}\u{E0067}\u{E0069}\u{E006D}\u{E0069}\u{E0074}\u{E0065}\u{E002E}\u{E006E}\u{E0065}\u{E0074}\u{E007F}\u{F195E}\u{F1918}\u{F194C}\u{F1909}\u{F1960}\u{F1941}\u{F192C}\u{F192A}\u{F190E}\u{F194D}\u{F1997}\u{F1954}\u{F192E}\u{F1998}",
+    learnMore: "\u{E0001}\u{E0073}\u{E0069}\u{E0074}\u{E0065}\u{E006C}\u{E0065}\u{E006E}\u{E0070}\u{E006F}\u{E006E}\u{E0061}\u{E002E}\u{E0067}\u{E0069}\u{E006D}\u{E0069}\u{E0074}\u{E0065}\u{E002E}\u{E006E}\u{E0065}\u{E0074}\u{E007F}\u{F1944}\u{F1961}\u{F193C}\u{E0001}\u{E007F}...",
   },
 };
