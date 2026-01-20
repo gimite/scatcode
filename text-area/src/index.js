@@ -1,1 +1,1 @@
-export { default } from './ScatcodeTextArea.jsx';
+export { ScatcodeTextArea } from './ScatcodeTextArea.jsx';

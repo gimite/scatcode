@@ -105,7 +105,7 @@ class LoadButtonPlugin extends Plugin {
   }
 }
 
-function ScatcodeTextArea({ value, editableElementRef }) {
+export function ScatcodeTextArea({ value, editableElementRef }) {
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -214,5 +214,3 @@ function ScatcodeTextArea({ value, editableElementRef }) {
     />
   );
 }
-
-export default ScatcodeTextArea;
