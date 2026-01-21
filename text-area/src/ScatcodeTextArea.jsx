@@ -105,7 +105,7 @@ class LoadButtonPlugin extends Plugin {
   }
 }
 
-export function ScatcodeTextArea({ value, editableElementRef }) {
+export function ScatcodeTextArea({ value, editableElementRef, onChange }) {
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -121,6 +121,21 @@ export function ScatcodeTextArea({ value, editableElementRef }) {
   return (
     <CKEditor
       editor={ ClassicEditor }
+      onChange={(event, editor) => {
+        if (onChange) {
+          try {
+            const editableElement = editor.ui.view.editable.element;
+            if (editableElement) {
+              const range = document.createRange();
+              range.selectNodeContents(editableElement);
+              const scatcodeText = getScatcodeTextFromRanges([range]);
+              onChange(scatcodeText);
+            }
+          } catch (err) {
+            console.error('Error in onChange handler:', err);
+          }
+        }
+      }}
       onReady={(editor) => {
         editorRef.current = editor;
         if (editableElementRef) {
