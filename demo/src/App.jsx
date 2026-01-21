@@ -255,7 +255,7 @@ function App() {
           </div>
         </header>
         <div className="editor-container">
-          <ScatcodeTextArea editableElementRef={editableElementRef} value={messages.overview} onChange={ (e) => { console.log('onChange', e); } } />
+          <ScatcodeTextArea editableElementRef={editableElementRef} value={messages.overview} />
         </div>
         <div className="learn-more-link">
           <a href="https://github.com/gimite/scatcode" target="_blank" rel="noopener noreferrer">

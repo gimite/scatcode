@@ -122,7 +122,7 @@ function Editor() {
   return (
     <ScatcodeTextArea
       value={content}
-      onChange={(e) => setContent(e.target.value)}
+      onChange={(value) => setContent(value)}
     />
   );
 }
