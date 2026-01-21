@@ -5,16 +5,16 @@ sina ken sitelen e sitelen - pona e 󠀁󠁴󠁥󠁮󠁧󠁷󠁡󠁲󠀮󠁧󠁩
 kin la sina ken pali e sitelen sina li ken sitelen e ona a
 sina ken kepeken nasin sitelen weka lon poki sitelen ni
 
-o luka e sitelen lon anpa o pana tawa poki ni
+o luka e sitelen lon leko anpa o pana tawa poki ni
 
-sina sitelen lon ilo seme lon ilo sona
-o pana e sitelen lon poki ni tawa ilo sitelen ni
-sitelen li lukin pakala lon ilo sitelen ni
+sina sitelen lon ilo lipu seme lon ilo sona
+o pana e sitelen lon poki ni tawa ilo lipu ni
+sitelen li lukin pakala lon ilo lipu ni
 taso ale li pona
 o pana sin e ona tawa poki ni
 sitelen li lukin pona sin a
 
-o luka e sitelen lon poki ni o kule e ona la sina sona e ni
+o luka e sitelen lon poki ni o kule e ona o lukin e leko anpa la sina sona e ni
 sitelen ni li seme
 nasin sitelen weka li ante e sitelen ni tawa seme
 
@@ -25,4 +25,8 @@ sitelen - pona li lon kulupu sitelenpona.gimite.net
 
 ilo li lukin e lipu kepeken nasin sitelen weka la ilo li wile sona e ni
 sitelen ni li lon kulupu seme
-nasin sitelen weka li toki e ni kepeken sitelen kon lon nasin sitelen [ uta ni ijo kule o ]
+nasin sitelen weka li toki e ni kepeken sitelen kon lon nasin sitelen [ jo uta ni ijo kule o ]
+
+kulupu lon nasin sitelen weka li seme
+kulupu ni la ilo li ante e nanpa tawa sitelen lukin kepeken nasin seme
+/scatcode.json lon kulupu ilo ni li pana e sona ni
