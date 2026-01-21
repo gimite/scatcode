@@ -3,13 +3,22 @@
   "version": "0.1.0",
   "description": "React component for rendering Scatcode-encoded text",
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
+  "main": "./dist/scatcode-text.umd.js",
+  "module": "./dist/scatcode-text.es.js",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "import": "./dist/scatcode-text.es.js",
+      "require": "./dist/scatcode-text.umd.js"
+    }
   },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "scripts": {
-    "build": "echo 'No build step required for now'"
+    "build": "vite build",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "scatcode",
@@ -22,5 +31,9 @@
   },
   "dependencies": {
     "scatcode-core": "^0.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "vite": "^6.0.5"
   }
 }
