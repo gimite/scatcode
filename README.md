@@ -60,6 +60,8 @@ to render characters in the domain.
 
 `/scatcode.json` also provides a list of characters in the domain in its `characters` property.
 
+`/scatcode.json` must have a CORS policy to allow access from any domains.
+
 ## Libraries
 
 ### scatcode-core
@@ -132,4 +134,4 @@ function Editor() {
 
 * Spec of the encoding format and domain configuration: Public domain
 * `scatcode-core` and `scatcode-text` libraries: MIT
-* `scatcode-text-area` library: GPL
+* `scatcode-text-area` library and `scatcode-demo` app: GPL

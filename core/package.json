@@ -22,12 +22,9 @@
   },
   "keywords": [
     "scatcode",
-    "text-encoding",
-    "unicode",
-    "font",
-    "web-component"
+    "text-encoding"
   ],
-  "author": "",
+  "author": "Hiroshi Ichikawa",
   "license": "MIT",
   "dependencies": {
     "ajv": "^8.17.1"

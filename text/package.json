@@ -1,7 +1,7 @@
 {
   "name": "scatcode-text",
   "version": "0.1.0",
-  "description": "Library for rendering and handling Scatcode encoded text",
+  "description": "React component for rendering Scatcode-encoded text",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -11,6 +11,12 @@
   "scripts": {
     "build": "echo 'No build step required for now'"
   },
+  "keywords": [
+    "scatcode",
+    "text-encoding"
+  ],
+  "author": "Hiroshi Ichikawa",
+  "license": "MIT",
   "peerDependencies": {
     "react": "^19.0.0"
   },
