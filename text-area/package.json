@@ -3,13 +3,22 @@
   "version": "0.1.0",
   "description": "React component providing an editable text area for Scatcode-encoded text",
   "type": "module",
-  "main": "./src/index.js",
-  "module": "./src/index.js",
+  "main": "./dist/scatcode-text-area.umd.js",
+  "module": "./dist/scatcode-text-area.es.js",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "import": "./dist/scatcode-text-area.es.js",
+      "require": "./dist/scatcode-text-area.umd.js"
+    }
   },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
   "scripts": {
-    "build": "echo 'No build step required for now'"
+    "build": "vite build",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "scatcode",
@@ -23,6 +32,9 @@
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^11.0.0",
     "ckeditor5": "^47.2.0",
-    "scatcode-text": "^0.1.0"
+    "scatcode-core": "^0.1.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.5"
   }
 }
