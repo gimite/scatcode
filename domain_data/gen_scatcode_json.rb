@@ -36,8 +36,29 @@ for (domain_name, name_regex) in [
     end
   end
 
-  FileUtils.mkdir_p(domain_name)
-  File.open("#{domain_name}/scatcode.json", "w") do |f|
+  FileUtils.mkdir_p("dist/#{domain_name}")
+  File.open("dist/#{domain_name}/scatcode.json", "w") do |f|
     f.write(JSON.pretty_generate(data))
+  end
+
+  name = data["name"]
+  File.open("dist/#{domain_name}/index.html", "w") do |f|
+    f.write <<~HTML
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <title>Scatcode domain for #{name}</title>
+        </head>
+        <body>
+          <div>
+            This domain hosts the <a href="https://scatcode.gimite.net/" target="_blank">Scatcode</a>
+            domain definition (<a href="/scatcode.json" target="_blank">scatcode.json</a>)
+            for #{name}.
+          </div>
+        </body>
+      </html>
+    HTML
   end
 end
