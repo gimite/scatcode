@@ -5,6 +5,7 @@
     "core",
     "demo",
     "text",
-    "text-area"
+    "text-area",
+    "domain-server"
   ]
 }

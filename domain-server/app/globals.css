@@ -1,0 +1,208 @@
+:root {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+  --card-bg: rgba(24, 24, 27, 0.6);
+  --card-border: rgba(63, 63, 70, 0.4);
+  --card-hover-border: rgba(161, 161, 170, 0.6);
+  --accent-glow: rgba(147, 51, 234, 0.15);
+  --text-muted: #a1a1aa;
+}
+
+html {
+  height: 100%;
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100%;
+  color: var(--foreground);
+  background: radial-gradient(circle at 50% 0%, var(--accent-glow) 0%, var(--background) 70%);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Dashboard Layout */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Header Styling */
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.badge {
+  background: rgba(147, 51, 234, 0.15);
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  color: #c084fc;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0.5rem 0 1rem 0;
+  background: linear-gradient(to right, #ffffff, #a1a1aa, #c084fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+/* Host Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+/* Card Styling */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255, 255, 255, 0.06), transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card:hover {
+  border-color: var(--card-hover-border);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(147, 51, 234, 0.2);
+}
+
+.card-header {
+  margin-bottom: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.card-tag {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: var(--text-muted);
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.card-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  z-index: 2;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-primary {
+  background: #ffffff;
+  color: #09090b;
+  border: 1px solid #ffffff;
+}
+
+.btn-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Footer Styling */
+.footer {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(63, 63, 70, 0.3);
+  padding-top: 2rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.footer a {
+  color: #c084fc;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
