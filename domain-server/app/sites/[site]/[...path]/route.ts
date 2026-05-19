@@ -21,7 +21,10 @@ export async function GET(
   const relativeFilePath = pathSegments.join('/');
   const safeRelativePath = path.normalize(relativeFilePath).replace(/^(\.\.(\/|\\|$))+/, '');
 
-  const baseDir = path.join(process.cwd(), '../domain_data/dist');
+  let baseDir = path.join(process.cwd(), 'domain_data/dist');
+  if (!fs.existsSync(baseDir)) {
+    baseDir = path.join(process.cwd(), '../domain_data/dist');
+  }
   let targetFilePath = path.join(baseDir, site, safeRelativePath);
 
   console.log(`[SiteSubPathRoute] site: "${site}", path: "${relativeFilePath}", file: "${targetFilePath}"`);
